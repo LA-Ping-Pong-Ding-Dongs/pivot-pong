@@ -1,9 +1,13 @@
 source 'http://rubygems.org'
 
-gem 'rake'
-gem 'rails', "~> 3.0.0"
-gem 'haml-rails'
-gem 'heroku'
+gem 'rails', "< 4.0.0"
+
+group :assets do
+  gem 'sass-rails'
+  gem 'uglifier'
+end
+
+gem 'haml'
 gem 'jquery-rails'
 
 group :test, :development do
