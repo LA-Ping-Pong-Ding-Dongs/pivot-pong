@@ -1,5 +1,16 @@
+html {
+    background: url('palms.png') no-repeat fixed;
+    background-size:contain;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
 body {
   font-family: "coolvetica-1", "coolvetica-2", Helvetica, Arial, sans-serif;
+    height: 100%;
 }
 
 body > * {
@@ -119,17 +130,18 @@ td.action, th.action {
   margin-right: auto;
   border-left: 1px solid #999;
   border-right: 1px solid #999;
+  border-bottom: 1px solid #999;
   width: 600px;
   padding: 25px;
-  background-color: #dedede;
+  background-color: rgba(222,222,222, 0.8);
 }
 
 .even {
-  background-color: #f0f0f0;
+  background-color: rgba(240,240,240, 0.8);
 }
 
 .odd {
-  background-color: #e7e7e7;
+  background-color: rgba(231,231,231, 0.8);
 }
 
 .flash {
