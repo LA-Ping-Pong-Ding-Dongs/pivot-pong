@@ -5,5 +5,8 @@ Pong::Application.routes.draw do
       get 'players'
     end
   end
+
+  resources :doubles_matches
+
   root to: 'matches#rankings'
 end
