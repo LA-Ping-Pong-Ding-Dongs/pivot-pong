@@ -1,4 +1,4 @@
-class Player < ActiveRecord::Base
+class Player < Opponent
   before_validation :downcase_name, :if => ->{ name.present? }
 
   validates :name, presence: true, uniqueness: true
