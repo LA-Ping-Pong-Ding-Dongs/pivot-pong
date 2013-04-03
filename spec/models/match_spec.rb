@@ -4,10 +4,10 @@ describe Match do
   describe "associations" do
     context "belongs_to" do
       [:winner, :loser].each do |association|
-        it "should belong_to #{association}, class_name: 'Player'" do
+        it "should belong_to #{association}, class_name: 'Opponent'" do
           reflection = Match.reflect_on_association(association)
           reflection.macro.should == :belongs_to
-          reflection.class_name.should == "Player"
+          reflection.class_name.should == Opponent.name
         end
       end
     end
