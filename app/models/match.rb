@@ -8,6 +8,7 @@ class Match < ActiveRecord::Base
   before_validation :set_default_occured_at_date, on: :create, :unless => ->{ occured_at.present? }
 
   def self.doubles_matches
+    scoped
   end
 
   private
