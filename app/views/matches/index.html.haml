@@ -9,17 +9,4 @@
   = f.text_field :occured_at, value: Time.now.strftime("%Y-%m-%d %H:%M:%S")
   = submit_tag "Add match"
 
-%h2 Match history
-
-%table
-  %tr
-    %th.date Date
-    %th Winner
-    %th Loser
-    %th.action
-  - @matches.each do |m|
-    %tr{class: cycle("even", "odd")}
-      %td.date= m.occured_at.strftime("%Y-%m-%d")
-      %td= m.winner
-      %td= m.loser
-      %td.action= link_to "delete", match_path(m), method: :delete
+= render :partial => 'shared/match_history', :object => @matches
