@@ -31,4 +31,15 @@ describe Match do
       its(:occured_at) { should == occured_at }
     end
   end
+
+  describe '.doubles_matches' do
+    it 'returns only doubles matches' do
+      create(:match)
+      m1 = create(:doubles_match)
+      m2 = create(:doubles_match)
+      matches = Match.doubles_matches
+      expect(matches).to_not be_nil
+      expect(matches).to match_array([m1,m2])
+    end
+  end
 end
