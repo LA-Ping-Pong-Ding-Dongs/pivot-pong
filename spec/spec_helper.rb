@@ -12,4 +12,5 @@ RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.use_transactional_fixtures = true
   config.color_enabled = true
+  config.render_views
 end
