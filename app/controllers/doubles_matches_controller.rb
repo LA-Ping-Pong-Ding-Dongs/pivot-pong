@@ -1,0 +1,3 @@
+class DoublesMatchesController < ApplicationController
+end
+
