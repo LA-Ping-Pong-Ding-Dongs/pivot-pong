@@ -3,7 +3,7 @@ class Player < Opponent
 
   validates :name, presence: true, uniqueness: true
 
-  def display_name
+  def to_s
     name.split("'").map(&:titleize).join("'")
   end
 

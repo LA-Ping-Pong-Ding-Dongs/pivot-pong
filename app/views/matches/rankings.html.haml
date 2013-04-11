@@ -3,5 +3,5 @@
 %ol#all-time.rankings
   - @rankings.each do |player, points|
     %li{class: cycle("even", "odd")}
-      = "#{player.display_name}"
+      = player
       %span= "#{points} pts"
