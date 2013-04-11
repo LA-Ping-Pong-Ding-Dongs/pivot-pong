@@ -17,12 +17,12 @@ describe Player do
     Player.new.should_not be_valid
   end
 
-  describe '#display_name' do
+  describe '#to_s' do
     subject { Player.create(name: 'scooby doo') }
-    its(:display_name) { should == 'Scooby Doo' }
+    its(:to_s) { should == 'Scooby Doo' }
 
     context "players with Irish names" do
-      subject { player.display_name }
+      subject { player.to_s }
 
       let(:player) { Player.new name: "sam o'neill" }
       it { should == "Sam O'Neill" }
