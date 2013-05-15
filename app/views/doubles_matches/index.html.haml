@@ -1,0 +1,23 @@
+- content_for :title, "Doubles Matches"
+
+= form_for(@match, url: doubles_matches_path) do |f|
+  = f.fields_for :winner do |w|
+    = w.fields_for :player1 do |w1|
+      = w1.label :name, "Winner Player 1"
+      = w1.text_field :name, autocomplete: "off"
+    = w.fields_for :player2 do |w2|
+      = w2.label :name, "Winner Player 2"
+      = w2.text_field :name, autocomplete: "off"
+  = f.fields_for :loser do |l|
+    = l.fields_for :player1 do |l1|
+      = l1.label :name, "Loser Player 1"
+      = l1.text_field :name, autocomplete: "off"
+    = l.fields_for :player2 do |l2|
+      = l2.label :name, "Loser Player 2"
+      = l2.text_field :name, autocomplete: "off"
+
+  = f.label :occured_at
+  = f.text_field :occured_at, value: Time.now.strftime("%Y-%m-%d %H:%M:%S")
+  = submit_tag "Add match"
+
+= render :partial => 'shared/match_history', :object => @matches

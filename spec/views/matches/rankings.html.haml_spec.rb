@@ -10,6 +10,6 @@ describe "matches/rankings.html.haml" do
   end
 
   it { should be }
-  it { should include(me.display_name) }
-  it { should include(you.display_name) }
+  it { should include(me.to_s) }
+  it { should include(you.to_s) }
 end

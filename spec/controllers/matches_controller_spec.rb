@@ -8,12 +8,13 @@ describe MatchesController do
     let(:you) { Player.create(name: "you") }
     let!(:newer_match) { Match.create(winner: me, loser: you) }
     let!(:older_match) { Match.create(winner: you, loser: me, occured_at: 1.day.ago) }
+    let!(:doubles_match) { FactoryGirl.create(:doubles_match)}
 
     before { get :index }
 
     it { should be_success }
-    it { assigns(:matches).should == Match.order("occured_at desc") }
-    it { assigns(:match).should be }
+    it { assigns(:matches).should == [newer_match, older_match] }
+    it { assigns(:match).should be_new_record }
   end
 
   describe "POST #create" do

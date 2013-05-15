@@ -4,10 +4,10 @@ describe Match do
   describe "associations" do
     context "belongs_to" do
       [:winner, :loser].each do |association|
-        it "should belong_to #{association}, class_name: 'Player'" do
+        it "should belong_to #{association}, class_name: 'Opponent'" do
           reflection = Match.reflect_on_association(association)
           reflection.macro.should == :belongs_to
-          reflection.class_name.should == "Player"
+          reflection.class_name.should == Opponent.name
         end
       end
     end
@@ -29,6 +29,29 @@ describe Match do
       let(:occured_at) { Time.parse("2011-03-27") }
       before { Time.stub(:now).and_return(occured_at) }
       its(:occured_at) { should == occured_at }
+    end
+  end
+
+  describe '.doubles_matches' do
+    it 'returns only doubles matches' do
+      create(:match)
+      m1 = create(:doubles_match)
+      m2 = create(:doubles_match)
+      matches = Match.doubles_matches
+      expect(matches).to_not be_nil
+      expect(matches).to match_array([m1,m2])
+    end
+  end
+
+  describe '.singles_matches' do
+    it 'returns only singles matches' do
+      single_match1 = create(:match)
+      single_match2 = create(:match)
+      create(:doubles_match)
+
+      matches = Match.singles_matches
+      expect(matches).to_not be_nil
+      expect(matches).to match_array([single_match1, single_match2])
     end
   end
 end
