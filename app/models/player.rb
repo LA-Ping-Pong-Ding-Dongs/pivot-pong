@@ -1,9 +1,9 @@
-class Player < ActiveRecord::Base
+class Player < Opponent
   before_validation :downcase_name, :if => ->{ name.present? }
 
   validates :name, presence: true, uniqueness: true
 
-  def display_name
+  def to_s
     name.split("'").map(&:titleize).join("'")
   end
 
