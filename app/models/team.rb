@@ -4,6 +4,9 @@ class Team < Opponent
   belongs_to :player1, class_name: Player.name
   belongs_to :player2, class_name: Player.name
 
+  validates :player1_id, :presence => true
+  validates :player2_id, :presence => true
+
   def to_s
     "#{player1} and #{player2}"
   end
