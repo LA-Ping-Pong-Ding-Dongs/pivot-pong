@@ -14,6 +14,7 @@ describe MatchPoint do
       Match.create winner: player1, loser: player2 # spread = 23, +7 player1
       Match.create winner: player1, loser: player2 # spread = 30, +7 player1
       Match.create winner: player2, loser: player1 # spread = 37, +10 player2
+      FactoryGirl.create(:doubles_match)
     end
 
     it { should == [[player1, 37], [player2, 10]] }

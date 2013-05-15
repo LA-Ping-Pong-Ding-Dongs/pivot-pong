@@ -17,7 +17,7 @@ class MatchPoint
     def rankings
       players_points = Hash.new(0)
 
-      Match.find_each { |match|
+      Match.singles_matches.each { |match|
         winner_points, loser_points = players_points.values_at match.winner_id, match.loser_id
 
         spread = (winner_points - loser_points).abs
