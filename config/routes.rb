@@ -6,7 +6,11 @@ Pong::Application.routes.draw do
     end
   end
 
-  resources :doubles_matches
+  resources :doubles_matches do
+    collection do
+      get 'rankings'
+    end
+  end
 
   root to: 'matches#rankings'
 end

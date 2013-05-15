@@ -16,20 +16,33 @@ class MatchPoint
   class << self
     def rankings
       players_points = Hash.new(0)
+      players_points = determine_points(players_points, Match.singles_matches)
+      players_points.to_a.map { |player_id, points| [Player.find(player_id), points] }.sort_by { |_,pts| pts }.reverse
+    end
 
-      Match.singles_matches.each { |match|
-        winner_points, loser_points = players_points.values_at match.winner_id, match.loser_id
+    def doubles_rankings
+      players_points = Hash.new(0)
+      players_points = determine_points(players_points, Match.doubles_matches)
+      players_points.to_a.map { |player_id, points| [Team.find(player_id), points] }.sort_by { |_,pts| pts }.reverse
+    end
+
+    private
+
+    def determine_points(players, matches)
+      matches.each { |match|
+        winner_points, loser_points = players.values_at match.winner_id, match.loser_id
 
         spread = (winner_points - loser_points).abs
         result = winner_points > loser_points ? :expected : :upset
         points_exchange = points_exchanged spread, result
 
-        players_points[match.winner_id] += points_exchange
+        players[match.winner_id] += points_exchange
       }
 
-      players_points.to_a.map { |player_id, points| [Player.find(player_id), points] }.sort_by { |_,pts| pts }.reverse
+      players
     end
 
+    public
     def points_exchanged spread, result
       @ratings ||= POINT_CHART.inject({}) { |acc, (k,v)|
         [*k].map { |i| acc[i] = v }
