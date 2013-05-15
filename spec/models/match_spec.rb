@@ -42,4 +42,16 @@ describe Match do
       expect(matches).to match_array([m1,m2])
     end
   end
+
+  describe '.singles_matches' do
+    it 'returns only singles matches' do
+      single_match1 = create(:match)
+      single_match2 = create(:match)
+      create(:doubles_match)
+
+      matches = Match.singles_matches
+      expect(matches).to_not be_nil
+      expect(matches).to match_array([single_match1, single_match2])
+    end
+  end
 end

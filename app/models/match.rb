@@ -11,6 +11,10 @@ class Match < ActiveRecord::Base
     joins(:winner).where(:opponents => {:type => Team.name})
   end
 
+  def self.singles_matches
+    joins(:winner).where(:opponents => {:type => Player.name})
+  end
+
   private
 
   def set_default_occured_at_date
