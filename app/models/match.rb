@@ -15,6 +15,10 @@ class Match < ActiveRecord::Base
     joins(:winner).where(:opponents => {:type => Player.name})
   end
 
+  def self.ordered(sort)
+    self.order("occured_at #{sort.to_sym == :desc ? 'desc' : 'asc'}")
+  end
+
   private
 
   def set_default_occured_at_date
