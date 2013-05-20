@@ -54,4 +54,15 @@ describe Match do
       expect(matches).to match_array([single_match1, single_match2])
     end
   end
+
+  describe '.ordered' do
+    it 'orders by occured_at descending or ascending' do
+      single_match1 = create(:match)
+      single_match2 = create(:match)
+      create(:doubles_match)
+      matches = Match.singles_matches
+      expect(matches.ordered(:desc)).to match_array([single_match2, single_match1])
+      expect(matches.ordered(:asc)).to match_array([single_match1, single_match2])
+    end
+  end
 end
