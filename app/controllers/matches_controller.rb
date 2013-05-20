@@ -22,7 +22,7 @@ class MatchesController < ApplicationController
 
   def index
     @match = Match.new
-    @matches = Match.singles_matches
+    @matches = Match.singles_matches.ordered(:desc)
   end
 
   def rankings

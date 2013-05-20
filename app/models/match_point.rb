@@ -16,13 +16,13 @@ class MatchPoint
   class << self
     def rankings
       players_points = Hash.new(0)
-      players_points = determine_points(players_points, Match.singles_matches)
+      players_points = determine_points(players_points, Match.singles_matches.ordered("asc"))
       players_points.to_a.map { |player_id, points| [Player.find(player_id), points] }.sort_by { |_,pts| pts }.reverse
     end
 
     def doubles_rankings
       players_points = Hash.new(0)
-      players_points = determine_points(players_points, Match.doubles_matches)
+      players_points = determine_points(players_points, Match.doubles_matches.ordered("asc"))
       players_points.to_a.map { |player_id, points| [Team.find(player_id), points] }.sort_by { |_,pts| pts }.reverse
     end
 
