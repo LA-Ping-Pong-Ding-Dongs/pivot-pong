@@ -70,7 +70,7 @@ ol {
 
 li {
   padding: 5px 25px;
-  width: 500px;
+  width: 700px;
   list-style-position: inside;
 }
 
@@ -82,7 +82,7 @@ li, td {
 table {
   table-layout: fixed;
   margin: 10px 0px;
-  width: 550px;
+  width: 750px;
 }
 
 tr {
@@ -98,6 +98,7 @@ th {
   background-color: #333;
   color: white;
   overflow: hidden;
+  text-align: left;
 }
 
 td {
@@ -116,7 +117,6 @@ input[type='text'] {
 
 td.date, th.date {
   width: 100px;
-  text-align: center;
 }
 
 td.action, th.action {
@@ -131,7 +131,7 @@ td.action, th.action {
   border-left: 1px solid #999;
   border-right: 1px solid #999;
   border-bottom: 1px solid #999;
-  width: 600px;
+  width: 800px;
   padding: 25px;
   background-color: rgba(222,222,222, 0.8);
 }
