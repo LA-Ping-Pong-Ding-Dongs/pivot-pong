@@ -70,7 +70,6 @@ ol {
 
 li {
   padding: 5px 25px;
-  width: 700px;
   list-style-position: inside;
 }
 
@@ -81,8 +80,8 @@ li, td {
 
 table {
   table-layout: fixed;
-  margin: 10px 0px;
-  width: 750px;
+  margin: 10px 0;
+  width: 100%;
 }
 
 tr {
@@ -101,27 +100,25 @@ th {
   text-align: left;
 }
 
-td {
-  width: 200px;
-}
-
 form {
   margin: 10px 0;
 }
 
-input[type='text'] {
-  font-size: 24px;
-  display: block;
-  width: 100%;
+fieldset {
+  padding: 1em;
+  margin: 1em 0;
+  border: 1px solid black;
 }
 
-td.date, th.date {
-  width: 100px;
+input[type='text'] {
+  font-size: 24px;
+  width: 100%;
+  display: block;
 }
+
 
 td.action, th.action {
   font-size: 12px;
-  width: 50px;
   text-align: center;
 }
 
@@ -157,4 +154,13 @@ td.action, th.action {
 
 ol.rankings > li > span {
   font-size: 25px;
+}
+
+.span2 {
+    display: inline-block;
+    width: 48%;
+    margin-right: 2%;
+}
+.span2.last {
+    margin-right: 0;
 }
