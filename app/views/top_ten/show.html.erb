@@ -1,0 +1,14 @@
+<%- content_for :title, 'Top Ten' %>
+
+<% [@singles, @doubles].each do |rankings| %>
+  <h2><%= cycle 'singles', 'doubles', name: 'title' -%></h2>
+
+  <ol id='all-time' class='rankings'>
+    <% rankings.each do |player, points| %>
+      <li class='<%= cycle 'even', 'odd' %>'>
+        <%= player %>
+        <span><%= "#{points} pts" %></span>
+      </li>
+    <% end -%>
+  </ol>
+<% end -%>

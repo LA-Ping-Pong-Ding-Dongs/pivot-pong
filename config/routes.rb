@@ -1,4 +1,6 @@
 Pong::Application.routes.draw do
+  resource :top_ten, only: [:show]
+
   resources :matches do
     collection do
       get 'rankings'
@@ -12,5 +14,5 @@ Pong::Application.routes.draw do
     end
   end
 
-  root to: 'matches#rankings'
+  root to: 'top_ten#show'
 end
