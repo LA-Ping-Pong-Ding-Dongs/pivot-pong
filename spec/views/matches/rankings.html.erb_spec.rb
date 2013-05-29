@@ -1,4 +1,4 @@
-describe "matches/rankings.html.haml" do
+describe "matches/rankings.html.erb" do
   subject { rendered }
 
   let(:me) { Player.create(name: "me") }

@@ -1,0 +1,10 @@
+<%- content_for :title, 'Matches' %>
+
+<ol id='all-time' class='rankings'>
+  <%- @rankings.each do |player, points| %>
+    <li class='<%= cycle('even', 'odd') %>'>
+      <%= player %>
+      <span><%= "#{points} pts" %></span>
+    </li>
+  <%- end -%>
+</ol>

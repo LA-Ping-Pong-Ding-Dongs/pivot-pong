@@ -1,4 +1,4 @@
-describe "matches/index.html.haml" do
+describe "matches/index.html.erb" do
   let(:occured_at) { 2.days.ago }
   let(:match) { Match.create(winner: Player.create(name: "cl"), loser: Player.create(name: "minzy"), occured_at: occured_at) }
   before do

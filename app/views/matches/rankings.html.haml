@@ -1,7 +1,0 @@
-- content_for :title, "Rankings"
-
-%ol#all-time.rankings
-  - @rankings.each do |player, points|
-    %li{class: cycle("even", "odd")}
-      = player
-      %span= "#{points} pts"
