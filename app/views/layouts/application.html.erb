@@ -15,7 +15,8 @@
       <header>
         <h1>pivot pong <%= location.downcase %></h1>
         <nav>
-          <%= link_to_with_current 'Rankings', root_path %>
+          <%= link_to_with_current 'Top Ten', root_path %>
+          <%= link_to_with_current 'Rankings', rankings_matches_path %>
           <%= link_to_with_current 'Matches', matches_path %>
           <%= link_to_with_current 'Doubles', doubles_matches_path %>
           <%= link_to_with_current 'Rankings', rankings_doubles_matches_path %>
