@@ -1,14 +1,17 @@
 <%- content_for :title, 'Top Ten' %>
 
-<% [@singles, @doubles].each do |rankings| %>
-  <h2><%= cycle 'singles', 'doubles', name: 'title' -%></h2>
-
-  <ol id='all-time' class='rankings'>
-    <% rankings.each do |player, points| %>
-      <li class='<%= cycle 'even', 'odd' %>'>
-        <%= player %>
-        <span><%= "#{points} pts" %></span>
-      </li>
-    <% end -%>
-  </ol>
+<% [@singles, @doubles].each do |types| %>
+    <h2><%= cycle 'singles', 'doubles', name: 'title' -%></h2>
+    <ol id='all-time' class='rankings'>
+      <%- types.each do |ranking_tuples| -%>
+          <li class='<%= cycle 'even', 'odd' %>'>
+            <span>spread:</span>
+            <%= ranking_tuples.first.first %>
+            <span><%= "#{ranking_tuples.first.last} pts" %></span>
+            <span>vs. bet:</span>
+            <%= ranking_tuples.last.first %>
+            <span><%= "#{ranking_tuples.last.last} pts" %></span>
+          </li>
+      <% end -%>
+    </ol>
 <% end -%>

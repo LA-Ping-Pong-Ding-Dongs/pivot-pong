@@ -14,19 +14,42 @@ class MatchPoint
   }
 
   class << self
-    def rankings
+    def rankings(type = :spread)
       players_points = Hash.new(0)
-      players_points = determine_points(players_points, Match.singles_matches.ordered("asc"))
+      if type == :spread
+        players_points = determine_points(players_points, Match.singles_matches.ordered("asc"))
+      elsif type == :bet
+        players_points = determine_bet_ranking(players_points, Match.singles_matches.ordered("asc"))
+      end
       players_points.to_a.map { |player_id, points| [Player.find(player_id), points] }.sort_by { |_,pts| pts }.reverse
     end
 
-    def doubles_rankings
+    def doubles_rankings(type = :spread)
       players_points = Hash.new(0)
-      players_points = determine_points(players_points, Match.doubles_matches.ordered("asc"))
+      if type == :spread
+        players_points = determine_points(players_points, Match.doubles_matches.ordered("asc"))
+      elsif type == :bet
+        players_points = determine_bet_ranking(players_points, Match.doubles_matches.ordered("asc"))
+      end
       players_points.to_a.map { |player_id, points| [Team.find(player_id), points] }.sort_by { |_,pts| pts }.reverse
     end
 
     private
+
+    def determine_bet_ranking(players, matches)
+      matches.each do |match|
+        winner_points, loser_points = players.values_at match.winner_id, match.loser_id
+
+        bet = ((winner_points - loser_points).abs / 2).floor
+
+        points_for_winner = winner_points > loser_points ? 8 : 8 + bet
+        points_for_looser = winner_points > loser_points ? 0 : -bet
+
+        players[match.winner_id] += points_for_winner
+        players[match.loser_id] += points_for_looser
+      end
+      players
+     end
 
     def determine_points(players, matches)
       matches.each { |match|
