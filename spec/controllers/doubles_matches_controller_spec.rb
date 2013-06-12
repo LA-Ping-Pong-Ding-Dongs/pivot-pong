@@ -14,6 +14,19 @@ describe DoublesMatchesController do
       assigns(:match).should be_new_record
       response.body.should include("<td>#{m1.winner}</td>")
     end
+
+    it 'shows a form to allow creation of other doubles matches' do
+      get :index
+      doc = Nokogiri::HTML(response.body)
+      text_inputs = doc.css('form fieldset input[type=text]')
+      field_names = text_inputs.map {|node| node[:name] }.uniq
+      field_names.should include(
+        'match[winner][player1][name]',
+        'match[winner][player2][name]',
+        'match[loser][player1][name]',
+        'match[loser][player2][name]'
+      )
+    end
   end
 
   describe 'GET rankings' do

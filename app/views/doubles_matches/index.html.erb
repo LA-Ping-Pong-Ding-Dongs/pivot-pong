@@ -14,7 +14,7 @@
           <% end -%>
         </div>
         <div class='span2'>
-          <%= team.fields_for :player1 do |player2| %>
+          <%= team.fields_for :player2 do |player2| %>
             <%= player2.label :name, 'Player 2' %>
             <%= player2.text_field :name, autocompete: 'off', tabindex: tabindex %>
             <% tabindex =+ 1 %>
