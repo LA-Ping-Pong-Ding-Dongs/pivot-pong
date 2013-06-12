@@ -152,10 +152,6 @@ td.action, th.action {
   color: green;
 }
 
-ol.rankings > li > span {
-  font-size: 25px;
-}
-
 .span2 {
     display: inline-block;
     width: 48%;
@@ -163,4 +159,17 @@ ol.rankings > li > span {
 }
 .span2.last {
     margin-right: 0;
+}
+
+table.rankings {
+    font-size: 40px;
+}
+
+table.rankings th.rank,
+table.rankings td.rank {
+    width: 30px;
+}
+
+table.rankings .points {
+    font-size: 20px;
 }

@@ -2,16 +2,31 @@
 
 <% [@singles, @doubles].each do |types| %>
     <h2><%= cycle 'singles', 'doubles', name: 'title' -%></h2>
-    <ol id='all-time' class='rankings'>
-      <%- types.each do |ranking_tuples| -%>
-          <li class='<%= cycle 'even', 'odd' %>'>
-            <span>spread:</span>
-            <%= ranking_tuples.first.first %>
-            <span><%= "#{ranking_tuples.first.last} pts" %></span>
-            <span>vs. bet:</span>
-            <%= ranking_tuples.last.first %>
-            <span><%= "#{ranking_tuples.last.last} pts" %></span>
-          </li>
-      <% end -%>
-    </ol>
+    <table class='rankings'>
+      <thead>
+        <tr>
+          <th class='rank'>#</th>
+          <th class='spread'>Spread based</th>
+          <th class='rank'>#</th>
+          <th class='bet'>Bet based</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%- types.each_with_index do |ranking_tuples, idx| -%>
+          <tr class='<%= cycle 'even', 'odd' %>'>
+            <td class='rank'><%= idx + 1 %>:</td>
+            <%- spread, bet = *ranking_tuples %>
+            <td class='spread'>
+              <%= spread.first %>
+              <span class='points'><%= "#{spread.last} pts" %></span>
+            </td>
+            <td class='rank'><%= idx + 1 %>:</td>
+            <td class='bet'>
+              <%= bet.first %>
+              <span class='points'><%= "#{bet.last} pts" %></span>
+            </td>
+          </tr>
+        <% end -%>
+      </tbody>
+    </table>
 <% end -%>
