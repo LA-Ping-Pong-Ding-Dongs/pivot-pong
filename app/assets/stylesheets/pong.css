@@ -73,7 +73,7 @@ li {
   list-style-position: inside;
 }
 
-li, td {
+li {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
