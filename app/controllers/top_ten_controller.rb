@@ -7,5 +7,4 @@ class TopTenController < ApplicationController
     bet_doubles = MatchPoint.doubles_rankings(:bet).first(10)
     @doubles = spread_doubles.zip(bet_doubles)
   end
-
 end

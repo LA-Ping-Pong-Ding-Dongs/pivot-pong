@@ -46,42 +46,64 @@ describe DoublesMatchesController do
   end
 
   describe 'create' do
-    let(:params) {
-      {
+    context 'with only player names' do
+      let(:params) do
+        {
           winner: {
-              player1: { name: "Dave" },
-              player2: { name: "Britz" }
+            name: 'capt. awesome',
+            player1: {name: 'Dave'},
+            player2: {name: 'Britz'}
           },
           loser: {
-              player1: { name: "Bob" },
-              player2: { name: "Sally" }
+            name: 'mike\' dogs',
+            player1: {name: 'Bob'},
+            player2: {name: 'Sally'}
           }
-      }
-    }
+        }
+      end
 
-    it 'builds a new doubles match' do
-      expect {
-      expect {
-      expect {
-        post :create, :match => params
-      }.to change { Match.count }.by(1)
-      }.to change { Player.count }.by(4)
-      }.to change { Team.count }.by(2)
-    end
+      it 'builds a new doubles match' do
+        expect {
+        expect {
+        expect {
+          post :create, :match => params
+        }.to change { Match.count }.by(1)
+        }.to change { Player.count }.by(4)
+        }.to change { Team.count }.by(2)
+      end
 
-    it 'handles case differences' do
-      create(:player, :name => 'Dave')
-      create(:player, :name => 'Britz')
-      create(:player, :name => 'Bob')
-      create(:player, :name => 'Sally')
-      expect {
+      it 'handles case differences' do
+        create(:player, :name => 'Dave')
+        create(:player, :name => 'Britz')
+        create(:player, :name => 'Bob')
+        create(:player, :name => 'Sally')
         expect {
           expect {
-            post :create, :match => params
-          }.to change { Match.count }.by(1)
-        }.to change { Player.count }.by(0)
-      }.to change { Team.count }.by(2)
+            expect {
+              post :create, :match => params
+            }.to change { Match.count }.by(1)
+          }.to change { Player.count }.by(0)
+        }.to change { Team.count }.by(2)
+      end
     end
 
+    context 'with only team name' do
+      let!(:winner) { create :team, name: 'Coffee Lovers' }
+      let!(:loser)  { create :team, name: 'Coffee Haters' }
+      let(:params) do
+        {
+          winner: { name: winner.name },
+          loser:  { name: loser.name }
+        }
+      end
+
+      it 'builds a new doubles match' do
+        expect {
+          post :create, match: params
+        }.to change { Match.count }.by(+1)
+
+        expect(response).to redirect_to(doubles_matches_url)
+      end
+    end
   end
 end

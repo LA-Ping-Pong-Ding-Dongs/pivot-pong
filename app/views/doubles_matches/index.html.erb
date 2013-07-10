@@ -4,12 +4,16 @@
   <% tabindex = 1 %>
   <% [:winner, :loser].each do |opponent| %>
     <%= match.fields_for opponent do |team| %>
-      <fieldset>
+      <fieldset id="<%= "#{opponent}" %>">
         <legend><%= cycle 'Winning', 'Losing', name: 'teams' %> Team</legend>
+        <div class='span2'>
+          <%= team.label :name, 'Name' %>
+          <%= team.text_field :name, autocomplete: 'off', tabindex: tabindex, autofocus: :autofocus %>
+        </div>
         <div class='span2'>
           <%= team.fields_for :player1 do |player1| %>
             <%= player1.label :name, 'Player 1' %>
-            <%= player1.text_field :name, autocompete: 'off', tabindex: tabindex, autofocus: :autofocus %>
+            <%= player1.text_field :name, autocompete: 'off', tabindex: tabindex %>
             <% tabindex =+ 1 %>
           <% end -%>
         </div>

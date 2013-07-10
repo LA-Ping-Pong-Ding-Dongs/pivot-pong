@@ -1,7 +1,8 @@
 class DoublesMatchesController < ApplicationController
+  before_filter :set_doubles_matches, only: [:index, :create]
+
   def index
     @match = Match.new(winner: Team.new, loser: Team.new)
-    @matches = Match.doubles_matches
   end
 
   def rankings
@@ -10,24 +11,22 @@ class DoublesMatchesController < ApplicationController
   end
 
   def create
-    winner_player_1 = Player.find_or_create_by_name(params[:match][:winner][:player1][:name].downcase)
-    winner_player_2 = Player.find_or_create_by_name(params[:match][:winner][:player2][:name].downcase)
+    teams = params[:match]
+    winner = TeamMaker.team_from(teams[:winner])
+    loser  = TeamMaker.team_from(teams[:loser])
 
-    loser_player_1 = Player.find_or_create_by_name(params[:match][:loser][:player1][:name].downcase)
-    loser_player_2 = Player.find_or_create_by_name(params[:match][:loser][:player2][:name].downcase)
+    @match = Match.new winner: winner, loser: loser
 
-    winner = Team.find_or_create_by_player1_id_and_player2_id winner_player_1.id, winner_player_2.id
-    loser  = Team.find_or_create_by_player1_id_and_player2_id loser_player_1.id, loser_player_2.id
-
-    match = Match.new winner: winner, loser: loser
-
-    unless [winner, loser].all?(&:valid?) && match.save
-      flash.alert = "Must specify a winner and a loser to post a match."
-      render :action => 'index'
-    else
+    if [winner, loser].all?(&:valid?) && @match.save
       redirect_to doubles_matches_path
+    else
+      render :action => 'index', alert: 'Must specify a winner and a loser to post a match.'
     end
+  end
 
+  private
+  def set_doubles_matches
+    @matches = Match.doubles_matches
   end
 end
 
