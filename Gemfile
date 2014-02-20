@@ -12,4 +12,7 @@ end
 
 group :development, :test do
   gem 'sqlite3'
+  gem 'rspec-rails', git: 'https://github.com/rspec/rspec-rails.git', tag: 'v3.0.0.beta2'
+  gem 'capybara'
+  gem 'poltergeist'
 end
