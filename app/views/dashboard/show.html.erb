@@ -1,0 +1,9 @@
+<%= form_for @match, url: matches_path do |f| %>
+    <%= f.label :winner, t('match.form.winner_label') %>
+    <%= f.text_field :winner %>
+
+    <%= f.label :loser, t('match.form.loser_label') %>
+    <%= f.text_field :loser %>
+
+    <%= f.submit t('match.form.commit') %>
+<% end %>

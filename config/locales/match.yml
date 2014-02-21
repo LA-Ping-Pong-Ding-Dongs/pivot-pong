@@ -1,0 +1,6 @@
+en:
+  match:
+    form:
+      winner_label: The Winner
+      loser_label: defeats
+      commit: and the crowd cheers!
