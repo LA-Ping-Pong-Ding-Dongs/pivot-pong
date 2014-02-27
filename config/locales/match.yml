@@ -4,3 +4,5 @@ en:
       winner_label: The Winner
       loser_label: defeats
       commit: and the crowd cheers!
+    last:
+      win_verb: beats

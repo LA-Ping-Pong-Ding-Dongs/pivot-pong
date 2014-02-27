@@ -1,9 +1,27 @@
-<%= form_for @match, url: matches_path do |f| %>
-    <%= f.label :winner, t('match.form.winner_label') %>
-    <%= f.text_field :winner %>
+<div id="match_form_container">
+  <%= form_for @match, url: matches_path, as: 'match' do |f| %>
+      <%= f.label :winner, t('match.form.winner_label') %>
+      <%= f.text_field :winner %>
 
-    <%= f.label :loser, t('match.form.loser_label') %>
-    <%= f.text_field :loser %>
+      <%= f.label :loser, t('match.form.loser_label') %>
+      <%= f.text_field :loser %>
 
-    <%= f.submit t('match.form.commit') %>
-<% end %>
+      <%= f.submit t('match.form.commit'), id: 'save_match' %>
+  <% end -%>
+</div>
+
+<div id="recent_matches_container"></div>
+
+<%= javascript_tag do %>
+    $(function() {
+        pong.activeViews = pong.activeViews || {};
+        pong.activeViews.MatchForm = new pong.MatchForm({
+            el: '#match_form_container',
+        });
+        var recentMatches = new Backbone.Collection();
+        pong.activeViews.RecentMatches = new pong.RecentMatches({
+            el: '#recent_matches_container',
+            collection: recentMatches,
+        });
+    });
+<% end -%>

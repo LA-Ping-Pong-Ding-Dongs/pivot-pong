@@ -1,0 +1,21 @@
+<% if (typeof errors !== "undefined") { %>
+<ul id="errors_container">
+    <% _(errors).each(function (error, field) { %>
+    <li><%= field + ": " + error %></li>
+    <% }); %>
+</ul>
+<% } %>
+
+<form accept-charset="UTF-8" action="/matches" class="new_match" id="new_match" method="post">
+    <div style="margin:0;padding:0;display:inline">
+        <input name="utf8" type="hidden" value="✓">
+        <input name="authenticity_token" type="hidden" value="nRiUVKL9jfJUDb4j5Mu8tX5/HvaEIXxBBIgs5CfruoE=">
+    </div>
+    <label for="match_winner">The Winner</label>
+    <input id="match_winner" name="match[winner]" type="text">
+
+    <label for="match_loser">defeats</label>
+    <input id="match_loser" name="match[loser]" type="text">
+
+    <input id="save_match" name="commit" type="submit" value="and the crowd cheers!">
+</form>

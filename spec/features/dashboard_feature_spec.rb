@@ -12,5 +12,9 @@ feature 'On the dashboard:', :js do
       click_on I18n.t('match.form.commit')
     end
 
+    step '2. the last match results should update to reflect the entry', current: example do
+      expect(page).to have_content(['Bob',I18n.t('match.last.win_verb'),'Templeton'].join(' '))
+    end
+
   end
 end

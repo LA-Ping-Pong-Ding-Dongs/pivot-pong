@@ -1,0 +1,7 @@
+<div id="recent_matches_container">
+    <ol>
+        <% matches.each(function (match) { %>
+            <li><%= match.get('winner') %> beats <%= match.get('loser') %></li>
+        <% }); %>
+    </ol>
+</div>
