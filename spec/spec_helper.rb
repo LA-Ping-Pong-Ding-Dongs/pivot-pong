@@ -11,7 +11,7 @@ ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 Capybara.javascript_driver = :poltergeist
 
 RSpec.configure do |config|
-  config.include FeatureHelper
+  config.include FeatureHelper, type: :feature
   config.use_transactional_fixtures = true
   config.order = 'random'
 end

@@ -1,0 +1,55 @@
+@import 'normalize';
+
+$white: rgb(233, 224, 227);
+$gray: rgb(82, 76, 76);
+$black: rgb(18, 15, 19);
+$red_orange: rgb(208, 83, 58);
+$red_rust: rgb(129, 48, 37);
+$purple_mauve: rgb(121, 101, 114);
+$blue_pale: rgb(186, 204, 228);
+$blue_perrywinkle: rgb(123, 147, 190);
+$blue_indigo: rgb(88, 92, 152);
+
+
+body {
+  position: relative;
+  background-color: white;
+}
+
+#player_tiles_container {
+  background-color: transparent;
+}
+
+#match_form_container {
+  width: 900px;
+  margin-left: -450px;
+  left: 50%;
+  bottom: 10%;
+
+  color: $gray;
+  text-align: center;
+}
+
+#recent_matches_container {
+
+}
+
+.overlay {
+  background-color: rgba($blue_pale, 0.8);
+  border: 1px solid $blue_indigo;
+  border-radius: 15px;
+  padding: 30px;
+  position: absolute;
+}
+
+.mesh, .hex-o {
+  fill: none;
+  stroke: #eee;
+  stroke-width: 2px;
+}
+
+.hex-o-link {
+  fill: cornflowerblue;
+  stroke: #eee;
+  stroke-width: 2px;
+}

@@ -32,5 +32,26 @@ describe PlayerFinder do
       uppercase = finder.find_or_create_by_name('Bob')
       expect(lowercase).to eq(uppercase)
     end
+
+  end
+
+  describe '#find_all_players' do
+
+    before do
+      Player.create(name: 'Bob', key: 'bob')
+      Player.create(name: 'Sally', key: 'sally')
+      Player.create(name: 'Templeton', key: 'templeton')
+    end
+
+    it 'returns an array of structs containing all players' do
+      expected_response = [
+          OpenStruct.new(name: 'Bob', key: 'bob'),
+          OpenStruct.new(name: 'Sally', key: 'sally'),
+          OpenStruct.new(name: 'Templeton', key: 'templeton'),
+      ]
+
+      expect(finder.find_all_players).to match_array(expected_response)
+    end
+
   end
 end

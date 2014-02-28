@@ -4,6 +4,8 @@
 //= require underscore-min
 //= require backbone-min
 //= require backbone.syphon.min
+//= require d3.min
+//= require hexbin
 //= require ./eventBus
 //= require_tree ./templates
 //= require_tree .

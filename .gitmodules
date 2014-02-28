@@ -10,3 +10,12 @@
 [submodule "vendor/backbone.syphon"]
 	path = vendor/backbone.syphon
 	url = https://github.com/derickbailey/backbone.syphon.git
+[submodule "vendor/d3"]
+	path = vendor/d3
+	url = https://github.com/mbostock/d3.git
+[submodule "vendor/d3-plugins"]
+	path = vendor/d3-plugins
+	url = https://github.com/d3/d3-plugins.git
+[submodule "vendor/normalize.css"]
+	path = vendor/normalize.css
+	url = https://github.com/necolas/normalize.css.git

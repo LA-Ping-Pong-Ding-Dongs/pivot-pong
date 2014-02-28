@@ -8,4 +8,8 @@ class PlayerFinder
 
     OpenStruct.new(name: player.name, key: player.id)
   end
+
+  def find_all_players
+    Player.all.map { |player| OpenStruct.new(name: player.name, key: player.id) }
+  end
 end
