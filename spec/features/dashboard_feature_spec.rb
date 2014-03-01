@@ -30,6 +30,4 @@ feature 'On the dashboard:', :js do
     #expect(page).to have_link(player_path(player_one))
     #expect(page).to have_link(player_path(player_two))
   end
-
-  after { Player.delete_all }
 end

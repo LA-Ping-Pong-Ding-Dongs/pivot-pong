@@ -1,0 +1,11 @@
+<h1>Player stats: <%= @player_information.name %></h1>
+<div class="record">
+  <%= @player_information.overall_record %>
+  <%= @player_information.overall_winning_percentage %>
+</div>
+
+<ul class="recent-matches">
+  <% @player_information.recent_matches.each do |match| %>
+      <li><%= match %></li>
+  <% end %>
+</ul>

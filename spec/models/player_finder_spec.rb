@@ -54,4 +54,20 @@ describe PlayerFinder do
     end
 
   end
+
+  describe '#find' do
+    before do
+      Player.create(name: 'Bob', key: 'bob')
+    end
+
+    it 'returns an open struct of player data if the player can be found' do
+      player_record = finder.find('bob')
+      expect(player_record.name).to eq 'Bob'
+    end
+
+    it 'raises an exception if a player cant be found' do
+      expect { finder.find('ashdlfkj') }.to raise_exception(ActiveRecord::RecordNotFound)
+    end
+  end
+
 end

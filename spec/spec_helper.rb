@@ -14,4 +14,10 @@ RSpec.configure do |config|
   config.include FeatureHelper, type: :feature
   config.use_transactional_fixtures = true
   config.order = 'random'
+
+  config.after(:each) do
+    Player.delete_all
+    Match.delete_all
+  end
+
 end
