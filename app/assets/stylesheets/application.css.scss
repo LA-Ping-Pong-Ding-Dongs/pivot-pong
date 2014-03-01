@@ -2,6 +2,7 @@
 
 $white: rgb(233, 224, 227);
 $gray: rgb(82, 76, 76);
+$gray_light: lighten($gray, 50%);
 $black: rgb(18, 15, 19);
 $red_orange: rgb(208, 83, 58);
 $red_rust: rgb(129, 48, 37);
@@ -44,12 +45,34 @@ body {
 
 .mesh, .hex-o {
   fill: none;
-  stroke: #eee;
+  stroke: $gray_light;
   stroke-width: 2px;
 }
 
 .hex-o-link {
   fill: cornflowerblue;
-  stroke: #eee;
+  stroke: $gray_light;
   stroke-width: 2px;
+  &.gray {
+    fill: $gray;
+  }
+  &.rust {
+    fill: $red_rust;
+  }
+  &.mauve {
+    fill: $purple_mauve;
+  }
+  &.perrywinkle {
+    fill: $blue_perrywinkle;
+  }
+  &.indigo {
+    fill: $blue_indigo;
+  }
+}
+
+.hex-o-text {
+  fill: $white;
+  font-size: 30px;
+  font-weight: bold;
+  font-family: 'Cambo', serif;
 }
