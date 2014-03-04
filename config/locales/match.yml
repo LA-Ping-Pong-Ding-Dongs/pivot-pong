@@ -6,3 +6,7 @@ en:
       commit: and the crowd cheers!
     last:
       win_verb: beats
+  player:
+    recent_matches:
+      won: Beat
+      lost: Lost to

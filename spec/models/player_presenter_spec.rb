@@ -14,9 +14,17 @@ describe PlayerPresenter do
   let(:winning_match_2) { OpenStruct.new(winner_key: bob.key, loser_key: loser.key, created_at: april_4) }
   let(:losing_match) { OpenStruct.new(winner_key: champ.key, loser_key: bob.key, created_at: april_3) }
 
+  let(:all_matches) { [winning_match_2, losing_match, winning_match_1] }
+  let(:recent_matches) do
+    [
+        OpenStruct.new(winning_match_2.to_h.merge(winner_name: 'Bob', loser_name: 'Loser')),
+        OpenStruct.new(losing_match.to_h.merge(winner_name: 'Champ', loser_name: 'Bob')),
+    ]
+  end
+
   let(:player_finder_double) { double(PlayerFinder) }
 
-  subject(:player_presenter) { PlayerPresenter.new(bob, [winning_match_2, losing_match, winning_match_1], player_finder_double) }
+  subject(:player_presenter) { PlayerPresenter.new(bob, all_matches, recent_matches, player_finder_double) }
 
   before do
     allow(player_finder_double).to receive(:find) do |key|
@@ -30,7 +38,7 @@ describe PlayerPresenter do
     end
 
     it 'returns 0s for users with no losses' do
-      player_presenter = PlayerPresenter.new(champ, [losing_match])
+      player_presenter = PlayerPresenter.new(champ, [losing_match], [])
       expect(player_presenter.overall_record).to eq '1-0'
     end
   end
@@ -49,20 +57,7 @@ describe PlayerPresenter do
 
   describe '#recent_matches' do
     it 'returns an array of human-readable strings' do
-      expect(subject.recent_matches).to eq ['Beat Loser on 04/04/2014', 'Lost to Champ on 04/03/2014', 'Beat Loser on 04/01/2014']
-    end
-
-    it 'limits the matches to the RECENT_MATCH_LIMIT' do
-      recent_match_limit = PlayerPresenter::RECENT_MATCH_LIMIT
-      Kernel.silence_warnings do
-        PlayerPresenter::RECENT_MATCH_LIMIT = 2
-      end
-
-      expect(subject.recent_matches).to eq ['Beat Loser on 04/04/2014', 'Lost to Champ on 04/03/2014']
-
-      Kernel.silence_warnings do
-        PlayerPresenter::RECENT_MATCH_LIMIT = recent_match_limit
-      end
+      expect(subject.recent_matches).to eq ["#{I18n.t('player.recent_matches.won')} Loser on 04/04/2014", "#{I18n.t('player.recent_matches.lost')} Champ on 04/03/2014"]
     end
   end
 end

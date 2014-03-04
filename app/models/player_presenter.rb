@@ -1,12 +1,11 @@
 class PlayerPresenter
-  RECENT_MATCH_LIMIT = 5
-
   include ActionView::Helpers::NumberHelper
 
-  def initialize(player, matches, player_finder = PlayerFinder.new)
+  def initialize(player, matches, recent_matches, player_finder = PlayerFinder.new)
     @player = player
     @matches = matches
     @player_finder = player_finder
+    @recent_matches = recent_matches
   end
 
   def overall_winning_percentage
@@ -23,25 +22,22 @@ class PlayerPresenter
   end
 
   def recent_matches
-    @matches[0..(RECENT_MATCH_LIMIT - 1)].map do |match|
+    @recent_matches.map do |match|
       if match.winner_key == @player.key
-        won_lost = 'Beat'
-        opponent = @player_finder.find(match.loser_key).name
+        "#{I18n.t('player.recent_matches.won')} #{match.loser_name} on #{match.created_at.to_s(:pivot_pong_time)}"
       else
-        won_lost = 'Lost to'
-        opponent = @player_finder.find(match.winner_key).name
+        "#{I18n.t('player.recent_matches.lost')} #{match.winner_name} on #{match.created_at.to_s(:pivot_pong_time)}"
       end
-      "#{won_lost} #{opponent} on #{match.created_at.to_s(:pivot_pong_time)}"
     end
   end
 
   private
 
   def wins
-    @matches.select{|match| match.winner_key == @player.key}
+    @matches.select { |match| match.winner_key == @player.key }
   end
 
   def losses
-    @matches.select{|match| match.loser_key == @player.key}
+    @matches.select { |match| match.loser_key == @player.key }
   end
 end

@@ -23,9 +23,9 @@ describe 'Player page', :js do
     end
 
     within '.recent-matches' do
-      expect(page).to have_content 'Beat Loser on 04/01/2013'
-      expect(page).to have_content 'Beat Loser on 04/03/2013'
-      expect(page).to have_content 'Lost to Champ on 04/04/2013'
+      expect(page).to have_content "#{I18n.t('player.recent_matches.won')} Loser on 04/01/2013"
+      expect(page).to have_content "#{I18n.t('player.recent_matches.won')} Loser on 04/03/2013"
+      expect(page).to have_content "#{I18n.t('player.recent_matches.lost')} Champ on 04/04/2013"
     end
   end
 
