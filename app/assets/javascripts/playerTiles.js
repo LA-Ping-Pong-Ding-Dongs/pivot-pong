@@ -52,7 +52,7 @@ pong.PlayerTiles = Backbone.View.extend({
             .append('a')
 //            .attr('class', 'hex-o-link')
             .attr('class', function (d) {
-                var colorClasses = ['gray', 'rust', 'mauve', 'perrywinkle', 'indigo'];
+                var colorClasses = ['color1', 'color2', 'color3', 'color4', 'color5'];
                 var index = Math.floor((d.i + d.j)%5);
                 return colorClasses[index] + ' hex-o-link';
             })

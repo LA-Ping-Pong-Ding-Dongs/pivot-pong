@@ -4,13 +4,17 @@ $white: rgb(233, 224, 227);
 $gray: rgb(82, 76, 76);
 $gray_light: lighten($gray, 50%);
 $black: rgb(18, 15, 19);
-$red_orange: rgb(208, 83, 58);
-$red_rust: rgb(129, 48, 37);
-$purple_mauve: rgb(121, 101, 114);
-$blue_pale: rgb(186, 204, 228);
-$blue_perrywinkle: rgb(123, 147, 190);
-$blue_indigo: rgb(88, 92, 152);
+$pivotal_red: #C21734;
+$pivotal_medium_blue: #75B6E2;
+$pivotal_light_blue: #CDE4F6;
+$pivotal_dark_blue: #1279BE;
+$killerspin_blue: #0f50d2;
 
+$shark_blue_lightest: #A5C4D8;
+$shark_blue_light: #598DBF;
+$shark_blue_medium: #3A77B0;
+$shark_blue_dark: #023A73;
+$shark_blue_darkest: #032259;
 
 body {
   position: relative;
@@ -36,8 +40,8 @@ body {
 }
 
 .overlay {
-  background-color: rgba($blue_pale, 0.8);
-  border: 1px solid $blue_indigo;
+  background-color: rgba($pivotal_light_blue, 0.8);
+  border: 1px solid $killerspin_blue;
   border-radius: 15px;
   padding: 30px;
   position: absolute;
@@ -53,20 +57,20 @@ body {
   fill: cornflowerblue;
   stroke: $gray_light;
   stroke-width: 2px;
-  &.gray {
-    fill: $gray;
+  &.color1 {
+    fill: $shark_blue_lightest;
   }
-  &.rust {
-    fill: $red_rust;
+  &.color2 {
+    fill: $shark_blue_light;
   }
-  &.mauve {
-    fill: $purple_mauve;
+  &.color3 {
+    fill: $shark_blue_medium;
   }
-  &.perrywinkle {
-    fill: $blue_perrywinkle;
+  &.color4 {
+    fill: $shark_blue_dark;
   }
-  &.indigo {
-    fill: $blue_indigo;
+  &.color5 {
+    fill: $shark_blue_darkest;
   }
 }
 
