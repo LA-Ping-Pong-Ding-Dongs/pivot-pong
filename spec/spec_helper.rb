@@ -6,6 +6,8 @@ require 'capybara/poltergeist'
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
+require Rails.root.join('spec/factories.rb')
+
 ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
 Capybara.javascript_driver = :poltergeist

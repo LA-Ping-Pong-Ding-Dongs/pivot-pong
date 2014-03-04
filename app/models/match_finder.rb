@@ -1,7 +1,7 @@
 class MatchFinder
   def find_all_for_player(player_key)
     Match.where('winner_key = ? OR loser_key = ?', player_key, player_key).order('created_at DESC').map do |match|
-      OpenStruct.new(match.attributes)
+      ReadOnlyStruct.new(match.attributes)
     end
   end
 
@@ -13,7 +13,7 @@ class MatchFinder
     .joins('inner join players as losers on losers.key = matches.loser_key')
     .order('created_at DESC')
     .limit(limit).map do |match|
-      OpenStruct.new({
+      ReadOnlyStruct.new({
                          id: match.id,
                          created_at: match.created_at,
                          winner_name: match.winner_name,

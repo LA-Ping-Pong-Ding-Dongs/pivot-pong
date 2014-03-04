@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140228190416) do
+ActiveRecord::Schema.define(version: 20140304180839) do
 
   create_table "matches", force: true do |t|
     t.string   "winner_key"
@@ -25,6 +25,9 @@ ActiveRecord::Schema.define(version: 20140228190416) do
     t.string   "key"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "mean"
+    t.integer  "sigma"
+    t.date     "last_tournament_date"
   end
 
   add_index "players", ["key"], name: "index_players_on_key", unique: true

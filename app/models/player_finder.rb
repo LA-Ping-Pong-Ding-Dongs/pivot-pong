@@ -6,15 +6,14 @@ class PlayerFinder
       player = Player.create(key: name.downcase, name: name)
     end
 
-    OpenStruct.new(name: player.name, key: player.id)
+    player.to_struct
   end
 
   def find_all_players
-    Player.all.map { |player| OpenStruct.new(name: player.name, key: player.id) }
+    Player.all.map { |player| player.to_struct }
   end
 
   def find(key)
-    player = Player.find(key)
-    OpenStruct.new(name: player.name, key: player.key)
+    Player.find(key).to_struct
   end
 end

@@ -17,4 +17,5 @@ group :development, :test do
   gem 'capybara'
   gem 'poltergeist'
   gem 'jasmine'
+  gem 'factory_girl'
 end

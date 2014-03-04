@@ -4,4 +4,8 @@ class Player < ActiveRecord::Base
   def to_param
     key
   end
+
+  def to_struct
+    ReadOnlyStruct.new(attributes)
+  end
 end

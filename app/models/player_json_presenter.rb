@@ -10,6 +10,7 @@ class PlayerJsonPresenter
       {
           name: player.name,
           url: player_path(player.key),
+          mean: player.mean,
       }
     end
   end

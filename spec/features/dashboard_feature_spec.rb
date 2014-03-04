@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 feature 'On the dashboard:', :js do
-  let(:player_one) { Player.create(name: 'Bob', key: 'bob') }
-  let(:player_two) { Player.create(name: 'Sally', key: 'sally') }
+  let(:player_one) { Player.create(name: 'Bob', key: 'bob', mean: 2300, sigma: 35, last_tournament_date: 5.weeks.ago) }
+  let(:player_two) { Player.create(name: 'Sally', key: 'sally', mean: 2105, sigma: 60, last_tournament_date: 1.week.ago) }
 
   scenario 'a player can enter a match.' do |example|
     visit root_path
@@ -15,7 +15,7 @@ feature 'On the dashboard:', :js do
     end
 
     step '2. the last match results should update to reflect the entry', current: example do
-      expect(page).to have_content(['Bob',I18n.t('match.last.win_verb'),'Templeton'].join(' '))
+      expect(page).to have_content(['Bob', I18n.t('match.last.win_verb'), 'Templeton'].join(' '))
     end
   end
 
@@ -25,9 +25,10 @@ feature 'On the dashboard:', :js do
 
     visit root_path
 
-    #expect(page).to have_content(player_one.name)
-    #expect(page).to have_content(player_two.name)
-    #expect(page).to have_link(player_path(player_one))
-    #expect(page).to have_link(player_path(player_two))
+    expect(page).to have_content('Bob')
+    expect(page).to have_content(2300)
+
+    expect(page).to have_content('Sally')
+    expect(page).to have_content(2105)
   end
 end

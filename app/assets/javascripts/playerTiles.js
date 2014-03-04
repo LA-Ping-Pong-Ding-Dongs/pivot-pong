@@ -71,7 +71,7 @@ pong.PlayerTiles = Backbone.View.extend({
     },
 
     appendPlayerNameAnchorToDOMElement: function (element) {
-        element
+        var anchor = element
             // add svg anchor element
             .append('a')
             .attr('class', 'hex-o-text')
@@ -80,19 +80,31 @@ pong.PlayerTiles = Backbone.View.extend({
             })
             .attr('xlink:title', function (d) {
                 return d.name;
-            })
+            });
             // append text of Player's name
-            .append('text')
+        var name = anchor.append('text')
             .attr('x', function (d) {
                 return d.i
             })
             .attr('y', function (d) {
                 return d.j
             })
-            .attr('dy', '-10')
+            .attr('dy', '-20')
             .attr('text-anchor', 'middle')
             .text(function (d) {
-                return d.name
+                return d.name;
+            });
+        var mean = anchor.append('text')
+            .attr('x', function (d) {
+                return d.i
+            })
+            .attr('y', function (d) {
+                return d.j
+            })
+            .attr('dy', '20')
+            .attr('text-anchor', 'middle')
+            .text(function (d) {
+                return d.mean;
             });
     },
 
