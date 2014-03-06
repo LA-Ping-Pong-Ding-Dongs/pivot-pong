@@ -10,7 +10,7 @@ describe NttrsParamBuilder do
 
     it 'returns data in the format the Nttrs gem expects' do
       expected_params = [
-          {id: 'templeton'},
+          {id: 'templeton', law: {mean: 1400, sigma: 450}},
           {id: 'sally', law: {mean: 1850, sigma: 40}},
           {id: 'bob', law: {mean: 2300, sigma: 23}},
       ]

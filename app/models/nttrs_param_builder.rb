@@ -5,7 +5,7 @@ class NttrsParamBuilder
       if player.mean && player.sigma
         {id: player.key, law: {mean: player.mean, sigma: player.sigma}}
       else
-        {id: player.key}
+        {id: player.key, law: {mean: 1400, sigma: 450}}
       end
     end
   end

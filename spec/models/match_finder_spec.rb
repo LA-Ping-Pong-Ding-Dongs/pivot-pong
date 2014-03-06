@@ -4,16 +4,16 @@ describe MatchFinder do
   let!(:bob) { Player.create(key: 'bob', name: 'Bob') }
   let!(:champ) { Player.create(key: 'champ', name: 'Champ') }
   let!(:loser) { Player.create(key: 'loser', name: 'Loser') }
-  let!(:winning_match) { Match.create(winner_key: 'bob', loser_key: 'loser', created_at: 4.days.ago) }
-  let!(:not_relevant_match) { Match.create(winner_key: 'champ', loser_key: 'loser', created_at: 3.minutes.ago) }
-  let!(:losing_match_1) { Match.create(winner_key: 'champ', loser_key: 'bob', created_at: 2.days.ago) }
-  let!(:losing_match_2) { Match.create(winner_key: 'champ', loser_key: 'bob', created_at: 3.months.ago) }
+  let!(:winning_match) { Match.create(winner_key: 'bob', loser_key: 'loser', created_at: 4.days.ago, processed: true) }
+  let!(:not_relevant_match) { Match.create(winner_key: 'champ', loser_key: 'loser', created_at: 3.minutes.ago, processed: false) }
+  let!(:losing_match_1) { Match.create(winner_key: 'champ', loser_key: 'bob', created_at: 2.days.ago, processed: false) }
+  let!(:losing_match_2) { Match.create(winner_key: 'champ', loser_key: 'bob', created_at: 3.months.ago, processed: true) }
 
   subject(:match_finder) { MatchFinder.new }
 
   describe '#find_all_for_player' do
     it 'returns all matches for player sorted by created_at time' do
-      expect(match_finder.find_all_for_player('bob')).to eq [OpenStruct.new(losing_match_1.attributes), OpenStruct.new(winning_match.attributes), OpenStruct.new(losing_match_2.attributes)]
+      expect(match_finder.find_all_for_player('bob')).to eq [losing_match_1.to_struct, winning_match.to_struct, losing_match_2.to_struct]
     end
   end
 
@@ -37,7 +37,13 @@ describe MatchFinder do
           loser_key: 'loser',
       }
 
-      expect(match_finder.find_recent_matches_for_player('bob', 2)).to eq [OpenStruct.new(losing_match_1_attrs), OpenStruct.new(winning_match_attrs)]
+      expect(match_finder.find_recent_matches_for_player('bob', 2)).to eq [ReadOnlyStruct.new(losing_match_1_attrs), ReadOnlyStruct.new(winning_match_attrs)]
+    end
+  end
+
+  describe '#find_unprocessed_matches' do
+    it 'returns all the matches that have not been processed' do
+      expect(subject.find_unprocessed_matches).to eq [not_relevant_match.to_struct, losing_match_1.to_struct]
     end
   end
 end

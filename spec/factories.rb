@@ -10,4 +10,14 @@ FactoryGirl.define do
     last_tournament_date { Date.today }
   end
 
+  factory :match do
+    sequence :winner_key do |n|
+      "winner#{n}"
+    end
+    sequence :loser_key do |n|
+      "loser#{n}"
+    end
+    created_at { Time.now }
+  end
+
 end

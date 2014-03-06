@@ -11,4 +11,4 @@ ajaxResponses.Matches = {
             responseText: '{"error":"bananas"}',
         },
     }
-}
+};

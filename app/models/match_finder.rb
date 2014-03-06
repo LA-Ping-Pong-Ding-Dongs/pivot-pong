@@ -1,8 +1,6 @@
 class MatchFinder
   def find_all_for_player(player_key)
-    Match.where('winner_key = ? OR loser_key = ?', player_key, player_key).order('created_at DESC').map do |match|
-      ReadOnlyStruct.new(match.attributes)
-    end
+    Match.where('winner_key = ? OR loser_key = ?', player_key, player_key).order('created_at DESC').map(&:to_struct)
   end
 
   def find_recent_matches_for_player(player_key, limit)
@@ -22,5 +20,9 @@ class MatchFinder
                          loser_key: match.loser_key,
                      })
     end
+  end
+
+  def find_unprocessed_matches
+    Match.where(processed: false).map(&:to_struct)
   end
 end
