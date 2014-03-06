@@ -3,15 +3,13 @@ describe('RecentMatchesView', function () {
     describe('match:created event', function () {
 
         it('adds the model to the collection and renders', function () {
-            var renderSpy = spyOn(pong.RecentMatchesView.prototype, 'render');
             var matches = new Backbone.Collection();
-            var newMatch = new Backbone.Model();
+            var fetchSpy = spyOn(matches, 'fetch');
             new pong.RecentMatchesView({ collection: matches });
 
-            pong.EventBus.trigger('match:created', newMatch);
+            pong.EventBus.trigger('match:created');
 
-            expect(renderSpy).toHaveBeenCalled();
-            expect(matches.first()).toBe(newMatch);
+            expect(fetchSpy).toHaveBeenCalled();
         });
 
     });

@@ -1,10 +1,4 @@
 GIT
-  remote: https://github.com/brjennin/nttrs.git
-  revision: b1bf039844dc51a882b4740e759102ebfc7c552f
-  specs:
-    nttrs (0.0.0)
-
-GIT
   remote: https://github.com/rspec/rspec-rails.git
   revision: 7f79917e7da8809018a84888e50124ac1644b7b5
   tag: v3.0.0.beta2
@@ -159,7 +153,6 @@ DEPENDENCIES
   factory_girl
   jasmine
   jquery-rails
-  nttrs!
   pg
   poltergeist
   rails (= 4.0.3)

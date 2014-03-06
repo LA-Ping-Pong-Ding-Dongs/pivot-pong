@@ -17,7 +17,8 @@ class PlayerRatingUpdater
     players = @player_finder.find_all_players
     matches = @match_finder.find_unprocessed
 
-    results = Nttrs::Tournament.new(@param_builder.build_player_data(players), @param_builder.build_match_data(matches)).final_player_laws
+    #deleting this until we find a better replacement
+    #results = []
 
     results.each do |player|
       @player_updater.update_for_player(player[:id], player[:law])
