@@ -1,5 +1,5 @@
 <ol>
     <% matches.each(function (match) { %>
-        <li><%= match.get('winner') %> beats <%= match.get('loser') %></li>
+        <li><%= match.get('winner_name') %> defeated <%= match.get('loser_name') %></li>
     <% }); %>
 </ol>

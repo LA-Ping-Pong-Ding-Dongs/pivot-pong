@@ -15,7 +15,7 @@ class PlayerRatingUpdater
 
   def update_for_tournament
     players = @player_finder.find_all_players
-    matches = @match_finder.find_unprocessed_matches
+    matches = @match_finder.find_unprocessed
 
     results = Nttrs::Tournament.new(@param_builder.build_player_data(players), @param_builder.build_match_data(matches)).final_player_laws
 

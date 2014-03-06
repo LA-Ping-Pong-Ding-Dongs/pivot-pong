@@ -1,5 +1,5 @@
 class MatchesController < ApplicationController
-  before_action :match_form
+  before_action :match_form, only: :create
 
   def create
     respond_to do |format|
@@ -16,7 +16,19 @@ class MatchesController < ApplicationController
     end
   end
 
+  def index
+    if params[:processed] == false
+      render json: { results: match_finder.find_unprocessed.as_json }
+    else
+      render json: { results: match_finder.find_all.as_json }
+    end
+  end
+
   private
+
+  def match_finder
+    MatchFinder.new
+  end
 
   def match_form
     @match_form ||= new_match_form

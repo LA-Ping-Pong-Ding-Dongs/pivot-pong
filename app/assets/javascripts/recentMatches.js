@@ -1,19 +1,9 @@
 window.pong = window.pong || {};
 
-pong.RecentMatches = Backbone.View.extend({
-    template: JST['templates/recentMatches'],
+pong.RecentMatches = Backbone.Collection.extend({
+    url: '/matches?processed=false',
 
-    initialize: function () {
-        pong.EventBus.on('match:created', this._updateCollection, this);
-    },
-
-    render: function () {
-        this.$el.html(this.template({ matches: this.collection }));
-        return this;
-    },
-
-    _updateCollection: function(model) {
-        this.collection.add(model);
-        this.render();
+    parse: function (response) {
+      return response.results;
     },
 });

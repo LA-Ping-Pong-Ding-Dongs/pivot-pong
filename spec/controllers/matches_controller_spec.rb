@@ -68,4 +68,34 @@ describe MatchesController do
       end
     end
   end
+
+  describe '#index' do
+    let(:match_1) { FactoryGirl.build(:match) }
+    let(:match_2) { FactoryGirl.build(:match) }
+    let(:match_3) { FactoryGirl.build(:match, processed: true) }
+    let(:unprocessed_matches) { [match_1.attributes, match_3.attributes] }
+    let(:all_matches) { [match_1.attributes, match_2.attributes, match_3.attributes] }
+    let(:match_finder_double) { double(MatchFinder, find_unprocessed: unprocessed_matches, find_all: all_matches) }
+
+    before do
+      expect(controller).to receive(:match_finder) { match_finder_double }
+    end
+
+    context 'responds with json' do
+      it 'returns all matches not filtered by processed' do
+        xhr :get, :index
+
+        expect(response).to be_success
+        expect(response.body).to eq({ 'results' => all_matches }.to_json)
+      end
+
+      it 'returns a list filtered by processed' do
+        xhr :get, :index, processed: false
+
+        expect(response).to be_success
+        expect(response.body).to eq({ 'results' => unprocessed_matches }.to_json)
+      end
+    end
+
+  end
 end

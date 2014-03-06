@@ -5,7 +5,7 @@ en:
       loser_label: defeats
       commit: and the crowd cheers!
     last:
-      win_verb: beats
+      win_verb: defeated
   player:
     recent_matches:
       won: Beat

@@ -33,8 +33,9 @@
         pong.activeViews.MatchForm = new pong.MatchForm({
             el: '#match_form_container',
         });
-        var recentMatches = new Backbone.Collection();
-        pong.activeViews.RecentMatches = new pong.RecentMatches({
+        var recentMatches = new pong.RecentMatches();
+        recentMatches.fetch();
+        pong.activeViews.RecentMatchesView = new pong.RecentMatchesView({
             el: '#recent_matches_container',
             collection: recentMatches,
         });

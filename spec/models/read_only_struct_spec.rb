@@ -15,4 +15,16 @@ describe ReadOnlyStruct do
     expect(subject.field).to eq 'value'
   end
 
+  describe '#to_json' do
+    it 'converts the struct to json' do
+      expect(subject.to_json).to eq({ field: 'value' }.to_json)
+    end
+  end
+
+  describe '#as_json' do
+    it 'converts the struct to hash' do
+      expect(subject.as_json).to eq({ field: 'value' }.to_h)
+    end
+  end
+
 end

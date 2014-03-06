@@ -4,6 +4,10 @@ feature 'On the dashboard:', :js do
   let(:player_one) { Player.create(name: 'Bob', key: 'bob', mean: 2300, sigma: 35, last_tournament_date: 5.weeks.ago) }
   let(:player_two) { Player.create(name: 'Sally', key: 'sally', mean: 2105, sigma: 60, last_tournament_date: 1.week.ago) }
 
+  let!(:godzilla) { FactoryGirl.create :player, name: 'Godzilla'}
+  let!(:mothra) { FactoryGirl.create :player, name: 'Mothra'}
+  let!(:match) { FactoryGirl.create :match, winner_key: godzilla.key, loser_key: mothra.key }
+
   scenario 'a player can enter a match.' do |example|
     visit root_path
 
@@ -30,5 +34,11 @@ feature 'On the dashboard:', :js do
 
     expect(page).to have_content('Sally')
     expect(page).to have_content(2105)
+  end
+
+  scenario 'a viewer can see existing matches' do
+    visit root_path
+
+    expect(page).to have_content "Godzilla #{I18n.t('match.last.win_verb')} Mothra"
   end
 end

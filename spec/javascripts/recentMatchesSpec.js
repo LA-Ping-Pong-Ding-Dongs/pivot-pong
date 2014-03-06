@@ -1,19 +1,19 @@
 describe('RecentMatches', function () {
+    beforeEach(function () {
+        this.collection = new pong.RecentMatches();
+    });
 
-    describe('match:created event', function () {
+    it('specifies a url to fetch recent matches', function () {
+        expect(this.collection.url).toEqual('/matches?processed=false')
+    });
 
-        it('adds the model to the collection and renders', function () {
-            var renderSpy = spyOn(pong.RecentMatches.prototype, 'render');
-            var matches = new Backbone.Collection();
-            var newMatch = new Backbone.Model();
-            new pong.RecentMatches({ collection: matches });
+    it('parses the response', function () {
+        jasmine.Ajax.stubRequest('/matches?processed=false').andReturn(ajaxResponses.Matches.index.success);
+        this.collection.fetch();
+        jasmine.clock().tick(1);
 
-            pong.EventBus.trigger('match:created', newMatch);
-
-            expect(renderSpy).toHaveBeenCalled();
-            expect(matches.first()).toBe(newMatch);
-        });
-
+        expect(this.collection.length).toEqual(2);
+        expect(this.collection.models[0].get('id')).toEqual(43);
     });
 
 });
