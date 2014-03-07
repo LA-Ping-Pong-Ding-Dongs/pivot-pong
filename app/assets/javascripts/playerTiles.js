@@ -2,6 +2,11 @@ window.pong = window.pong || {};
 
 pong.PlayerTiles = Backbone.View.extend({
 
+    render: function() {
+        this.renderMesh();
+        this.renderTiles();
+    },
+
     renderMesh: function () {
         calculateNewHexbin.apply(this);
         appendHexMesh.apply(this);
@@ -28,6 +33,7 @@ pong.PlayerTiles = Backbone.View.extend({
     renderTiles: function () {
         this.distributePlayersAroundMesh();
         joinPlayerDataToDom.apply(this);
+
         return this;
 
         function joinPlayerDataToDom() {
@@ -50,6 +56,9 @@ pong.PlayerTiles = Backbone.View.extend({
                 mean: function (d) {
                     return d.mean;
                 },
+                color: _.bind(function (d) {
+                    return this.colorize(d);
+                }, this),
                 translate: function (d) {
                     return 'translate(' + d.i + ',' + d.j + ')';
                 },
@@ -68,6 +77,11 @@ pong.PlayerTiles = Backbone.View.extend({
             newAnchorGroups
                 .append('a')
                 .classed('hex-o-link', true)
+                .classed('color1', function(d) { return keyFunctions.color(d) === 'color1'; })
+                .classed('color2', function(d) { return keyFunctions.color(d) === 'color2'; })
+                .classed('color3', function(d) { return keyFunctions.color(d) === 'color3'; })
+                .classed('color4', function(d) { return keyFunctions.color(d) === 'color4'; })
+                .classed('color5', function(d) { return keyFunctions.color(d) === 'color5'; })
                 .attr('xlink:href', keyFunctions.url)
                 .attr('xlink:title', keyFunctions.name)
                 .append('path')
@@ -84,7 +98,6 @@ pong.PlayerTiles = Backbone.View.extend({
                 .attr('dy', '-20')
                 .attr('text-anchor', 'middle')
                 .text(keyFunctions.name);
-
             newAnchorGroups
                 .append('a')
                 .classed('hex-o-text', true)
@@ -125,16 +138,9 @@ pong.PlayerTiles = Backbone.View.extend({
         });
 
         function availableTileCenters(centers) {
-            var maxI = 0;
-            var maxJ = 0;
             var available = [];
-
-            _.each(centers, function (center) {
-                if (center.i > maxI)
-                    maxI = center.i;
-                if (center.j > maxJ)
-                    maxJ = center.j;
-            });
+            maxI = _.max(centers, function(center) { return center.i; }).i;
+            maxJ = _.max(centers, function(center) { return center.j; }).j;
 
             _.each(centers, function (center) {
                 if (center.i != 0 && center.i != maxI && center.j != 0 && center.j != maxJ) {
@@ -157,10 +163,7 @@ pong.PlayerTiles = Backbone.View.extend({
         this.svg = d3.select(this.el).append('svg');
 
         $(window).resize(_.bind(this.renderMesh, this));
-        $(window).resize(_.debounce(_.bind(this.renderTiles, this), 500));
-
-        this.renderMesh();
-        this.renderTiles();
+        $(window).resize(_.debounce(_.bind(this.renderTiles, this), 500, true));
     },
 
 });
