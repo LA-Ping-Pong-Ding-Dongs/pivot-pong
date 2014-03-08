@@ -14,15 +14,15 @@ class PlayerRatingUpdater
   end
 
   def update_for_tournament
-    players = @player_finder.find_all_players
+    #players = @player_finder.find_all_players
     matches = @match_finder.find_unprocessed
 
     #deleting this until we find a better replacement
     #results = []
 
-    results.each do |player|
-      @player_updater.update_for_player(player[:id], player[:law])
-    end
+    #results.each do |player|
+    #  @player_updater.update_for_player(player[:id], player[:law])
+    #end
 
     matches.each { |match| @match_updater.mark_as_processed(match.id) }
   end

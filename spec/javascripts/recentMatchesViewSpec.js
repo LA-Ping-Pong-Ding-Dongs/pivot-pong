@@ -1,7 +1,6 @@
 describe('RecentMatchesView', function () {
 
     describe('match:created event', function () {
-
         it('adds the model to the collection and renders', function () {
             var matches = new Backbone.Collection();
             var fetchSpy = spyOn(matches, 'fetch');
@@ -11,7 +10,6 @@ describe('RecentMatchesView', function () {
 
             expect(fetchSpy).toHaveBeenCalled();
         });
-
     });
 
     it('renders when the collection is synced', function () {

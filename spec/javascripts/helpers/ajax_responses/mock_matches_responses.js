@@ -22,3 +22,16 @@ ajaxResponses.Matches = {
         },
     },
 };
+
+ajaxResponses.Players = {
+    show: {
+        success: {
+            status: '200',
+            responseText: JSON.stringify({ results: { name: 'Tommy Wiseau' } }),
+        },
+        failure: {
+            status: '400',
+            rresponseText: JSON.stringify({ error: 'blowin up' }),
+        },
+    },
+};

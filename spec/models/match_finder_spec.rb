@@ -20,7 +20,6 @@ describe MatchFinder do
     }
   end
 
-
   let(:losing_match_2_attrs) do
     {
         id: losing_match_2.id,

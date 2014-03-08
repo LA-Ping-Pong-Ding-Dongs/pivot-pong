@@ -1,17 +1,4 @@
-<div id="player_tiles_container">
-  <!--<ul>-->
-    <!--<%# @players.each do |player| %>-->
-        <!--<li>-->
-          <!--<dl>-->
-            <!--<dt>name</dt>-->
-            <!--<dd><%#= player.name %></dd>-->
-            <!--<dt>url</dt>-->
-            <!--<dd><%#= player_path player.key %></dd>-->
-          <!--</dl>-->
-        <!--</li>-->
-    <!--<%# end -%>-->
-  <!--</ul>-->
-</div>
+<div id="player_tiles_container"></div>
 
 <div id="match_form_container" class="overlay">
   <%= form_for @match, url: matches_path, as: 'match' do |f| %>
@@ -27,21 +14,13 @@
 
 <div id="recent_matches_container" class="overlay"></div>
 
-<%= javascript_tag do %>
+<div id="player_info" class="overlay"></div>
+
+<script type="text/javascript">
     $(function() {
-        pong.activeViews = pong.activeViews || {};
-        pong.activeViews.MatchForm = new pong.MatchForm({
-            el: '#match_form_container',
-        });
-        var recentMatches = new pong.RecentMatches();
-        recentMatches.fetch();
-        pong.activeViews.RecentMatchesView = new pong.RecentMatchesView({
-            el: '#recent_matches_container',
-            collection: recentMatches,
-        });
-        pong.activeViews.PlayerTiles = new pong.PlayerTiles({
-            el: '#player_tiles_container',
-            data: <%= PlayerJsonPresenter.new(@players).to_json.html_safe %>
-        });
+        pong.players = <%= PlayerTilesJsonPresenter.new(@players).to_json.html_safe %>
+        new pong.AppRouter();
+        Backbone.history.start({ pushState: true });
+        $(document).click('a', pong.navigator);
     });
-<% end -%>
+</script>

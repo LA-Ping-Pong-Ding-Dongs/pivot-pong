@@ -4,9 +4,8 @@ feature 'On the dashboard:', :js do
   let(:player_one) { Player.create(name: 'Bob', key: 'bob', mean: 2300, sigma: 35, last_tournament_date: 5.weeks.ago) }
   let(:player_two) { Player.create(name: 'Sally', key: 'sally', mean: 2105, sigma: 60, last_tournament_date: 1.week.ago) }
 
-  let!(:godzilla) { FactoryGirl.create :player, name: 'Godzilla'}
-  let!(:mothra) { FactoryGirl.create :player, name: 'Mothra'}
-  let!(:match) { FactoryGirl.create :match, winner_key: godzilla.key, loser_key: mothra.key }
+  let(:create_players) { player_one and player_two and nil }
+  let(:create_match) { Match.create winner_key: player_one.key, loser_key: player_two.key }
 
   scenario 'a player can enter a match.' do |example|
     visit root_path
@@ -24,9 +23,7 @@ feature 'On the dashboard:', :js do
   end
 
   scenario 'a viewer can see all of the players and their data' do
-    player_one
-    player_two
-
+    create_players
     visit root_path
 
     expect(page).to have_content('Bob')
@@ -37,8 +34,24 @@ feature 'On the dashboard:', :js do
   end
 
   scenario 'a viewer can see existing matches' do
+    create_match
     visit root_path
 
-    expect(page).to have_content "Godzilla #{I18n.t('match.last.win_verb')} Mothra"
+    expect(page).to have_content "Bob #{I18n.t('match.last.win_verb')} Sally"
   end
+
+  scenario 'a user can view player info' do
+    create_match
+    visit root_path
+
+    expect(page).to have_content('Bob')
+
+    # svg selection seems to generally suck on attributes, this is a work around
+    page.execute_script "$('a').filter('[title=Bob]').first().click();"
+
+    within '#player_info' do
+      expect(page).to have_content "Bob's Record"
+    end
+  end
+
 end
