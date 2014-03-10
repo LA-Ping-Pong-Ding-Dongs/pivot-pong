@@ -6,7 +6,11 @@
 @import 'icons';
 
 body {
-  position: relative;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   background-color: white;
   font-family: 'Open Sans', sans-serif;
 }
@@ -32,14 +36,22 @@ input[type=submit] {
   text-transform: uppercase;
 }
 
+h3 {
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: $gray;
+}
+
 hr {
   border: 0;
-  border-top: 2px dashed darken($overlay_grey, 10%);
+  border-top: 2px dashed darken($overlay_grey, 15%);
   margin: 20px;
 }
 
 .overlay {
-  background-color: rgba($overlay_grey, 0.9);
+  background-color: rgba($overlay_grey, 0.85);
   border: 3px solid darken($overlay_grey, 5%);
   padding: 10px;
 }

@@ -11,5 +11,6 @@ en:
       win_verb: defeated
   player:
     recent_matches:
+      title: '- Recent Matches -'
       won: Beat
       lost: Lost to
