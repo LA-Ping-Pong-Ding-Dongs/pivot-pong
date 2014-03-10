@@ -1,21 +1,27 @@
-<% if (typeof errors !== "undefined") { %>
-<ul id="errors_container">
-    <% _(errors).each(function (error, field) { %>
-    <li><%= field + ": " + error %></li>
-    <% }); %>
-</ul>
-<% } %>
-
 <form accept-charset="UTF-8" action="/matches" class="new_match" id="new_match" method="post">
     <div style="margin:0;padding:0;display:inline">
         <input name="utf8" type="hidden" value="✓">
         <input name="authenticity_token" type="hidden" value="nRiUVKL9jfJUDb4j5Mu8tX5/HvaEIXxBBIgs5CfruoE=">
     </div>
-    <label for="match_winner">The Winner</label>
-    <input id="match_winner" name="match[winner]" type="text">
 
-    <label for="match_loser">defeats</label>
-    <input id="match_loser" name="match[loser]" type="text">
+    <h1 class="app-name">Piv<span class="pivotal-o"></span>t-P<span class="pivotal-o"></span>ng</h1>
+    <input id="match_winner" name="match[winner]" type="text" placeholder="WINNER" tabindex="1"/>
 
-    <input id="save_match" name="commit" type="submit" value="and the crowd cheers!">
+    <span class="defeats-text">- DEFEATS -</span>
+    <input id="match_loser" name="match[loser]" type="text" placeholder="LOSER" tabindex="2"/>
+
+    <input id="save_match" name="commit" type="submit" value="RECORD" tabindex="3"/>
 </form>
+
+<hr/>
+
+<% if (typeof errors !== "undefined") { %>
+<div class="errors-container">
+    <span class="errors-description">Errors prevented the match from being saved:</span>
+    <ul>
+        <% _(errors).each(function (error, field) { %>
+        <li><%= field + " " + error + "." %></li>
+        <% }); %>
+    </ul>
+</div>
+<% } %>

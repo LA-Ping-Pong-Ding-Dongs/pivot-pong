@@ -1,20 +1,24 @@
-<div id="player_tiles_container"></div>
+<div class="dashboard-container">
+  <div id="player_tiles_container"></div>
 
-<div id="match_form_container" class="overlay">
-  <%= form_for @match, url: matches_path, as: 'match' do |f| %>
-      <%= f.label :winner, t('match.form.winner_label') %>
-      <%= f.text_field :winner %>
+  <div id="match_form_container" class="overlay">
+    <%= form_for @match, url: matches_path, as: 'match' do |f| %>
+        <h1 class="app-name"><%= I18n.t('application.name_html').html_safe %></h1>
 
-      <%= f.label :loser, t('match.form.loser_label') %>
-      <%= f.text_field :loser %>
+        <%= f.text_field :winner, placeholder: I18n.t('match.form.winner_label').upcase, tabindex: 1 %>
 
-      <%= f.submit t('match.form.commit'), id: 'save_match' %>
-  <% end -%>
+        <span class="defeats-text"><%= I18n.t('match.form.defeats_verb') %></span>
+
+        <%= f.text_field :loser, placeholder: I18n.t('match.form.loser_label').upcase, tabindex: 2 %>
+
+        <%= f.submit t('match.form.commit'), id: 'save_match', tabindex: 3 %>
+    <% end -%>
+  </div>
+
+  <div id="recent_matches_container" class="overlay"></div>
+
+  <div id="player_info" class="overlay"></div>
 </div>
-
-<div id="recent_matches_container" class="overlay"></div>
-
-<div id="player_info" class="overlay"></div>
 
 <script type="text/javascript">
     $(function() {

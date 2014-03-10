@@ -1,9 +1,12 @@
 en:
+  application:
+    name_html: Piv<span class="pivotal-o"></span>t-P<span class="pivotal-o"></span>ng
   match:
     form:
-      winner_label: The Winner
-      loser_label: defeats
-      commit: and the crowd cheers!
+      winner_label: Winner
+      loser_label: Loser
+      commit: Record
+      defeats_verb: '- Defeats -'
     last:
       win_verb: defeated
   player:

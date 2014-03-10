@@ -1,0 +1,96 @@
+.dashboard-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#player_tiles_container {
+  background-color: transparent;
+}
+
+#match_form_container {
+  position: absolute;
+  width: 900px;
+  margin-left: -450px;
+  left: 50%;
+  top: 20px;
+  color: $gray;
+  text-align: center;
+
+  .app-name {
+    text-transform: uppercase;
+    position: absolute;
+    margin: 0;
+    font-size: 13pt;
+    color: darken($overlay_grey, 15%);
+    letter-spacing: 0.1em;
+    top: 20px;
+    left: 37px;
+  }
+
+  .defeats-text {
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    margin: 0 10px;
+    font-size: 15pt;
+    display: inline-block;
+    padding-top: 3px;
+  }
+
+  #save_match {
+    display: inline-block;
+    position: absolute;
+    right: 28px;
+    letter-spacing: 0.1em;
+  }
+
+  .errors-container {
+    padding: 0 20px;
+    font-size: 10pt;
+    text-align: left;
+    color: $pivotal_red;
+
+    ul {
+      list-style: none;
+      margin: 0;
+    }
+  }
+}
+
+#recent_matches_container {
+
+}
+
+.mesh, .hex-o {
+  fill: none;
+  stroke: $gray_light;
+  stroke-width: 2px;
+}
+
+.hex-o-link {
+  fill: white;
+  stroke: $gray_light;
+  stroke-width: 2px;
+  &.color1 {
+    fill: $shark_blue_lightest;
+  }
+  &.color2 {
+    fill: $shark_blue_light;
+  }
+  &.color3 {
+    fill: $shark_blue_medium;
+  }
+  &.color4 {
+    fill: $shark_blue_dark;
+  }
+  &.color5 {
+    fill: $shark_blue_darkest;
+  }
+}
+
+.hex-o-text {
+  fill: $off-white;
+  font-size: 30px;
+  font-weight: bold;
+}

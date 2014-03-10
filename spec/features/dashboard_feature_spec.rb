@@ -11,8 +11,8 @@ feature 'On the dashboard:', :js do
     visit root_path
 
     step '1. fill in the winner and the loser', current: example do
-      fill_in I18n.t('match.form.winner_label'), with: 'Bob'
-      fill_in I18n.t('match.form.loser_label'), with: 'Templeton'
+      fill_in I18n.t('match.form.winner_label').upcase, with: 'Bob'
+      fill_in I18n.t('match.form.loser_label').upcase, with: 'Templeton'
 
       click_on I18n.t('match.form.commit')
     end
