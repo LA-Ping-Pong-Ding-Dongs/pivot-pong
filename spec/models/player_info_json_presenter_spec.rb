@@ -17,7 +17,19 @@ describe PlayerInfoJsonPresenter do
 
   describe '#as_json' do
     it 'presents name, overall_wins, overall_losses and rating in json format' do
-      expect(subject.as_json).to eq({ name: 'Chokester', overall_wins: 1, overall_losses: 2, rating: 1100 })
+      expect(subject.as_json).to eq({
+                                        name: 'Chokester',
+                                        overall_wins: 1,
+                                        overall_losses: 2,
+                                        rating: 1100,
+                                        overall_win_percentage: '33.3%',
+                                    })
+    end
+  end
+
+  describe '#overall_win_percentage' do
+    it 'returns a formatted winning percentage' do
+      expect(subject.overall_win_percentage).to eq '33.3%'
     end
   end
 

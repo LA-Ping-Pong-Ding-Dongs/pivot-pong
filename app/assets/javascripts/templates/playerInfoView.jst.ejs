@@ -1,1 +1,14 @@
-<h4><%= name %>'s Record</h4>
+<div class="general-info">
+    <h4><%= player.name %></h4>
+</div>
+<div class="record">
+    <dl>
+        <dt>
+            Overall Record
+        </dt>
+        <dd class="<%= overallType %>">
+            <%= player.overall_wins %>-<%= player.overall_losses %> (<%= player.overall_win_percentage %>)
+        </dd>
+    </dl>
+</div>
+

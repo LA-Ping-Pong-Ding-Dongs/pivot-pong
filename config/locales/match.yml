@@ -14,3 +14,6 @@ en:
       title: '- Recent Matches -'
       won: Beat
       lost: Lost to
+  player_info:
+    record:
+      overall: Overall Record

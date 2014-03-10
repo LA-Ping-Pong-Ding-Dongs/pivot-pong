@@ -50,7 +50,8 @@ feature 'On the dashboard:', :js do
     page.execute_script "$('a').filter('[title=Bob]').first().click();"
 
     within '#player_info' do
-      expect(page).to have_content "Bob's Record"
+      expect(page).to have_content 'Bob'
+      expect(page).to have_content '1-0 (100.0%)'
     end
   end
 

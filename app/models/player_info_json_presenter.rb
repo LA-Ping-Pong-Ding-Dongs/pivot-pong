@@ -1,4 +1,5 @@
 class PlayerInfoJsonPresenter
+  include ActionView::Helpers::NumberHelper
 
   def initialize(player, matches)
     @player = player
@@ -13,12 +14,17 @@ class PlayerInfoJsonPresenter
     wins.count
   end
 
+  def overall_win_percentage
+    number_to_percentage(100.0 * overall_wins / (overall_wins + overall_losses), precision: 1)
+  end
+
   def as_json
     {
         name: @player.name,
         overall_losses: overall_losses,
         overall_wins: overall_wins,
         rating: @player.mean,
+        overall_win_percentage: overall_win_percentage,
     }
   end
 

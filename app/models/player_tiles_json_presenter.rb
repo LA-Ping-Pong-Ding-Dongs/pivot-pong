@@ -11,6 +11,7 @@ class PlayerTilesJsonPresenter
           name: player.name,
           url: player_path(player.key),
           mean: player.mean,
+          key: player.key,
       }
     end
   end

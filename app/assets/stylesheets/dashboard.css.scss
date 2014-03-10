@@ -100,6 +100,60 @@
   border-bottom: 0;
   border-left: 0;
   border-right: 0;
+  padding: 20px 87px;
+
+  .general-info, .record {
+    vertical-align: middle;
+    display: inline-block;
+    width: 25%;
+
+    dl {
+      margin: 0;
+    }
+    dd, dt {
+      display: inline-block;
+      margin-left: 1%;
+    }
+
+    dt {
+      width: 100px;
+      vertical-align: top;
+      text-transform: uppercase;
+      font-weight: 700;
+      text-align: right;
+      letter-spacing: 0.2em;
+      font-size: 10pt;
+      line-height: 12pt;
+    }
+
+    dd {
+      font-size: 21pt;
+      vertical-align: top;
+      line-height: 23pt;
+      font-weight: 500;
+      margin-left: 20px;
+
+      &.winning {
+        color: $winning_green;
+      }
+      &.losing {
+        color: $losing_red;
+      }
+    }
+
+    h4 {
+      margin: 0;
+      font-size: 25pt;
+      line-height: 34pt;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .record {
+    margin-left: 4%;
+  }
 }
 
 .mesh, .hex-o {
@@ -131,6 +185,6 @@
 
 .hex-o-text {
   fill: $off-white;
-  font-size: 30px;
+  font-size: 22px;
   font-weight: bold;
 }

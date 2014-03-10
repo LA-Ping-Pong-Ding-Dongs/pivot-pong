@@ -33,6 +33,9 @@ pong.AppRouter = Backbone.Router.extend({
             collection: recentMatches,
         });
         recentMatches.fetch();
+
+        var randomPlayer = _.sample(pong.players);
+        this.playerShow(randomPlayer.key);
     },
 
 });
