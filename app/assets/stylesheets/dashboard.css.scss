@@ -82,6 +82,12 @@
     overflow-y: auto;
     color: $gray;
   }
+
+  li {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 #player_info {

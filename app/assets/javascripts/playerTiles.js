@@ -48,7 +48,11 @@ pong.PlayerTiles = Backbone.View.extend({
                     return  d.location;
                 },
                 name: function (d) {
-                    return d.name;
+                    if (d.name.length > 8) {
+                        return $.trim(d.name).substring(0, 8).trim(this) + '...';
+                    } else {
+                        return d.name;
+                    }
                 },
                 url: function (d) {
                     return d.url;
