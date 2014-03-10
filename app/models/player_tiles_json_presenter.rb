@@ -9,7 +9,7 @@ class PlayerTilesJsonPresenter
     @players.map do |player|
       {
           name: player.name,
-          url: player_path(player.key),
+          url: "#/players/#{player.key}",
           mean: player.mean,
           key: player.key,
       }

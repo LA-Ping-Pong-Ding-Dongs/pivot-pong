@@ -47,7 +47,7 @@ feature 'On the dashboard:', :js do
     expect(page).to have_content('Bob')
 
     # svg selection seems to generally suck on attributes, this is a work around
-    page.execute_script "$('a').filter('[title=Bob]').first().click();"
+    page.execute_script "window.location = $('a').filter('[title=Bob]').first().attr('href');"
 
     within '#player_info' do
       expect(page).to have_content 'Bob'

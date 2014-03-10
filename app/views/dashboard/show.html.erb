@@ -26,7 +26,12 @@
     $(function() {
         pong.players = <%= PlayerTilesJsonPresenter.new(@players).to_json.html_safe %>
         new pong.AppRouter();
-        Backbone.history.start({ pushState: true });
-        $(document).click('a', pong.navigator);
+        Backbone.history.start();
+
+//        we took this out because clicking a tile on the dashboard changes the current url to url/players/key
+//        and subsequent dashboard reloads would navigate away to the player page instead of staying on the dashboard
+//        $(document).click('a', pong.navigator);
+
+        pong.initializeDashboard();
     });
 </script>

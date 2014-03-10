@@ -25,20 +25,20 @@ describe('AppRouter', function () {
             expect(this.router.routes['']).toBe('dashboardShow');
         });
 
-        it('creates/renders MatchForm, PlayerTiles and RecentMatches', function () {
-            pong.players = {};
-            expect(pong.activeViews.MatchForm).toBeUndefined();
-            expect(pong.activeViews.PlayerTiles).toBeUndefined();
-            expect(pong.activeViews.RecentMatches).toBeUndefined();
-
+        it('picks a random pong player and calls playerShow', function () {
+            pong.players = [{key: 'test'}];
+            spyOn(this.router, 'playerShow');
             this.router.dashboardShow();
 
-            var request = jasmine.Ajax.requests.mostRecent();
-            expect(request.url).toBe('/matches?processed=false');
-            expect(pong.activeViews.MatchForm instanceof pong.MatchForm).toBeTruthy();
-            expect(pong.activeViews.PlayerTiles instanceof pong.PlayerTiles).toBeTruthy();
-            expect(pong.activeViews.RecentMatchesView instanceof pong.RecentMatchesView).toBeTruthy();
-            expect(pong.activeViews.RecentMatchesView.collection instanceof pong.RecentMatches).toBeTruthy();
+            expect(this.router.playerShow).toHaveBeenCalledWith('test');
+        });
+
+        it('does not call playerShow when there are no players', function () {
+            pong.players = [];
+            spyOn(this.router, 'playerShow');
+            this.router.dashboardShow();
+
+            expect(this.router.playerShow).not.toHaveBeenCalled();
         });
 
     });
