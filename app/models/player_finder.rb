@@ -6,14 +6,21 @@ class PlayerFinder
       player = Player.create(key: name.downcase, name: name)
     end
 
-    player.to_struct
+    player_to_struct(player)
   end
 
   def find_all_players
-    Player.all.map { |player| player.to_struct }
+    Player.all.map { |player| player_to_struct(player) }
   end
 
   def find(key)
-    Player.find(key).to_struct
+    player = Player.find(key)
+    player_to_struct(player)
+  end
+
+  private
+
+  def player_to_struct(player)
+    PlayerStruct.new(player.key, player.name, player.mean, player.sigma)
   end
 end

@@ -14,7 +14,10 @@ describe MatchCreator do
     end
 
     it 'returns an Open Struct representing the match' do
-      expect(creator.create_match(winner_key: 'sally', loser_key: 'bob')).to eq(OpenStruct.new(winner_key: 'sally', loser_key: 'bob'))
+      record = creator.create_match(winner_key: 'sally', loser_key: 'bob')
+      expect(record).to be_kind_of MatchStruct
+      expect(record.winner_key).to eq 'sally'
+      expect(record.loser_key).to eq 'bob'
     end
   end
 end

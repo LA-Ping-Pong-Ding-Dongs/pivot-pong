@@ -2,23 +2,23 @@ require 'spec_helper'
 
 describe PlayerPresenter do
 
-  let(:bob) { OpenStruct.new(name: 'Bob', key: 'bob') }
-  let(:loser) { OpenStruct.new(name: 'Loser', key: 'loser') }
-  let(:champ) { OpenStruct.new(name: 'Champ', key: 'champ') }
+  let(:bob) { PlayerStruct.new('bob', 'Bob', 1200, 50) }
+  let(:loser) { PlayerStruct.new('loser', 'Loser', 1200, 50) }
+  let(:champ) { PlayerStruct.new('champ', 'Champ', 1200, 50) }
 
   let(:april_1) { DateTime.new(2014, 04, 01) }
   let(:april_3) { DateTime.new(2014, 04, 03) }
   let(:april_4) { DateTime.new(2014, 04, 04) }
 
-  let(:winning_match_1) { OpenStruct.new(winner_key: bob.key, loser_key: loser.key, created_at: april_1) }
-  let(:winning_match_2) { OpenStruct.new(winner_key: bob.key, loser_key: loser.key, created_at: april_4) }
-  let(:losing_match) { OpenStruct.new(winner_key: champ.key, loser_key: bob.key, created_at: april_3) }
+  let(:winning_match_1) { MatchStruct.new(2, bob.key, loser.key, april_1) }
+  let(:winning_match_2) { MatchStruct.new(3, bob.key, loser.key, april_4) }
+  let(:losing_match) { MatchStruct.new(4, champ.key, bob.key, april_3) }
 
   let(:all_matches) { [winning_match_2, losing_match, winning_match_1] }
   let(:recent_matches) do
     [
-        OpenStruct.new(winning_match_2.to_h.merge(winner_name: 'Bob', loser_name: 'Loser')),
-        OpenStruct.new(losing_match.to_h.merge(winner_name: 'Champ', loser_name: 'Bob')),
+        build_match_with_names_struct(winning_match_2, 'Bob', 'Loser'),
+        build_match_with_names_struct(losing_match, 'Champ', 'Bob'),
     ]
   end
 
@@ -28,7 +28,7 @@ describe PlayerPresenter do
 
   before do
     allow(player_finder_double).to receive(:find) do |key|
-      OpenStruct.new(name: key.camelize, key: key)
+      PlayerStruct.new(key, key.camelize, 1200, 50)
     end
   end
 

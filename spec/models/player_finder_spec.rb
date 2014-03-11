@@ -6,10 +6,10 @@ describe PlayerFinder do
   describe '#find_or_create_by_name' do
 
     context 'when the player does exist' do
-      let!(:bob) { FactoryGirl.create :player, name: 'Bob' }
+      let!(:bob) { Player.create(key: 'bob', name: 'Bob') }
 
       it 'returns the player struct' do
-        expect(finder.find_or_create_by_name('Bob')).to eq bob.to_struct
+        expect(finder.find_or_create_by_name('Bob')).to eq build_player_struct(bob)
       end
 
       it 'does not effect the number of players' do
@@ -25,7 +25,7 @@ describe PlayerFinder do
       it 'still returns the player struct' do
         player_record = finder.find_or_create_by_name('Sally')
 
-        expect(player_record).to be_kind_of ReadOnlyStruct
+        expect(player_record).to be_kind_of PlayerStruct
         expect(player_record.name).to eq 'Sally'
         expect(player_record.key).to eq 'sally'
       end
@@ -41,29 +41,31 @@ describe PlayerFinder do
 
   describe '#find_all_players' do
 
-    let!(:bob) { FactoryGirl.create(:player, name: 'Bob') }
-    let!(:sally) { FactoryGirl.create(:player, name: 'Sally') }
-    let!(:templeton) { FactoryGirl.create(:player, name: 'Templeton') }
+    let!(:bob) { Player.create(key: 'bob', name: 'Bob') }
+    let!(:sally) { Player.create(key: 'sally', name: 'Sally') }
+    let!(:templeton) { Player.create(key: 'templeton', name: 'Templeton') }
 
     it 'returns an array of structs containing all players' do
-      expect(finder.find_all_players).to match_array([bob.to_struct, sally.to_struct, templeton.to_struct])
+      expect(finder.find_all_players).to match_array([
+                                                         build_player_struct(bob),
+                                                         build_player_struct(sally),
+                                                         build_player_struct(templeton),
+                                                     ])
     end
 
   end
 
   describe '#find' do
-
-    let!(:bob) { FactoryGirl.create :player, name: 'Bob' }
+    let!(:bob) { Player.create(key: 'bob', name: 'Bob')}
 
     it 'returns an open struct of player data if the player can be found' do
       player_record = finder.find('bob')
-      expect(player_record).to eq(bob.to_struct)
+      expect(player_record).to eq build_player_struct(bob)
     end
 
     it 'raises an exception if a player cant be found' do
       expect { finder.find('ashdlfkj') }.to raise_exception(ActiveRecord::RecordNotFound)
     end
-
   end
 
 end

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe PlayerUpdater do
-  let(:player) { FactoryGirl.create :player, sigma: 40 }
+  let(:player) { Player.create key: 'bob', sigma: 40 }
 
   subject(:updater) { PlayerUpdater.new }
 

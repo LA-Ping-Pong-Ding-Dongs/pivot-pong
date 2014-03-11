@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe MatchUpdater do
-  let(:match) { FactoryGirl.create :match }
+  let(:match) { Match.create(winner_key: 'bob', loser_key: 'templeton') }
 
   subject(:match_updater) { MatchUpdater.new }
 

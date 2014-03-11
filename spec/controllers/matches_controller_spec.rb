@@ -70,11 +70,11 @@ describe MatchesController do
   end
 
   describe '#index' do
-    let(:match_1) { FactoryGirl.build(:match) }
-    let(:match_2) { FactoryGirl.build(:match) }
-    let(:match_3) { FactoryGirl.build(:match, processed: true) }
-    let(:unprocessed_matches) { [match_1.attributes, match_3.attributes] }
-    let(:all_matches) { [match_1.attributes, match_2.attributes, match_3.attributes] }
+    let(:match_1) { MatchStruct.new(1, 'Bob', 'Templeton', Time.now) }
+    let(:match_2) { MatchStruct.new(2, 'Bob', 'Sally', Time.now) }
+    let(:match_3) { MatchStruct.new(3, 'Sally', 'Templeton', Time.now) }
+    let(:unprocessed_matches) { [match_1, match_3] }
+    let(:all_matches) { [match_1, match_2, match_3] }
     let(:match_finder_double) { double(MatchFinder, find_unprocessed: unprocessed_matches, find_all: all_matches) }
 
     before do

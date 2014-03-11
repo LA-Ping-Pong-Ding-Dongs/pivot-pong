@@ -3,7 +3,7 @@ class MatchFinder
     Match
     .where('winner_key = ? OR loser_key = ?', player_key, player_key)
     .order('created_at DESC')
-    .map(&:to_struct)
+    .map{ |match| MatchStruct.new match.id, match.winner_key, match.loser_key, match.created_at }
   end
 
   def find_recent_matches_for_player(player_key, limit)
@@ -11,7 +11,7 @@ class MatchFinder
     .where('winner_key = ? OR loser_key = ?', player_key, player_key)
     .order('created_at DESC')
     .limit(limit)
-    .map { |match| match_and_player_struct(match) }
+    .map { |record| match_and_player_struct(record) }
   end
 
   def find_unprocessed
@@ -36,14 +36,7 @@ class MatchFinder
     .joins('inner join players as losers on losers.key = matches.loser_key')
   end
 
-  def match_and_player_struct(match)
-    ReadOnlyStruct.new({
-                         id: match.id,
-                         created_at: match.created_at,
-                         winner_name: match.winner_name,
-                         loser_name: match.loser_name,
-                         winner_key: match.winner_key,
-                         loser_key: match.loser_key,
-                       })
+  def match_and_player_struct(record)
+    MatchWithNamesStruct.new(record.id, record.winner_key, record.loser_key, record.winner_name, record.loser_name, record.created_at)
   end
 end

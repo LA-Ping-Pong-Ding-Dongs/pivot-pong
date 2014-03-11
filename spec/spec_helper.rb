@@ -6,13 +6,12 @@ require 'capybara/poltergeist'
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
-require Rails.root.join('spec/factories.rb')
-
 ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
 Capybara.javascript_driver = :poltergeist
 
 RSpec.configure do |config|
+  config.include StructBuilder
   config.include FeatureHelper, type: :feature
   config.use_transactional_fixtures = true
   config.order = 'random'

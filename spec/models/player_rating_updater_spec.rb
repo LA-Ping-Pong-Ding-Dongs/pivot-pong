@@ -2,11 +2,11 @@ require 'spec_helper'
 
 describe PlayerRatingUpdater do
 
-  let(:player) { FactoryGirl.build :player, name: 'Bob', key: 'bob', mean: 1200, sigma: 50 }
-  let(:player_finder_double) { double(PlayerFinder, find_all_players: [player.to_struct]) }
+  let(:player) { PlayerStruct.new('bob', 'Bob', 1200, 50) }
+  let(:player_finder_double) { double(PlayerFinder, find_all_players: [player]) }
 
-  let(:match_1) { FactoryGirl.build :match, id: 1, processed: false }
-  let(:match_finder_double) { double(MatchFinder, find_unprocessed: [match_1.to_struct] ) }
+  let(:match_1) { MatchStruct.new(1, 'bob', 'loser', Time.now) }
+  let(:match_finder_double) { double(MatchFinder, find_unprocessed: [match_1] ) }
 
   let(:param_builder_double) { double(NttrsParamBuilder, build_player_data: 'playerstuff', build_match_data: 'matchstuff')}
 

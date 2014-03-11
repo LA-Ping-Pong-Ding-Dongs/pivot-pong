@@ -2,12 +2,12 @@ require 'spec_helper'
 
 describe PlayerInfoJsonPresenter do
 
-  let(:player) { FactoryGirl.build(:player, name: 'Chokester', key: 'chokester', mean: 1100) }
+  let(:player) {PlayerStruct.new('chokester', 'Chokester', 1100, 9) }
   let(:matches) do
     [
-        Match.new(winner_key: 'chokester', loser_key: 'loser').to_struct,
-        Match.new(winner_key: 'champ', loser_key: 'chokester').to_struct,
-        Match.new(winner_key: 'champ', loser_key: 'chokester').to_struct,
+        MatchStruct.new(1, 'chokester', 'loser', Time.now),
+        MatchStruct.new(1, 'champ', 'chokester', Time.now),
+        MatchStruct.new(1, 'champ', 'chokester', Time.now)
     ]
   end
 

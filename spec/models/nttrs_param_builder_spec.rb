@@ -4,9 +4,9 @@ describe NttrsParamBuilder do
   subject { NttrsParamBuilder.new }
 
   describe '#build_player_data' do
-    let(:bob) { FactoryGirl.build(:player, name: 'Bob', mean: 2300, sigma: 23).to_struct }
-    let(:sally) { FactoryGirl.build(:player, name: 'Sally', mean: 1850, sigma: 40).to_struct }
-    let(:templeton) { FactoryGirl.build(:player, name: 'Templeton', mean: nil, sigma: nil).to_struct }
+    let(:bob) { PlayerStruct.new('bob', 'Bob', 2300, 23) }
+    let(:sally) { PlayerStruct.new('sally', 'Sally', 1850, 40) }
+    let(:templeton) { PlayerStruct.new('templeton', 'Templeton', nil, nil) }
 
     it 'returns data in the format the Nttrs gem expects' do
       expected_params = [

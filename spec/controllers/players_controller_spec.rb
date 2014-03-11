@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe PlayersController do
 
-  let(:player_double) { FactoryGirl.build :player }
-  let(:nemesis_double) { FactoryGirl.build :player }
-  let(:player_finder_double) { double(PlayerFinder, find: player_double) }
+  let(:player) { PlayerStruct.new('bob', 'Bob', 1200, 50) }
+  let(:nemesis) { PlayerStruct.new('sally', 'Sally', 1500, 150) }
+  let(:player_finder_double) { double(PlayerFinder, find: player) }
   let(:match_finder_double) { double(MatchFinder, find_all_for_player: 'all matches', find_recent_matches_for_player: 'recent matches') }
 
   let(:player_info_json_presenter_double) { double(PlayerInfoJsonPresenter, as_json: {field: 'val'}) }
@@ -17,7 +17,7 @@ describe PlayersController do
 
   describe '#show' do
     context 'js request' do
-      let(:make_request) { xhr :get, :show, key: 'testplayer' }
+      let(:make_request) { xhr :get, :show, key: 'bob' }
 
       it 'returns serialized player information' do
         make_request
