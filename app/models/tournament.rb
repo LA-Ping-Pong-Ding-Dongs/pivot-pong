@@ -1,4 +1,5 @@
 class Tournament
+  attr_reader :start_time, :end_time
 
   def initialize(
     match_finder = MatchFinder.new,

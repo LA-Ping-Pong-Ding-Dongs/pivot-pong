@@ -14,17 +14,10 @@ class MatchFinder
     .map { |record| match_and_player_struct(record) }
   end
 
-  def find_matches_for_tournament(start_date, end_date)
+  def find_matches_for_tournament(start_time, end_time)
     match_with_player_names
-    .where('matches.created_at > ? AND matches.created_at <= ?', start_date, end_date)
+    .where('matches.created_at > ? AND matches.created_at <= ?', start_time, end_time)
     .order('matches.created_at DESC')
-    .map { |record| match_and_player_struct(record) }
-  end
-
-  def find_unprocessed
-    match_with_player_names
-    .where(processed: false)
-    .order('created_at DESC')
     .map { |record| match_and_player_struct(record) }
   end
 

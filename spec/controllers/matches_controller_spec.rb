@@ -73,27 +73,27 @@ describe MatchesController do
     let(:match_1) { MatchStruct.new(1, 'Bob', 'Templeton', Time.now) }
     let(:match_2) { MatchStruct.new(2, 'Bob', 'Sally', Time.now) }
     let(:match_3) { MatchStruct.new(3, 'Sally', 'Templeton', Time.now) }
-    let(:unprocessed_matches) { [match_1, match_3] }
+    let(:recent_matches) { [match_1, match_3] }
     let(:all_matches) { [match_1, match_2, match_3] }
-    let(:match_finder_double) { double(MatchFinder, find_unprocessed: unprocessed_matches, find_all: all_matches) }
+    let(:match_finder_double) { double(MatchFinder, find_matches_for_tournament: recent_matches, find_all: all_matches) }
 
     before do
       expect(controller).to receive(:match_finder) { match_finder_double }
     end
 
     context 'responds with json' do
-      it 'returns all matches not filtered by processed' do
+      it 'returns all matches' do
         xhr :get, :index
 
         expect(response).to be_success
         expect(response.body).to eq({ 'results' => all_matches }.to_json)
       end
 
-      it 'returns a list filtered by processed' do
-        xhr :get, :index, processed: false
+      it 'returns a list of recent matches' do
+        xhr :get, :index, recent: true
 
         expect(response).to be_success
-        expect(response.body).to eq({ 'results' => unprocessed_matches }.to_json)
+        expect(response.body).to eq({ 'results' => recent_matches }.to_json)
       end
     end
 

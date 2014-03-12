@@ -4,11 +4,11 @@ describe('RecentMatches', function () {
     });
 
     it('specifies a url to fetch recent matches', function () {
-        expect(this.collection.url).toEqual('/matches?processed=false')
+        expect(this.collection.url).toEqual('/matches?recent=true')
     });
 
     it('parses the response', function () {
-        jasmine.Ajax.stubRequest('/matches?processed=false').andReturn(ajaxResponses.Matches.index.success);
+        jasmine.Ajax.stubRequest('/matches?recent=true').andReturn(ajaxResponses.Matches.index.success);
         this.collection.fetch();
         jasmine.clock().tick(1);
 

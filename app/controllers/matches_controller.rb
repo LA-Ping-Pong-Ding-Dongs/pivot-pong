@@ -17,14 +17,18 @@ class MatchesController < ApplicationController
   end
 
   def index
-    if params[:processed] == false
-      render json: { results: match_finder.find_unprocessed.as_json }
+    if params[:recent] == true
+      render json: { results: match_finder.find_matches_for_tournament(tournament.start_time, tournament.end_time).as_json }
     else
       render json: { results: match_finder.find_all.as_json }
     end
   end
 
   private
+
+  def tournament
+    @tournament ||= Tournament.new
+  end
 
   def match_finder
     MatchFinder.new

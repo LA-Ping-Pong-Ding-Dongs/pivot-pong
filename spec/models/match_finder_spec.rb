@@ -4,10 +4,10 @@ describe MatchFinder do
   let!(:bob) { Player.create(key: 'bob', name: 'Bob') }
   let!(:champ) { Player.create(key: 'champ', name: 'Champ') }
   let!(:loser) { Player.create(key: 'loser', name: 'Loser') }
-  let!(:winning_match) { Match.create(winner_key: 'bob', loser_key: 'loser', created_at: 4.days.ago, processed: true) }
-  let!(:not_relevant_match) { Match.create(winner_key: 'champ', loser_key: 'loser', created_at: 3.minutes.ago, processed: false) }
-  let!(:losing_match_1) { Match.create(winner_key: 'champ', loser_key: 'bob', created_at: 2.days.ago, processed: false) }
-  let!(:losing_match_2) { Match.create(winner_key: 'champ', loser_key: 'bob', created_at: 3.months.ago, processed: true) }
+  let!(:winning_match) { Match.create(winner_key: 'bob', loser_key: 'loser', created_at: 4.days.ago) }
+  let!(:not_relevant_match) { Match.create(winner_key: 'champ', loser_key: 'loser', created_at: 3.minutes.ago) }
+  let!(:losing_match_1) { Match.create(winner_key: 'champ', loser_key: 'bob', created_at: 2.days.ago) }
+  let!(:losing_match_2) { Match.create(winner_key: 'champ', loser_key: 'bob', created_at: 3.months.ago) }
 
   subject(:match_finder) { MatchFinder.new }
 
@@ -29,16 +29,6 @@ describe MatchFinder do
         build_match_with_names_struct(winning_match, 'Bob', 'Loser'),
       ]
       expect(match_finder.find_recent_matches_for_player('bob', 2)).to eq expected
-    end
-  end
-
-  describe '#find_unprocessed' do
-    it 'returns all the matches that have not been processed' do
-      expected = [
-        build_match_with_names_struct(not_relevant_match, 'Champ', 'Loser'),
-        build_match_with_names_struct(losing_match_1, 'Champ', 'Bob'),
-      ]
-      expect(subject.find_unprocessed).to eq expected
     end
   end
 

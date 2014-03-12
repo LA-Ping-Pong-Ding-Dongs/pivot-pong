@@ -8,7 +8,7 @@ describe('initializeDashboard', function() {
     pong.initializeDashboard();
 
     var request = jasmine.Ajax.requests.mostRecent();
-    expect(request.url).toBe('/matches?processed=false');
+    expect(request.url).toBe('/matches?recent=true');
     expect(pong.activeViews.MatchForm instanceof pong.MatchForm).toBeTruthy();
     expect(pong.activeViews.PlayerTiles instanceof pong.PlayerTiles).toBeTruthy();
     expect(pong.activeViews.RecentMatchesView instanceof pong.RecentMatchesView).toBeTruthy();
