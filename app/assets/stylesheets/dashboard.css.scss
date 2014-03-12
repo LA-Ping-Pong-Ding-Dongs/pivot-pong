@@ -69,59 +69,8 @@
   width: 410px;
   height: 400px;
   margin-top: -250px;
-}
 
-.pane-toggle {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  margin: 0;
-  padding: 0;
-
-  .tab {
-    text-align: center;
-    cursor: pointer;
-    box-sizing: border-box;
-    padding: 8px;
-    display: inline-block;
-    background-color: rgba(darken($overlay_grey, 5%), 0.85);
-    width: 33.33%;
-
-    &.active {
-      background-color: transparent;
-    }
-  }
-
-  .tab-spacer {
-    background-color: rgba(darken($overlay_grey, 5%), 0.85);
-    cursor: default;
-  }
-}
-
-#recent_matches_container {
-  ul {
-    position: absolute;
-    top: 60px;
-    bottom: 20px;
-    left: 20px;
-    right: 20px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    overflow-y: auto;
-    color: $gray;
-  }
-
-  li {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-}
-
-#leaderboard_container {
-  .leaderboard-table-container {
+  .table-container {
     position: absolute;
     top: 60px;
     bottom: 20px;
@@ -136,16 +85,65 @@
     tr {
       height: 27px;
       border-bottom: 1px dotted rgba(darken($overlay_grey, 5%), 0.85);
+
+      &:last-child {
+        border-bottom: none;
+      }
     }
+  }
+
+  .pane-toggle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+
+    .tab {
+      text-align: center;
+      cursor: pointer;
+      box-sizing: border-box;
+      padding: 8px;
+      display: inline-block;
+      background-color: rgba(darken($overlay_grey, 5%), 0.85);
+      width: 33.33%;
+
+      &.active {
+        background-color: transparent;
+      }
+    }
+
+    .tab-spacer {
+      background-color: rgba(darken($overlay_grey, 5%), 0.85);
+      cursor: default;
+    }
+  }
+
+  #recent_matches_container {
+    .player-name {
+      @include ellipsis-text;
+      text-align: left;
+      width: 135px;
+      max-width: 135px;
+      padding: 0 10px;
+      box-sizing: border-box;
+    }
+    .time {
+      text-align: right;
+      padding: 0;
+    }
+  }
+
+  #leaderboard_container {
     .player-ranking {
       text-align: right;
       width: 15px;
     }
     .player-name {
+      @include ellipsis-text;
       width: 250px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      max-width: 250px;
       padding: 0 25px;
     }
     .player-record {
@@ -219,12 +217,10 @@
     }
 
     h4 {
+      @include ellipsis-text;
       margin: 0;
       font-size: 25pt;
       line-height: 34pt;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
   }
 

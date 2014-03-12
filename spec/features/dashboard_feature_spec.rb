@@ -27,7 +27,8 @@ feature 'On the dashboard:', :js do
     step '2. the last match results should update to reflect the entry', current: example do
       find('.recent-matches-link').click
 
-      expect(page).to have_content(['Bob', I18n.t('match.last.win_verb'), 'Templeton'].join(' '))
+      expect(page).to have_css '.winner', text: 'Bob'
+      expect(page).to have_css '.loser', text: 'Templeton'
     end
   end
 
@@ -48,7 +49,8 @@ feature 'On the dashboard:', :js do
 
     find('.recent-matches-link').click
 
-    expect(page).to have_content "Bob #{I18n.t('match.last.win_verb')} Sally about 1 hour ago"
+    expect(page).to have_css '.winner', text: 'Bob'
+    expect(page).to have_css '.loser', text: 'Sally'
   end
 
   scenario 'a user can view player info' do

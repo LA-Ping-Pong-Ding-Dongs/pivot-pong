@@ -1,6 +1,17 @@
 <h3>- RECENT MATCHES -</h3>
-<ul>
-    <% matches.each(function (match) { %>
-        <li><%= match.get('winner_name') %> defeated <%= match.get('loser_name') %> <%= match.get('human_readable_time') %> </li>
-    <% }); %>
-</ul>
+<div class="table-container">
+  <table>
+    <tr>
+      <th class="player-name">Winner</th>
+      <th class="player-name">Loser</th>
+      <th class="time">Time</th>
+    </tr>
+      <% matches.each(function (match) { %>
+        <tr>
+          <td class="player-name winner"><%= match.get('winner_name') %></td>
+          <td class="player-name loser"><%= match.get('loser_name') %></td>
+          <td class="time"><%= match.get('human_readable_time') %></td>
+        </tr>
+      <% }); %>
+  </table>
+</div>

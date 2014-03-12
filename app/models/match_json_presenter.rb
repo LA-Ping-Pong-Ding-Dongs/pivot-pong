@@ -20,7 +20,8 @@ class MatchJsonPresenter
 
   def human_readable_time
     if @match.created_at > 1.day.ago
-      "#{time_ago_in_words(@match.created_at)} ago"
+      time_ago = time_ago_in_words(@match.created_at).gsub('about ', '')
+      "#{time_ago} ago"
     else
       @match.created_at.strftime('%-m/%-d/%Y')
     end
