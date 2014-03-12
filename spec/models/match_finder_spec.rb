@@ -14,9 +14,9 @@ describe MatchFinder do
   describe '#find_all_for_player' do
     it 'returns all matches for player sorted by created_at time' do
       expected = [
-          build_match_struct(losing_match_1),
-          build_match_struct(winning_match),
-          build_match_struct(losing_match_2),
+        build_match_struct(losing_match_1),
+        build_match_struct(winning_match),
+        build_match_struct(losing_match_2),
       ]
       expect(match_finder.find_all_for_player('bob')).to eq expected
     end
@@ -25,8 +25,8 @@ describe MatchFinder do
   describe '#find_recent_matches_for_player' do
     it 'returns the requested number of matches with player names' do
       expected = [
-          build_match_with_names_struct(losing_match_1, 'Champ', 'Bob'),
-          build_match_with_names_struct(winning_match, 'Bob', 'Loser'),
+        build_match_with_names_struct(losing_match_1, 'Champ', 'Bob'),
+        build_match_with_names_struct(winning_match, 'Bob', 'Loser'),
       ]
       expect(match_finder.find_recent_matches_for_player('bob', 2)).to eq expected
     end
@@ -35,8 +35,8 @@ describe MatchFinder do
   describe '#find_unprocessed' do
     it 'returns all the matches that have not been processed' do
       expected = [
-          build_match_with_names_struct(not_relevant_match, 'Champ', 'Loser'),
-          build_match_with_names_struct(losing_match_1, 'Champ', 'Bob'),
+        build_match_with_names_struct(not_relevant_match, 'Champ', 'Loser'),
+        build_match_with_names_struct(losing_match_1, 'Champ', 'Bob'),
       ]
       expect(subject.find_unprocessed).to eq expected
     end
@@ -45,12 +45,23 @@ describe MatchFinder do
   describe '#find_all' do
     it 'returns all the matches' do
       expected = [
-          build_match_with_names_struct(not_relevant_match, 'Champ', 'Loser'),
-          build_match_with_names_struct(losing_match_1, 'Champ', 'Bob'),
-          build_match_with_names_struct(winning_match, 'Bob', 'Loser'),
-          build_match_with_names_struct(losing_match_2, 'Champ', 'Bob'),
+        build_match_with_names_struct(not_relevant_match, 'Champ', 'Loser'),
+        build_match_with_names_struct(losing_match_1, 'Champ', 'Bob'),
+        build_match_with_names_struct(winning_match, 'Bob', 'Loser'),
+        build_match_with_names_struct(losing_match_2, 'Champ', 'Bob'),
       ]
       expect(subject.find_all).to eq expected
+    end
+  end
+
+  describe '#find_matches_for_tournament' do
+    it 'returns all matches bound by start and end time' do
+      expected = [
+        build_match_with_names_struct(not_relevant_match, 'Champ', 'Loser'),
+        build_match_with_names_struct(losing_match_1, 'Champ', 'Bob'),
+        build_match_with_names_struct(winning_match, 'Bob', 'Loser'),
+      ]
+      expect(subject.find_matches_for_tournament(5.days.ago, Time.now)).to eq expected
     end
   end
 end

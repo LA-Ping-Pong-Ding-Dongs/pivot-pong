@@ -61,14 +61,21 @@
   }
 }
 
-#recent_matches_container {
+.dashboard-pane {
   position: absolute;
   padding: 20px;
   right: 40px;
   top: 50%;
   width: 400px;
   height: 400px;
-  margin-top: -300px;
+  margin-top: -250px;
+}
+
+#recent_matches_container {
+  display: none;
+  &.active {
+    display: block;
+  }
 
   ul {
     position: absolute;
@@ -87,6 +94,13 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+}
+
+#leaderboard_container {
+  display: none;
+  &.active {
+    display: block;
   }
 }
 

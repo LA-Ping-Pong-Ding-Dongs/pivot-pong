@@ -1,11 +1,16 @@
 require 'spec_helper'
 
 feature 'On the dashboard:', :js do
-  let(:player_one) { Player.create(name: 'Bob', key: 'bob', mean: 2300, sigma: 35, last_tournament_date: 5.weeks.ago) }
-  let(:player_two) { Player.create(name: 'Sally', key: 'sally', mean: 2105, sigma: 60, last_tournament_date: 1.week.ago) }
+  let(:bob) { Player.create(name: 'Bob', key: 'bob', mean: 2300, sigma: 35, last_tournament_date: 5.weeks.ago) }
+  let(:sally) { Player.create(name: 'Sally', key: 'sally', mean: 2105, sigma: 60, last_tournament_date: 1.week.ago) }
+  let(:godzilla) { Player.create(name: 'Godzilla', key: 'godzilla') }
 
-  let(:create_players) { player_one and player_two and nil }
-  let(:create_match) { Match.create winner_key: player_one.key, loser_key: player_two.key }
+  let(:match_1) { Match.create(winner_key: bob.key, loser_key: sally.key) }
+  let(:match_2) { Match.create(winner_key: godzilla.key, loser_key: sally.key) }
+  let(:match_3) { Match.create(winner_key: godzilla.key, loser_key: bob.key) }
+
+  let(:create_players) { bob and sally and nil }
+  let(:create_leaderboard_objects) { match_1 and match_2 and match_3 and nil }
 
   scenario 'a player can enter a match.' do |example|
     visit root_path
@@ -18,6 +23,8 @@ feature 'On the dashboard:', :js do
     end
 
     step '2. the last match results should update to reflect the entry', current: example do
+      find('.recent-matches-link').click
+
       expect(page).to have_content(['Bob', I18n.t('match.last.win_verb'), 'Templeton'].join(' '))
     end
   end
@@ -34,14 +41,16 @@ feature 'On the dashboard:', :js do
   end
 
   scenario 'a viewer can see existing matches' do
-    create_match
+    match_1
     visit root_path
+
+    find('.recent-matches-link').click
 
     expect(page).to have_content "Bob #{I18n.t('match.last.win_verb')} Sally"
   end
 
   scenario 'a user can view player info' do
-    create_match
+    match_1
     visit root_path
 
     expect(page).to have_content('Bob')
@@ -55,4 +64,20 @@ feature 'On the dashboard:', :js do
     end
   end
 
+  scenario 'a viewer can see current tournament player rankings' do
+    create_leaderboard_objects
+    visit root_path
+
+    find('.recent-matches-link').click
+    expect(page).to have_content I18n.t('player.recent_matches.title').upcase
+    expect(page).to_not have_content I18n.t('player.tournament_rankings.title').upcase
+
+    find('.leaderboard-link').click
+    expect(page).to have_content I18n.t('player.tournament_rankings.title').upcase
+    expect(page).to_not have_content I18n.t('player.recent_matches.title').upcase
+
+    expect(page).to have_content "Godzilla 2-0"
+    expect(page).to have_content "Bob 1-1"
+    expect(page).to have_content "Sally 0-2"
+  end
 end
