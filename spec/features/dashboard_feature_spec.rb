@@ -1,11 +1,13 @@
 require 'spec_helper'
 
 feature 'On the dashboard:', :js do
+  let(:match_time) { 1.hour.ago }
+
   let(:bob) { Player.create(name: 'Bob', key: 'bob', mean: 2300, sigma: 35, last_tournament_date: 5.weeks.ago) }
   let(:sally) { Player.create(name: 'Sally', key: 'sally', mean: 2105, sigma: 60, last_tournament_date: 1.week.ago) }
   let(:godzilla) { Player.create(name: 'Godzilla', key: 'godzilla') }
 
-  let(:match_1) { Match.create(winner_key: bob.key, loser_key: sally.key) }
+  let(:match_1) { Match.create(winner_key: bob.key, loser_key: sally.key, created_at: match_time) }
   let(:match_2) { Match.create(winner_key: godzilla.key, loser_key: sally.key) }
   let(:match_3) { Match.create(winner_key: godzilla.key, loser_key: bob.key) }
 
@@ -46,7 +48,7 @@ feature 'On the dashboard:', :js do
 
     find('.recent-matches-link').click
 
-    expect(page).to have_content "Bob #{I18n.t('match.last.win_verb')} Sally"
+    expect(page).to have_content "Bob #{I18n.t('match.last.win_verb')} Sally about 1 hour ago"
   end
 
   scenario 'a user can view player info' do

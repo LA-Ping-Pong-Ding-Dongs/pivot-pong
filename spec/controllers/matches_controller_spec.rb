@@ -85,15 +85,19 @@ describe MatchesController do
       it 'returns all matches' do
         xhr :get, :index
 
+        expected = all_matches.map{ |match| MatchJsonPresenter.new(match).as_json }
+
         expect(response).to be_success
-        expect(response.body).to eq({ 'results' => all_matches }.to_json)
+        expect(response.body).to eq({ 'results' => expected }.to_json)
       end
 
       it 'returns a list of recent matches' do
         xhr :get, :index, recent: true
 
+        expected = recent_matches.map{ |match| MatchJsonPresenter.new(match).as_json }
+
         expect(response).to be_success
-        expect(response.body).to eq({ 'results' => recent_matches }.to_json)
+        expect(response.body).to eq({ 'results' => expected }.to_json)
       end
     end
 

@@ -1,6 +1,6 @@
 <h3>- RECENT MATCHES -</h3>
 <ul>
     <% matches.each(function (match) { %>
-        <li><%= match.get('winner_name') %> defeated <%= match.get('loser_name') %></li>
+        <li><%= match.get('winner_name') %> defeated <%= match.get('loser_name') %> <%= match.get('human_readable_time') %> </li>
     <% }); %>
 </ul>
