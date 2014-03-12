@@ -3,35 +3,64 @@
 
   <div id="match_form_container" class="overlay">
     <%= form_for @match, url: matches_path, as: 'match' do |f| %>
-        <h1 class="app-name"><%= I18n.t('application.name_html').html_safe %></h1>
+      <h1 class="app-name"><%= I18n.t('application.name_html').html_safe %></h1>
 
-        <%= f.text_field :winner, placeholder: I18n.t('match.form.winner_label').upcase, tabindex: 1 %>
+      <%= f.text_field :winner, placeholder: I18n.t('match.form.winner_label').upcase, tabindex: 1 %>
 
-        <span class="defeats-text"><%= I18n.t('match.form.defeats_verb') %></span>
+      <span class="defeats-text"><%= I18n.t('match.form.defeats_verb') %></span>
 
-        <%= f.text_field :loser, placeholder: I18n.t('match.form.loser_label').upcase, tabindex: 2 %>
+      <%= f.text_field :loser, placeholder: I18n.t('match.form.loser_label').upcase, tabindex: 2 %>
 
-        <%= f.submit t('match.form.commit'), id: 'save_match', tabindex: 3 %>
+      <%= f.submit t('match.form.commit'), id: 'save_match', tabindex: 3 %>
     <% end -%>
   </div>
 
-  <div id="recent_matches_container" class="overlay">
-    <h3><%= I18n.t('player.recent_matches.title') %></h3>
+
+  <div class="dashboard-pane overlay">
+    <div class="pane-toggle">
+      <div class="tab leaderboard-link active">Leaderboard</div><div class="tab recent-matches-link">Recent Matches</div><div class="tab tab-spacer">&nbsp;</div>
+    </div>
+
+    <div id="leaderboard_container" class="active">
+      <h3><%= I18n.t('player.tournament_rankings.title') %></h3>
+      <div class="leaderboard-table-container">
+        <table>
+          <% @tournament_rankings.each_with_index do |player_ranking, index| %>
+            <tr>
+              <td class="player-ranking">
+                <%= index + 1 %>
+              </td>
+              <td class="player-name">
+                <%= player_ranking.name %>
+              </td>
+              <td class="player-record">
+                <%= player_ranking.wins %>-<%= player_ranking.losses %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+
+    <div id="recent_matches_container">
+      <h3><%= I18n.t('player.recent_matches.title') %></h3>
+    </div>
+
   </div>
 
   <div id="player_info" class="overlay"></div>
 </div>
 
 <script type="text/javascript">
-    $(function() {
-        pong.players = <%= PlayerTilesJsonPresenter.new(@players).to_json.html_safe %>
-        new pong.AppRouter();
-        Backbone.history.start();
+  $(function() {
+    pong.players = <%= PlayerTilesJsonPresenter.new(@players).to_json.html_safe %>;
+    new pong.AppRouter();
+    Backbone.history.start();
 
 //        we took this out because clicking a tile on the dashboard changes the current url to url/players/key
 //        and subsequent dashboard reloads would navigate away to the player page instead of staying on the dashboard
 //        $(document).click('a', pong.navigator);
 
-        pong.initializeDashboard();
-    });
+    pong.initializeDashboard();
+  });
 </script>
