@@ -5,10 +5,12 @@ pong.initializeDashboard = function() {
     el: '#match_form_container',
   });
   setupPlayerTiles();
-  setupRecentMatches();
-  setupPlayerStandings();
+  var recentMatches = new pong.RecentMatches();
+  setupRecentMatches(recentMatches);
+  var playerStandings = new pong.PlayerStandings();
+  setupPlayerStandings(playerStandings);
   paneViewDisplay();
-
+  pollForUpdates();
 
   function setupPlayerTiles() {
     pong.activeViews.PlayerTiles = new pong.PlayerTiles({
@@ -19,7 +21,6 @@ pong.initializeDashboard = function() {
   }
 
   function setupRecentMatches() {
-    var recentMatches = new pong.RecentMatches();
     pong.activeViews.RecentMatchesView = new pong.RecentMatchesView({
       el: '#recent_matches_container',
       collection: recentMatches,
@@ -28,12 +29,18 @@ pong.initializeDashboard = function() {
   }
 
   function setupPlayerStandings() {
-    var playerStandings = new pong.PlayerStandings();
     pong.activeViews.PlayerStandingsView = new pong.PlayerStandingsView({
       el: '#leaderboard_container',
       collection: playerStandings,
     });
     playerStandings.fetch();
+  }
+
+  function pollForUpdates() {
+    setInterval(function() {
+      recentMatches.fetch();
+      playerStandings.fetch();
+    }, 15000);
   }
 
   function paneViewDisplay() {

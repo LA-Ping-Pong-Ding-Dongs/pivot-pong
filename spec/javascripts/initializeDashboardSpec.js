@@ -22,4 +22,23 @@ describe('initializeDashboard', function() {
     expect(pong.activeViews.PlayerStandingsView.collection instanceof pong.PlayerStandings).toBeTruthy();
   });
 
+  it('sets an interval', function() {
+    spyOn(window, 'setInterval');
+    pong.initializeDashboard();
+
+    expect(window.setInterval).toHaveBeenCalledWith(jasmine.any(Function), 15000);
+  });
+
+  it('fetches recent matches and tournament standings every 15 seconds', function() {
+    pong.initializeDashboard();
+
+    var requests = jasmine.Ajax.requests;
+    expect(requests.count()).toEqual(2);
+    jasmine.clock().tick(15001);
+
+    expect(requests.count()).toEqual(4);
+    expect(requests.at(2).url).toBe('/matches?recent=true');
+    expect(requests.at(3).url).toBe('/tournament');
+  });
+
 });
