@@ -1,0 +1,18 @@
+<h3>- TOURNAMENT LEADERBOARD -</h3>
+<div class="table-container">
+  <table>
+    <% standings.each(function(standing, index) { %>
+      <tr>
+        <td class="player-ranking">
+          <%= index + 1 %>
+        </td>
+        <td class="player-name">
+          <%= standing.get('name') %>
+        </td>
+        <td class="player-record">
+          <%= standing.get('wins') %>-<%= standing.get('losses') %>
+        </td>
+      </tr>
+    <% }); %>
+  </table>
+</div>

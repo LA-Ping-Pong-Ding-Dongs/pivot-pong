@@ -35,3 +35,16 @@ ajaxResponses.Players = {
         },
     },
 };
+
+ajaxResponses.Tournament = {
+  show: {
+    success: {
+      status: '200',
+      responseText: JSON.stringify({ results: [{ key: 'one' }, { key: 'two' }] }),
+    },
+    failure: {
+      status: '400',
+      rresponseText: JSON.stringify({ error: 'blowin up' }),
+    },
+  },
+};

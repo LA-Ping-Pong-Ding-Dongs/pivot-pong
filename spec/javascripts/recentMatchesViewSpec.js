@@ -1,7 +1,7 @@
 describe('RecentMatchesView', function () {
 
     describe('match:created event', function () {
-        it('adds the model to the collection and renders', function () {
+        it('fetches the collection and re-renders', function () {
             var matches = new Backbone.Collection();
             var fetchSpy = spyOn(matches, 'fetch');
             new pong.RecentMatchesView({ collection: matches });

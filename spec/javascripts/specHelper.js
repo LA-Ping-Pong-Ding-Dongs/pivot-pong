@@ -6,4 +6,5 @@ beforeEach(function () {
 afterEach(function () {
     jasmine.Ajax.uninstall();
     jasmine.clock().uninstall();
+    pong.EventBus.off();
 });

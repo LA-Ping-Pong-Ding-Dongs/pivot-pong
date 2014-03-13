@@ -13,7 +13,7 @@ pong.RecentMatchesView = Backbone.View.extend({
         return this;
     },
 
-    _updateCollection: function(model) {
+    _updateCollection: function() {
         this.collection.fetch();
     },
 });
