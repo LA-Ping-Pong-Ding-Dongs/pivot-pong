@@ -92,7 +92,7 @@ describe MatchesController do
       end
 
       it 'returns a list of recent matches' do
-        xhr :get, :index, recent: true
+        xhr :get, :index, recent: 'true'
 
         expected = recent_matches.map{ |match| MatchJsonPresenter.new(match).as_json }
 

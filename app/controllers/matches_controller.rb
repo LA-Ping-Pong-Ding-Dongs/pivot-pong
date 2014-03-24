@@ -17,7 +17,7 @@ class MatchesController < ApplicationController
   end
 
   def index
-    if params[:recent] == true
+    if params[:recent]
       matches = match_finder.find_matches_for_tournament(tournament.start_time, tournament.end_time)
     else
       matches = match_finder.find_all
