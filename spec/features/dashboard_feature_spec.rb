@@ -23,6 +23,7 @@ feature 'On the dashboard:', :js do
       fill_in I18n.t('match.form.loser_label').upcase, with: 'Templeton'
 
       click_on I18n.t('match.form.commit')
+      expect(page).to have_content '1-0'
     end
 
     step '2. The players ratings get updated', current: example do

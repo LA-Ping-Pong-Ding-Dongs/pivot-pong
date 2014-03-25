@@ -157,12 +157,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  capybara
+  capybara (~> 2.2.1)
   ejs
-  jasmine
+  jasmine (~> 2.0.0)
   jquery-rails
   pg
-  poltergeist
+  poltergeist (~> 1.5.0)
   rails (= 4.0.3)
   rails_on_heroku
   rails_serve_static_assets

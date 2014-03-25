@@ -18,8 +18,8 @@ end
 group :development, :test do
   gem 'sqlite3'
   gem 'rspec-rails', git: 'https://github.com/rspec/rspec-rails.git', tag: 'v3.0.0.beta2'
-  gem 'capybara'
-  gem 'poltergeist'
-  gem 'jasmine'
+  gem 'capybara', '~> 2.2.1'
+  gem 'poltergeist', '~> 1.5.0'
+  gem 'jasmine', '~> 2.0.0'
   gem 'timecop'
 end
