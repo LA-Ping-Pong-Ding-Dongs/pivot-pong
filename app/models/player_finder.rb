@@ -1,9 +1,14 @@
 class PlayerFinder
+
+  def initialize(player_creator = PlayerCreator.new)
+    @player_creator = player_creator
+  end
+
   def find_or_create_by_name(name)
     begin
       player = Player.find(name.downcase)
     rescue ActiveRecord::RecordNotFound
-      player = Player.create(key: name.downcase, name: name)
+      player = @player_creator.create_player(key: name.downcase, name: name)
     end
 
     player_to_struct(player)

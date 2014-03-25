@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140312191305) do
+ActiveRecord::Schema.define(version: 20140324220907) do
 
   create_table "matches", force: true do |t|
     t.string   "winner_key"

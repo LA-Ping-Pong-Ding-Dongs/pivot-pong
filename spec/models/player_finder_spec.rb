@@ -1,7 +1,10 @@
 require 'spec_helper'
 
 describe PlayerFinder do
-  subject(:finder) { PlayerFinder.new }
+  subject(:finder) { PlayerFinder.new(player_creator_double) }
+
+  let(:player) { PlayerStruct.new('sally', 'Sally', 1223, 23) }
+  let(:player_creator_double) { double(PlayerCreator, create_player: player )}
 
   describe '#find_or_create_by_name' do
 
@@ -19,15 +22,9 @@ describe PlayerFinder do
 
     context 'when the name does not exist' do
       it 'creates a record for the player' do
-        expect { finder.find_or_create_by_name('Sally') }.to change(Player, :count).by(1)
-      end
+        expect(player_creator_double).to receive(:create_player).with(key: 'sally', name: 'Sally')
 
-      it 'still returns the player struct' do
-        player_record = finder.find_or_create_by_name('Sally')
-
-        expect(player_record).to be_kind_of PlayerStruct
-        expect(player_record.name).to eq 'Sally'
-        expect(player_record.key).to eq 'sally'
+        finder.find_or_create_by_name('Sally')
       end
     end
 

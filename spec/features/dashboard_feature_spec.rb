@@ -3,7 +3,7 @@ require 'spec_helper'
 feature 'On the dashboard:', :js do
   let(:match_time) { 1.hour.ago }
 
-  let(:bob) { Player.create(name: 'Bob', key: 'bob', mean: 2300, sigma: 35, last_tournament_date: 5.weeks.ago) }
+  let(:bob) { Player.create(name: 'Bob', key: 'bob', mean: 800, sigma: 100, last_tournament_date: 5.weeks.ago) }
   let(:sally) { Player.create(name: 'Sally', key: 'sally', mean: 2105, sigma: 60, last_tournament_date: 1.week.ago) }
   let(:godzilla) { Player.create(name: 'Godzilla', key: 'godzilla') }
 
@@ -15,6 +15,7 @@ feature 'On the dashboard:', :js do
   let(:create_leaderboard_objects) { match_1 and match_2 and match_3 and nil }
 
   scenario 'a player can enter a match.' do |example|
+    bob
     visit root_path
 
     step '1. fill in the winner and the loser', current: example do
@@ -24,7 +25,14 @@ feature 'On the dashboard:', :js do
       click_on I18n.t('match.form.commit')
     end
 
-    step '2. the last match results should update to reflect the entry', current: example do
+    step '2. The players ratings get updated', current: example do
+      visit current_url
+
+      expect(page).to have_content(865)
+      expect(page).to have_content(742)
+    end
+
+    step '3. the last match results should update to reflect the entry', current: example do
       find('.recent-matches-link').click
 
       expect(page).to have_css '.winner', text: 'Bob'
@@ -37,7 +45,7 @@ feature 'On the dashboard:', :js do
     visit root_path
 
     expect(page).to have_content('Bob')
-    expect(page).to have_content(2300)
+    expect(page).to have_content(800)
 
     expect(page).to have_content('Sally')
     expect(page).to have_content(2105)
