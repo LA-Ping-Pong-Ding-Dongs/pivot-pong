@@ -18,7 +18,25 @@ describe MatchFinder do
         build_match_struct(winning_match),
         build_match_struct(losing_match_2),
       ]
-      expect(match_finder.find_all_for_player('bob')).to equal_structs(expected)
+
+      actual = match_finder.find_all_for_player('bob')
+
+      p '*' * 80
+      p "actual map:"
+      p actual.map{ |s| s.to_h }
+      p "expected map:"
+      p expected.map{ |s| s.to_h }
+      p ''
+      p "actual classes:"
+      p actual.map{ |s| s.class }
+      p "expected classes:"
+      p expected.map{ |s| s.class }
+      p ''
+      p "actual structs?:"
+      p actual.map{ |s| s.kind_of?(Struct) }
+      p '*' * 80
+
+      expect(actual).to equal_structs(expected)
     end
   end
 
