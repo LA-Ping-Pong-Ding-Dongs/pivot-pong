@@ -18,7 +18,7 @@ describe MatchFinder do
         build_match_struct(winning_match),
         build_match_struct(losing_match_2),
       ]
-      expect(match_finder.find_all_for_player('bob')).to eq expected
+      expect(match_finder.find_all_for_player('bob')).to equal_structs(expected)
     end
   end
 
@@ -28,7 +28,7 @@ describe MatchFinder do
         build_match_with_names_struct(losing_match_1, 'Champ', 'Bob'),
         build_match_with_names_struct(winning_match, 'Bob', 'Loser'),
       ]
-      expect(match_finder.find_recent_matches_for_player('bob', 2)).to eq expected
+      expect(match_finder.find_recent_matches_for_player('bob', 2)).to equal_structs(expected)
     end
   end
 
@@ -40,7 +40,7 @@ describe MatchFinder do
         build_match_with_names_struct(winning_match, 'Bob', 'Loser'),
         build_match_with_names_struct(losing_match_2, 'Champ', 'Bob'),
       ]
-      expect(subject.find_all).to eq expected
+      expect(subject.find_all).to equal_structs(expected)
     end
   end
 
@@ -51,7 +51,7 @@ describe MatchFinder do
         build_match_with_names_struct(losing_match_1, 'Champ', 'Bob'),
         build_match_with_names_struct(winning_match, 'Bob', 'Loser'),
       ]
-      expect(subject.find_matches_for_tournament(5.days.ago, Time.now)).to eq expected
+      expect(subject.find_matches_for_tournament(5.days.ago, Time.now)).to equal_structs(expected)
     end
   end
 end
