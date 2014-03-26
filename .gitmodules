@@ -19,3 +19,6 @@
 [submodule "vendor/normalize.css"]
 	path = vendor/normalize.css
 	url = https://github.com/necolas/normalize.css.git
+[submodule "vendor/backbone-poller"]
+	path = vendor/backbone-poller
+	url = https://github.com/uzikilon/backbone-poller.git
