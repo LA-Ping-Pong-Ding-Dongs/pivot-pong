@@ -11,5 +11,21 @@
 
 <%= yield %>
 
+<script type="text/javascript">
+  $(function() {
+    pong.collections = {};
+    pong.collections.recentMatches = new pong.RecentMatches();
+    pong.collections.playerStandings = new pong.PlayerStandings();
+
+    Backbone.Poller.get(pong.collections.recentMatches, { delay: 15000 }).start();
+    Backbone.Poller.get(pong.collections.playerStandings, { delay: 15000 }).start();
+
+    new pong.AppRouter({
+      collections: pong.collections
+    });
+    Backbone.history.start();
+  });
+</script>
+
 </body>
 </html>

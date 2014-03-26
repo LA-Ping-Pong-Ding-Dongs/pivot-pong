@@ -3,6 +3,7 @@
 //= require ./csrf
 //= require underscore-min
 //= require backbone-min
+//= require backbone.poller
 //= require backbone.syphon.min
 //= require d3.min
 //= require hexbin

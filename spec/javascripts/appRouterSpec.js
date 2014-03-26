@@ -1,9 +1,11 @@
 describe('AppRouter', function () {
     beforeEach(function () {
-        this.router = new pong.AppRouter();
+        this.router = new pong.AppRouter({ collections: {} });
+        spyOn(pong, 'initializeDashboard');
     });
 
     describe('playerShow', function () {
+
         it('wires up the route', function () {
             expect(this.router.routes['players/:key']).toBe('playerShow');
         });
@@ -18,9 +20,11 @@ describe('AppRouter', function () {
             expect(pong.activeViews.PlayerInfoView instanceof pong.PlayerInfoView).toBeTruthy();
             expect(pong.activeViews.PlayerInfoView.model instanceof pong.Player).toBeTruthy();
         });
+
     });
 
     describe('root', function () {
+
         it('wires up the route', function () {
             expect(this.router.routes['']).toBe('dashboardShow');
         });

@@ -18,11 +18,14 @@
 
   <div class="dashboard-pane overlay">
     <div class="pane-toggle">
-      <div class="tab leaderboard-link active">Leaderboard</div><div class="tab recent-matches-link">Recent Matches</div><div class="tab tab-spacer">&nbsp;</div>
+      <div class="tab leaderboard-link active">Leaderboard</div>
+      <div class="tab recent-matches-link">Recent Matches</div>
+      <div class="tab tab-spacer">&nbsp;</div>
     </div>
 
     <div id="leaderboard_container" class="active">
       <h3><%= I18n.t('player.tournament_rankings.title') %></h3>
+
       <div class="table-container">
         <table>
           <% @tournament_rankings.each_with_index do |player_ranking, index| %>
@@ -52,15 +55,5 @@
 </div>
 
 <script type="text/javascript">
-  $(function() {
-    pong.players = <%= PlayerTilesJsonPresenter.new(@players).to_json.html_safe %>;
-    new pong.AppRouter();
-    Backbone.history.start();
-
-//        we took this out because clicking a tile on the dashboard changes the current url to url/players/key
-//        and subsequent dashboard reloads would navigate away to the player page instead of staying on the dashboard
-//        $(document).click('a', pong.navigator);
-
-    pong.initializeDashboard();
-  });
+  pong.players = <%= PlayerTilesJsonPresenter.new(@players).to_json.html_safe %>;
 </script>

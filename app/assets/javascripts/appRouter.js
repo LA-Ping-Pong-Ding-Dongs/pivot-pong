@@ -8,6 +8,10 @@ pong.AppRouter = Backbone.Router.extend({
         'players/:key': 'playerShow',
     },
 
+    initialize: function (options) {
+        this.options = options;
+    },
+
     playerShow: function (key) {
         var player = new pong.Player({ key: key });
 
@@ -23,6 +27,7 @@ pong.AppRouter = Backbone.Router.extend({
         if (randomPlayer) {
             this.playerShow(randomPlayer.key);
         }
+        pong.initializeDashboard(this.options);
     },
 
 });
