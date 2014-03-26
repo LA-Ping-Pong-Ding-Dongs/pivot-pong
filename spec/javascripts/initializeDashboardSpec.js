@@ -1,9 +1,11 @@
 describe('initializeDashboard', function() {
     beforeEach(function () {
+        this.players = new Backbone.Collection();
         this.recentMatches = new Backbone.Collection();
         this.playerStandings = new Backbone.Collection();
         this.collectionDoubles = {
             collections: {
+                players: this.players,
                 recentMatches: this.recentMatches,
                 playerStandings: this.playerStandings,
             }
@@ -11,8 +13,6 @@ describe('initializeDashboard', function() {
     });
 
   it('creates/renders MatchForm, PlayerTiles and RecentMatches', function() {
-    pong.players = {};
-
     expect(pong.activeViews.MatchForm).toBeUndefined();
     expect(pong.activeViews.PlayerTiles).toBeUndefined();
     expect(pong.activeViews.RecentMatchesView).toBeUndefined();

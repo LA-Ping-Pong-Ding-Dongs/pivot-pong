@@ -16,9 +16,11 @@
     pong.collections = {};
     pong.collections.recentMatches = new pong.RecentMatches();
     pong.collections.playerStandings = new pong.PlayerStandings();
+    pong.collections.players = new pong.Players(pong.players);
 
     Backbone.Poller.get(pong.collections.recentMatches, { delay: 15000 }).start();
     Backbone.Poller.get(pong.collections.playerStandings, { delay: 15000 }).start();
+    Backbone.Poller.get(pong.collections.players, { delay: 300000, delayed: true }).start();
 
     new pong.AppRouter({
       collections: pong.collections

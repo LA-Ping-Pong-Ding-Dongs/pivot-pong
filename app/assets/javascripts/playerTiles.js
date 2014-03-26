@@ -163,9 +163,10 @@ pong.PlayerTiles = Backbone.View.extend({
     },
 
     initialize: function (options) {
-        this.data = options.data;
+        this.data = this.collection.toJSON();
         this.svg = d3.select(this.el).append('svg');
 
+        this.collection.on('sync', _.bind(this.render, this));
         $(window).resize(_.bind(this.renderMesh, this));
         $(window).resize(_.debounce(_.bind(this.renderTiles, this), 500, true));
     },

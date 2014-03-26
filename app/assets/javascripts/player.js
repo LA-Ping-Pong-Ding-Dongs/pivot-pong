@@ -10,3 +10,11 @@ pong.Player = Backbone.Model.extend({
         return response.results;
     },
 });
+
+pong.Players = Backbone.Collection.extend({
+
+    model: pong.Player,
+
+    url: '/players',
+
+});

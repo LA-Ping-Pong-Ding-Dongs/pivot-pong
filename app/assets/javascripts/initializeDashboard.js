@@ -16,7 +16,7 @@ pong.initializeDashboard = function (options) {
     });
     pong.activeViews.PlayerTiles = new pong.PlayerTiles({
         el: '#player_tiles_container',
-        data: pong.players,
+        collection: this.options.collections.players,
     });
     pong.activeViews.PlayerTiles.render();
 

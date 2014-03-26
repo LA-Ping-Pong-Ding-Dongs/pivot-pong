@@ -7,7 +7,7 @@ describe('PlayerTiles', function () {
         this.renderMeshSpy = spyOn(pong.PlayerTiles.prototype, 'renderMesh');
         this.renderTilesSpy = spyOn(pong.PlayerTiles.prototype, 'renderTiles');
 
-        this.view = new pong.PlayerTiles({ data: this.playerData });
+        this.view = new pong.PlayerTiles({ collection: new Backbone.Collection(this.playerData) });
     });
 
     describe('initialize', function () {
