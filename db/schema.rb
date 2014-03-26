@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20140324220907) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "matches", force: true do |t|
     t.string   "winner_key"
     t.string   "loser_key"
@@ -30,6 +33,6 @@ ActiveRecord::Schema.define(version: 20140324220907) do
     t.date     "last_tournament_date"
   end
 
-  add_index "players", ["key"], name: "index_players_on_key", unique: true
+  add_index "players", ["key"], name: "index_players_on_key", unique: true, using: :btree
 
 end
