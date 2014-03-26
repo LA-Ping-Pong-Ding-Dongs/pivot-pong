@@ -23,9 +23,9 @@ describe MatchFinder do
 
       p '*' * 80
       p "actual map:"
-      p actual.map{ |s| s.to_h }
+      p actual.map{ |s| s.to_h.tap{ |h| h.delete(:created_at) } }
       p "expected map:"
-      p expected.map{ |s| s.to_h }
+      p expected.map{ |s| s.to_h.tap{ |h| h.delete(:created_at) } }
       p ''
       p "actual classes:"
       p actual.map{ |s| s.class }
