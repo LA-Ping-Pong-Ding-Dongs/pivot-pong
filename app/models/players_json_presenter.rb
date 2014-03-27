@@ -1,4 +1,4 @@
-class PlayerTilesJsonPresenter
+class PlayersJsonPresenter
   include Rails.application.routes.url_helpers
 
   def initialize(players)

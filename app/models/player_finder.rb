@@ -23,6 +23,13 @@ class PlayerFinder
     player_to_struct(player)
   end
 
+  def find_players_by_substring(substring)
+    Player
+    .where('name ILIKE ?', "#{substring}%")
+    .order('name ASC')
+    .map { |player| player_to_struct(player) }
+  end
+
   private
 
   def player_to_struct(player)

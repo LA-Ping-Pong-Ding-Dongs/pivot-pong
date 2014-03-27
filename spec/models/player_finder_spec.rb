@@ -49,11 +49,32 @@ describe PlayerFinder do
                                                          build_player_struct(templeton),
                                                      ])
     end
+  end
 
+  describe '#find_players_by_substring' do
+    let!(:bob) { Player.create(key: 'bob', name: 'Bob') }
+    let!(:shelby) { Player.create(key: 'shelby', name: 'Shelby') }
+    let!(:bella) { Player.create(key: 'bella', name: 'Bella') }
+    let!(:sally) { Player.create(key: 'sally', name: 'sally') }
+
+
+    it 'returns an alphabetically ordered array of player names matching substring ' do
+      expect(finder.find_players_by_substring('b')).to eql([
+                                                             build_player_struct(bella),
+                                                             build_player_struct(bob),
+                                                         ])
+    end
+
+    it 'returns a case-insensitive search' do
+      expect(finder.find_players_by_substring('s')).to match_array([
+          build_player_struct(sally),
+          build_player_struct(shelby),
+      ])
+    end
   end
 
   describe '#find' do
-    let!(:bob) { Player.create(key: 'bob', name: 'Bob')}
+    let!(:bob) { Player.create(key: 'bob', name: 'Bob') }
 
     it 'returns an open struct of player data if the player can be found' do
       player_record = finder.find('bob')

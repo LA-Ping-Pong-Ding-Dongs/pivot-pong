@@ -41,6 +41,54 @@ feature 'On the dashboard:', :js do
     end
   end
 
+  scenario 'as they enter a match winner a player can click on a name from a dropdown' do
+    create_players
+    visit root_path
+
+    step '1. type initial name string and expect pop up list to display' do
+      fill_in "Winner".upcase, with: 'b'
+      within '.winner-field .search' do
+        expect(page).to have_content 'Bob'
+      end
+    end
+
+    step '2. clicking a name will fill in winner with player name' do
+      within '.winner-field .search' do
+        page.find('li', 'Bob').click
+      end
+
+      expect(page).to have_field('match_winner', with: 'Bob')
+
+      within '.winner-field .search' do
+        expect(page).to_not have_selector('li')
+      end
+    end
+  end
+
+  scenario 'as they enter a match loser a player can click on a name from a dropdown' do
+    create_players
+    visit root_path
+
+    step '1. type initial name string and expect pop up list to display' do
+      fill_in "Loser".upcase, with: 'b'
+      within '.loser-field .search' do
+        expect(page).to have_content 'Bob'
+      end
+    end
+
+    step '2. clicking a name will fill in loser with player name' do
+      within '.loser-field .search' do
+        page.find('li', 'Bob').click
+      end
+
+      expect(page).to have_field('match_loser', with: 'Bob')
+
+      within '.loser-field .search' do
+        expect(page).to_not have_selector('li')
+      end
+    end
+  end
+
   scenario 'a viewer can see all of the players and their data' do
     create_players
     visit root_path

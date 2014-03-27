@@ -2,11 +2,11 @@ class PlayersController < ApplicationController
   RECENT_MATCHES_LIMIT = 5
 
   def index
-    @players = player_finder.find_all_players
+    @players = player_finder.find_players_by_substring(params[:search])
 
     respond_to do |format|
       format.js do
-        render json: player_tiles_json_presenter.as_json
+        render json: players_json_presenter.as_json
       end
     end
   end
@@ -40,7 +40,7 @@ class PlayersController < ApplicationController
     PlayerInfoJsonPresenter.new(@player, @matches)
   end
 
-  def player_tiles_json_presenter
-    PlayerTilesJsonPresenter.new(@players)
+  def players_json_presenter
+    PlayersJsonPresenter.new(@players)
   end
 end

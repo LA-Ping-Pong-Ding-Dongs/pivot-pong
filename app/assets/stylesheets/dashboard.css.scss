@@ -39,12 +39,14 @@
     font-size: 15pt;
     display: inline-block;
     padding-top: 3px;
+    vertical-align: top;
   }
 
   #save_match {
     display: inline-block;
     position: absolute;
     right: 28px;
+    top: 11px;
     letter-spacing: 0.1em;
   }
 
@@ -58,6 +60,18 @@
       margin: 0;
       color: $pivotal_red;
     }
+  }
+
+  .winner-field, .loser-field {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  #winner_suggestions ul li, #loser_suggestions ul li {
+    @include ellipsis-text;
+    width: 125px;
+    max-width: 125px;
+    text-align: left;
   }
 }
 

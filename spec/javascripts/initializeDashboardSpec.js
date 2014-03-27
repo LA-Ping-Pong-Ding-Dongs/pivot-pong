@@ -12,11 +12,13 @@ describe('initializeDashboard', function() {
         }
     });
 
-  it('creates/renders MatchForm, PlayerTiles and RecentMatches', function() {
+  it('creates/renders MatchForm, PlayerTiles, PlayerSearchViews and RecentMatches', function() {
     expect(pong.activeViews.MatchForm).toBeUndefined();
     expect(pong.activeViews.PlayerTiles).toBeUndefined();
     expect(pong.activeViews.RecentMatchesView).toBeUndefined();
     expect(pong.activeViews.PlayerStandingsView).toBeUndefined();
+    expect(pong.activeViews.winnerPlayerSearchView).toBeUndefined();
+    expect(pong.activeViews.loserPlayerSearchView).toBeUndefined();
 
     pong.initializeDashboard(this.collectionDoubles);
 
@@ -28,6 +30,8 @@ describe('initializeDashboard', function() {
 
     expect(pong.activeViews.PlayerStandingsView instanceof pong.PlayerStandingsView).toBeTruthy();
     expect(pong.activeViews.PlayerStandingsView.collection).toBe(this.playerStandings);
-  });
 
+    expect(pong.activeViews.winnerPlayerSearchView instanceof pong.PlayerSearchView).toBeTruthy();
+    expect(pong.activeViews.loserPlayerSearchView instanceof pong.PlayerSearchView).toBeTruthy();
+  });
 });
