@@ -1,4 +1,5 @@
 ---
 applications:
 - name: pivot-pong
-  command: bundle exec rake cf:on_first_instance db:migrate && rails s
+  command: bundle exec rake cf:on_first_instance db:migrate && bundle exec rails s -p $PORT -e $RAILS_ENV
+  buildpack: git://github.com/heroku/heroku-buildpack-ruby.git

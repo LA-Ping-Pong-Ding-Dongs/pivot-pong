@@ -11,7 +11,7 @@ gem 'trueskill', git: 'git://github.com/saulabs/trueskill.git', require: 'saulab
 gem 'pg'
 
 
-group :production do
+group :production, :staging do
   gem 'rails_serve_static_assets'
   gem 'rails_on_heroku'
 end
