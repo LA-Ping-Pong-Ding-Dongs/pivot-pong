@@ -12,7 +12,7 @@ class MatchesController < ApplicationController
           render status: 400, json: match_form.as_json.merge(errors: errors)
         end
       end
-      format.html { redirect_to root_path, alert: match_validator.errors }
+      format.html { redirect_to root_path, alert: match_validator.errors.full_messages }
     end
   end
 

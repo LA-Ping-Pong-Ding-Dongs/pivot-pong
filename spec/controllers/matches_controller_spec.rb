@@ -28,7 +28,12 @@ describe MatchesController do
       end
 
       describe 'failure' do
-        let(:errors) { ActiveModel::Errors.new('errors').add(:bad_news, 'I failed') }
+        let(:errors) do
+          err = ActiveModel::Errors.new(Match.new)
+          err.add(:loser, 'I failed')
+
+          err
+        end
         let(:match_validator) { instance_double(MatchValidator, valid?: false, errors: errors) }
         let(:match_data) { {match: {invalid: "data"}} }
 
