@@ -3,4 +3,5 @@
 
 require File.expand_path('../config/application', __FILE__)
 
+task :default => ['spec', 'jasmine:ci']
 PivotPong::Application.load_tasks
