@@ -107,6 +107,7 @@
   }
 
   .pane-toggle {
+    background-color: rgba(darken($overlay_grey, 5%), 0.85);
     position: absolute;
     top: 0;
     left: 0;
@@ -121,15 +122,17 @@
       padding: 8px;
       display: inline-block;
       background-color: rgba(darken($overlay_grey, 5%), 0.85);
-      width: 33.33%;
-
       &.active {
-        background-color: transparent;
+        background-color: rgba(lighten($overlay_grey, 75%), 0.35);
       }
     }
 
+    .leaderboard-link, recent-matches-link {
+      width: 34.33333%;
+    }
+
     .tab-spacer {
-      background-color: rgba(darken($overlay_grey, 5%), 0.85);
+      width: 31.33333%;
       cursor: default;
     }
   }
