@@ -38,6 +38,7 @@ describe('PlayerTiles', function () {
                 [5,5], [15,5], [25,5], [35,5],
                 [5,15], [15,15], [25,15], [35,15],
                 [5,25], [15,25], [25,25], [35,25],
+                [5,35], [15,35], [25,35], [35,35],
             ];
             _.each(centerValues, function(center, index) {
                 center['i'] = index % 4;
@@ -60,6 +61,15 @@ describe('PlayerTiles', function () {
                 { name: 'Mark', mean: 1580, url: '/players/mark', i: 25, j: 15, location: '25,15' },
             ]);
         });
+
+        it('avoids centers excluded by callback', function () {
+
+            this.view.distributePlayersAroundMesh(function (x, y) {return y == 15});
+            expect(this.view.data).toEqual([
+                { name: 'Johnny', mean: 1200, url: '/players/johnny', i: 15, j: 25, location: '15,25' },
+                { name: 'Mark', mean: 1580, url: '/players/mark', i: 25, j: 25, location: '25,25' },
+            ]);
+        })
     });
 
     describe('colorize', function () {

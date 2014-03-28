@@ -18,6 +18,7 @@ pong.initializeDashboard = function (options) {
     pong.activeViews.PlayerTiles = new pong.PlayerTiles({
         el: '#player_tiles_container',
         collection: this.options.collections.players,
+        excludeCells: pong.underOverlayChecker.underOverlays,
     });
     pong.activeViews.PlayerTiles.render();
 
