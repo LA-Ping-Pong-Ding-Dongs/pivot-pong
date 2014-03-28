@@ -1,6 +1,17 @@
 language: ruby
 script:
-  - bundle exec rake
-  - bundle exec rake jasmine:ci
+- bundle exec rake
+- bundle exec rake jasmine:ci
 rvm:
-  - 2.1.0
+- 2.1.0
+deploy:
+  provider: cloudfoundry
+  username:
+    secure: HX60jYjZyrKIu7eM4wbzgQuhj22kaH7ZwQ9AcnTTA+eNy+QS86UFmbggJoPgzLNSqiYP+LMOPEGuiCytNOCtNzDx5vaJdqAI5LuXJ2dzgZAHi8Kxc0STp0vYPZludNOPzt3RIWTIqPIIh3wmryAdfdShf3ikQZ99fk6wJ6sE/aI=
+  password:
+    secure: HOA+R04u3qsKMo7TPRgqfHHQM6bZ1cZklGaIDH+AAWbbXZSCfzUMPt9Ay7sTHfsV3BKFpQ7A6h8rlvrStVcuaomFrIxtSsjD0HQolrpwyeWqSN3O8tq3VjOSxqws+36rGyzA7dCQHxv3oW+QcTZeH+LA8Nr3DaAVARNKpuLM6kc=
+  organization:
+    secure: ipQ5MiQVYiJKc0Q/wQAVAxQVff0Pt6uMwfI7wzg8s4OlX5pymzoXPVcc1q4R6KCoO8G78OV4XIr9C5zC0/UPiiP+KWAl0JF85bbS1JkTrUlBgWvZbKnFzv3p/TE4NrmYAQArJflPL57L07sluLykiYgOlkJvQoz5rHA9i4/LVEs=
+  target:
+    secure: MfullqjR+NXsudb1S+W27aFz9MUtBGlwEGRQvrnpvf/O0FK1t71OyEg8zx40JvTpN2T1Lv6kgwLLnRFc1+UbC5Hu33Nh8CkmRiRqjG0WaTYns7cY++8Tpg/reswfvCO/GuSui1z4E3F6sLjYTb+Tl0MomtRkB/PAnAdDG1IoAho=
+  space: staging
