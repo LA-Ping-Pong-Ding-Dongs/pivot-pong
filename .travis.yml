@@ -15,3 +15,4 @@ deploy:
   target:
     secure: MfullqjR+NXsudb1S+W27aFz9MUtBGlwEGRQvrnpvf/O0FK1t71OyEg8zx40JvTpN2T1Lv6kgwLLnRFc1+UbC5Hu33Nh8CkmRiRqjG0WaTYns7cY++8Tpg/reswfvCO/GuSui1z4E3F6sLjYTb+Tl0MomtRkB/PAnAdDG1IoAho=
   space: staging
+  edge: true
