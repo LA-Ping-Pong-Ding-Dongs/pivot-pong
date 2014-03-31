@@ -74,6 +74,23 @@ describe PlayerStandingsBuilder do
       expect(rankings[7].losses).to eq(1)
       expect(rankings[7].unique_opponents_count).to eq(1)
     end
+
+    it 'returns the top elements if no range parameter is provided' do
+      Kernel.silence_warnings do
+        @player_limit = described_class::PLAYER_STANDINGS_LIMIT
+        described_class::PLAYER_STANDINGS_LIMIT = 2
+      end
+
+      expect(subject.get_ordered_standings_for_matches([match_1, match_2, match_3]).length).to be 2
+
+      Kernel.silence_warnings do
+        described_class::PLAYER_STANDINGS_LIMIT = @player_limit
+      end
+    end
+
+    it 'returns the top elements if range parameter is provided' do
+      expect(subject.get_ordered_standings_for_matches([match_1, match_2], limit: 1).length).to be 1
+    end
   end
 
 end

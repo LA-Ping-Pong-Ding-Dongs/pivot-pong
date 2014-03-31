@@ -1,8 +1,10 @@
 class PlayerStandingsBuilder
 
-  def get_ordered_standings_for_matches(matches)
+  PLAYER_STANDINGS_LIMIT = 10
+
+  def get_ordered_standings_for_matches(matches, limit: PLAYER_STANDINGS_LIMIT)
     standings = build_for_matches(matches)
-    sort_standings(standings)
+    sort_standings(standings)[(0...limit)]
   end
 
   private
