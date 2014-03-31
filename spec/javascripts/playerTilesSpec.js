@@ -62,14 +62,20 @@ describe('PlayerTiles', function () {
             ]);
         });
 
-        it('avoids centers excluded by callback', function () {
-
+        it('avoids centers that should be excluded', function () {
             this.view.distributePlayersAroundMesh(function (x, y) {return y == 15});
             expect(this.view.data).toEqual([
                 { name: 'Johnny', mean: 1200, url: '/players/johnny', i: 15, j: 25, location: '15,25' },
                 { name: 'Mark', mean: 1580, url: '/players/mark', i: 25, j: 25, location: '25,25' },
             ]);
-        })
+        });
+
+        it('stops distributing hexbins before all available bins are full', function () {
+            this.view.distributePlayersAroundMesh(function (x, y) {return false}, 0.75);
+            expect(this.view.data).toEqual([
+                { name: 'Johnny', mean: 1200, url: '/players/johnny', i: jasmine.any(Number), j: jasmine.any(Number), location: jasmine.any(String) },
+            ]);
+        });
     });
 
     describe('colorize', function () {

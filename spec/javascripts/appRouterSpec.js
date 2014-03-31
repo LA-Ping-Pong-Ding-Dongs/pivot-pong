@@ -24,7 +24,6 @@ describe('AppRouter', function () {
     });
 
     describe('root', function () {
-
         it('wires up the route', function () {
             expect(this.router.routes['']).toBe('dashboardShow');
         });
@@ -45,5 +44,17 @@ describe('AppRouter', function () {
             expect(this.router.playerShow).not.toHaveBeenCalled();
         });
 
+    });
+
+    describe('tournamentShow', function () {
+        it('wires up the route', function () {
+            expect(this.router.routes['tournament']).toBe('tournamentShow');
+        });
+    });
+
+    describe('matchesIndex', function () {
+        it('wires up the route', function () {
+            expect(this.router.routes['matches']).toBe('matchesIndex');
+        });
     });
 });

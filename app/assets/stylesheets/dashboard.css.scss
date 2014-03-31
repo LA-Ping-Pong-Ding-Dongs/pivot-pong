@@ -121,6 +121,8 @@
       box-sizing: border-box;
       padding: 8px;
       display: inline-block;
+      text-decoration: none;
+      color: $gray;
       background-color: rgba(darken($overlay_grey, 5%), 0.85);
       &.active {
         background-color: rgba(lighten($overlay_grey, 75%), 0.35);

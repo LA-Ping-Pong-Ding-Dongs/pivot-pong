@@ -25,7 +25,8 @@
     new pong.AppRouter({
       collections: pong.collections
     });
-    Backbone.history.start();
+    Backbone.history.start({pushState: true, hashChange: false});
+    $(document).click('a', pong.navigator);
   });
 </script>
 

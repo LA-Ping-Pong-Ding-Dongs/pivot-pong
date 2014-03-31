@@ -22,8 +22,6 @@ pong.initializeDashboard = function (options) {
     });
     pong.activeViews.PlayerTiles.render();
 
-    paneViewDisplay();
-
     function setupPlayerSearchViews() {
         pong.activeViews.winnerPlayerSearchView = new pong.PlayerSearchView({
             el: '#winner_suggestions',
@@ -47,22 +45,6 @@ pong.initializeDashboard = function (options) {
         $('.loser-field input').on('keyup', function (e) {
             var val = e.target.value;
             pong.activeViews.loserPlayerSearchView.collectionSearch(val);
-        });
-    };
-
-    function paneViewDisplay() {
-        $('.leaderboard-link').click(function () {
-            $('.recent-matches-link').removeClass('active');
-            $('#recent_matches_container').removeClass('active');
-            $('.leaderboard-link').addClass('active');
-            $('#leaderboard_container').addClass('active');
-        });
-
-        $('.recent-matches-link').click(function () {
-            $('.leaderboard-link').removeClass('active');
-            $('#leaderboard_container').removeClass('active');
-            $('.recent-matches-link').addClass('active');
-            $('#recent_matches_container').addClass('active');
         });
     }
 };

@@ -19,3 +19,8 @@ en:
   player_info:
     record:
       overall: Overall Record
+  overlay:
+    leaderboard:
+      title: Leaderboard
+    recent_matches:
+      title: Recent Matches

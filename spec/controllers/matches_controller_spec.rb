@@ -106,5 +106,14 @@ describe MatchesController do
       end
     end
 
+    context 'responds with html' do
+      it 'is successful' do
+        get :index
+
+        expect(response).to be_success
+        expect(response.body).to eq ' '
+      end
+    end
+
   end
 end

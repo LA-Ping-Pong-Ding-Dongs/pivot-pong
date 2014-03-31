@@ -13,8 +13,8 @@ describe PlayersJsonPresenter do
   describe '#as_json' do
     it 'presents names of matching players in json format' do
       expect(subject.as_json).to eq([
-                                    { key: 'bob', name: 'Bob', url: "#/players/bob", mean: 1300 },
-                                    { key: 'bella', name: 'Bella', url: "#/players/bella", mean: 1100 }
+                                    { key: 'bob', name: 'Bob', url: "/players/bob", mean: 1300 },
+                                    { key: 'bella', name: 'Bella', url: "/players/bella", mean: 1100 }
                                     ])
     end
 

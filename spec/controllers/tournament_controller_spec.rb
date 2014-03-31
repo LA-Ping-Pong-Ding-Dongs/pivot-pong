@@ -11,14 +11,24 @@ describe TournamentController do
   end
 
   describe '#show' do
-    it 'returns current tournament data' do
-      xhr :get, :show
+    context 'responds with json' do
+      it 'returns current tournament data' do
+        xhr :get, :show
 
-      expect(tournament_double).to have_received(:determine_rankings)
+        expect(tournament_double).to have_received(:determine_rankings)
 
-      expect(response).to be_success
-      expect(JSON.parse(response.body)).to eq(JSON.parse({ results: ['json_data', 'json_data'] }.to_json))
+        expect(response).to be_success
+        expect(JSON.parse(response.body)).to eq(JSON.parse({ results: ['json_data', 'json_data'] }.to_json))
+      end
+    end
+
+    context 'responds with html' do
+      it 'is successful' do
+        get :show
+
+        expect(response).to be_success
+        expect(response.body).to eq ' '
+      end
     end
   end
-
 end
