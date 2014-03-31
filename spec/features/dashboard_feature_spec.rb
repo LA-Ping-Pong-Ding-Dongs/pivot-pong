@@ -19,10 +19,11 @@ feature 'On the dashboard:', :js do
     visit root_path
 
     step '1. fill in the winner and the loser', current: example do
+      expect(page).to have_css '#match_winner.js-field'
       fill_in I18n.t('match.form.winner_label').upcase, with: 'Bob'
       fill_in I18n.t('match.form.loser_label').upcase, with: 'Templeton'
 
-      click_on I18n.t('match.form.commit')
+      click_on I18n.t('match.form.commit').upcase
       expect(page).to have_content '1-0'
     end
 

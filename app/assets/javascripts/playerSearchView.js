@@ -17,7 +17,6 @@ pong.PlayerSearchView = Backbone.View.extend({
       names: this.filterPlayers(),
     }));
     this.$el.on('click', _.bind(this.clickHandler, this));
-
   },
 
   collectionSearch: function (substring) {

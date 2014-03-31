@@ -5,10 +5,16 @@
     </div>
 
     <h1 class="app-name">Piv<span class="pivotal-o"></span>t-P<span class="pivotal-o"></span>ng</h1>
-    <input id="match_winner" name="match[winner]" type="text" placeholder="WINNER" tabindex="1"/>
+    <div class="winner-field">
+        <input id="match_winner" name="match[winner]" type="text" placeholder="WINNER" class="js-field" tabindex="1"/>
+        <div id="winner_suggestions" class="search winner"></div>
+    </div>
 
     <span class="defeats-text">- DEFEATS -</span>
-    <input id="match_loser" name="match[loser]" type="text" placeholder="LOSER" tabindex="2"/>
+    <div class="loser-field">
+        <input id="match_loser" name="match[loser]" type="text" placeholder="LOSER" class="js-field" tabindex="2"/>
+        <div id="loser_suggestions" class="search loser"></div>
+    </div>
 
     <input id="save_match" name="commit" type="submit" value="RECORD" tabindex="3"/>
 </form>
