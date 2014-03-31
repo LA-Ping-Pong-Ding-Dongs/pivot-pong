@@ -23,3 +23,7 @@ group :development, :test do
   gem 'jasmine', '~> 2.0.0'
   gem 'timecop'
 end
+
+group :test do
+  gem 'nyan-cat-formatter'
+end
