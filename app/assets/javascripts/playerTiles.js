@@ -31,7 +31,7 @@ pong.PlayerTiles = Backbone.View.extend({
     },
 
     renderTiles: function () {
-        this.distributePlayersAroundMesh();
+        this.distributePlayersAroundMesh(this.excludeCells);
         joinPlayerDataToDom.apply(this);
 
         return this;
@@ -122,7 +122,8 @@ pong.PlayerTiles = Backbone.View.extend({
         }
     },
 
-    distributePlayersAroundMesh: function () {
+    distributePlayersAroundMesh: function (excludeCells) {
+        excludeCells = excludeCells || function() { return false };
         var centers = _(availableTileCenters(this.hexbin.centers()))
             .chain()
             .shuffle()
@@ -146,8 +147,14 @@ pong.PlayerTiles = Backbone.View.extend({
             maxI = _.max(centers, function(center) { return center.i; }).i;
             maxJ = _.max(centers, function(center) { return center.j; }).j;
 
+            var notEdgeRowOrColumn = function(center) {
+                return center.i != 0 && center.i != maxI &&
+                    center.j != 0 && center.j != maxJ
+            };
+
             _.each(centers, function (center) {
-                if (center.i != 0 && center.i != maxI && center.j != 0 && center.j != maxJ) {
+
+                if (notEdgeRowOrColumn(center) && !excludeCells(center[0], center[1])) {
                     available.push(center);
                 }
             });
@@ -165,6 +172,7 @@ pong.PlayerTiles = Backbone.View.extend({
     initialize: function (options) {
         this.data = this.collection.toJSON();
         this.svg = d3.select(this.el).append('svg');
+        this.excludeCells = options.excludeCells;
 
         this.collection.on('sync', _.bind(this.render, this));
         $(window).resize(_.bind(this.renderMesh, this));
