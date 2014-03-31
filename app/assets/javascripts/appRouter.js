@@ -6,6 +6,8 @@ pong.AppRouter = Backbone.Router.extend({
     routes: {
         '': 'dashboardShow',
         'players/:key': 'playerShow',
+        'tournament': 'tournamentShow',
+        'matches': 'matchesIndex',
     },
 
     initialize: function (options) {
@@ -30,4 +32,17 @@ pong.AppRouter = Backbone.Router.extend({
         pong.initializeDashboard(this.options);
     },
 
+    tournamentShow: function () {
+        $('.recent-matches-link').removeClass('active');
+        $('#recent_matches_container').removeClass('active');
+        $('.leaderboard-link').addClass('active');
+        $('#leaderboard_container').addClass('active');
+    },
+
+    matchesIndex: function () {
+        $('.leaderboard-link').removeClass('active');
+        $('#leaderboard_container').removeClass('active');
+        $('.recent-matches-link').addClass('active');
+        $('#recent_matches_container').addClass('active');
+    },
 });

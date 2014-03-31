@@ -22,8 +22,10 @@ class MatchesController < ApplicationController
     else
       matches = match_finder.find_all
     end
-
-    render json: { results: matches.map{ |match| MatchJsonPresenter.new(match).as_json }.as_json }
+    respond_to do |format|
+      format.js { render json: { results: matches.map{ |match| MatchJsonPresenter.new(match).as_json }.as_json } }
+      format.html { render nothing: true }
+    end
   end
 
   private

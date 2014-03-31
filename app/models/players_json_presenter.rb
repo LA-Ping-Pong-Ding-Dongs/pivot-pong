@@ -9,7 +9,7 @@ class PlayersJsonPresenter
     @players.map do |player|
       {
           name: player.name,
-          url: "#/players/#{player.key}",
+          url: "/players/#{player.key}",
           mean: player.mean,
           key: player.key,
       }
