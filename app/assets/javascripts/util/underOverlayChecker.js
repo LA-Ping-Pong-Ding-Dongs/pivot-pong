@@ -2,7 +2,7 @@ window.pong = window.pong || {};
 
 pong.underOverlayChecker = {
     pointUnderElement: function (x, y, el) {
-        var MARGIN = 100;
+        var MARGIN = 50;
         bb = el.getBoundingClientRect();
         return x > (bb.left - MARGIN) && x < (bb.right + MARGIN) && y > (bb.top - MARGIN) && y < (bb.bottom + MARGIN);
     },

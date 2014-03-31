@@ -31,7 +31,7 @@ pong.PlayerTiles = Backbone.View.extend({
     },
 
     renderTiles: function () {
-        this.distributePlayersAroundMesh(this.excludeCells);
+        this.distributePlayersAroundMesh(this.excludeCells, this.PERCENT_BLANK_TILES);
         joinPlayerDataToDom.apply(this);
 
         return this;
@@ -122,15 +122,19 @@ pong.PlayerTiles = Backbone.View.extend({
         }
     },
 
-    distributePlayersAroundMesh: function (excludeCells) {
+    distributePlayersAroundMesh: function (excludeCells, percentBlankCells) {
         excludeCells = excludeCells || function() { return false };
         var centers = _(availableTileCenters(this.hexbin.centers()))
             .chain()
             .shuffle()
-            .take(this.data.length)
             .value();
 
-        this.data = _(this.data).map(function (player, index) {
+        if (percentBlankCells) {
+            centers  = _.initial(centers, parseInt(centers.length * percentBlankCells));
+        }
+        centers  = _.take(centers, this.data.length);
+
+        this.data = _(_.take(this.data, centers.length)).map(function (player, index) {
             var column = centers[index][0];
             var row = centers[index][1];
             player = _.clone(player);
@@ -173,6 +177,7 @@ pong.PlayerTiles = Backbone.View.extend({
         this.data = this.collection.toJSON();
         this.svg = d3.select(this.el).append('svg');
         this.excludeCells = options.excludeCells;
+        this.PERCENT_BLANK_TILES = 0.33;
 
         this.collection.on('sync', _.bind(this.render, this));
         $(window).resize(_.bind(this.renderMesh, this));
