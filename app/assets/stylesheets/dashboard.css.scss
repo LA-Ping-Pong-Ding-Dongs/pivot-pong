@@ -67,11 +67,28 @@
     vertical-align: top;
   }
 
-  #winner_suggestions ul li, #loser_suggestions ul li {
-    @include ellipsis-text;
-    width: 125px;
-    max-width: 125px;
-    text-align: left;
+  .search-results {
+    position: absolute;
+    border: 3px solid $gray_light;
+    border-top: none;
+    width: 160px;
+    background-color: white;
+    margin: 0;
+    padding: 0;
+
+    li {
+      @include ellipsis-text;
+      text-align: left;
+      cursor: pointer;
+      border-bottom: 1px dotted rgba(darken($overlay_grey, 5%), 0.85);
+      padding: 9px;
+      &:hover {
+        background-color: $gray_light;
+      }
+      &:last-child {
+        border-bottom: none;
+      }
+    }
   }
 }
 

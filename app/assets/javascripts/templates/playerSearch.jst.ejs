@@ -1,5 +1,7 @@
-<ul>
-    <% _.each(names, function(name) { %>
-    <li><%= name %></li>
-    <% }); %>
-</ul>
+<% if (names.length != 0) { %>
+    <ul class="search-results">
+        <% _.each(names, function(name) { %>
+        <li><%= name %></li>
+        <% }); %>
+    </ul>
+<% } %>
