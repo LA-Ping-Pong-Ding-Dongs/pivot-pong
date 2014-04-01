@@ -11,16 +11,18 @@ en:
       win_verb: defeated
   player:
     recent_matches:
-      title: '- Recent Matches -'
+      title: 'Recent Matches'
       won: Beat
       lost: Lost to
     tournament_rankings:
-      title: '- Tournament Leaderboard -'
+      title: 'Tournament Leaderboard'
   player_info:
     record:
       overall: Overall Record
   overlay:
     leaderboard:
       title: Leaderboard
+    tooltip:
+      copy: Leaderboard ranking is determined by tournament win % multiplied by the number of unique players faced in the tournament.
     recent_matches:
       title: Recent Matches

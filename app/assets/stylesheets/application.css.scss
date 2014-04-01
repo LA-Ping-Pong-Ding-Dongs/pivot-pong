@@ -47,13 +47,13 @@ h3 {
 
 hr {
   border: 0;
-  border-top: 2px dashed darken($overlay_grey, 15%);
+  border-top: 2px dashed darken($overlay_gray, 15%);
   margin: 20px;
 }
 
 .overlay {
-  background-color: rgba($overlay_grey, 0.85);
-  border: 3px solid darken($overlay_grey, 5%);
+  background-color: rgba($overlay_gray, 0.85);
+  border: 3px solid darken($overlay_gray, 5%);
   padding: 10px;
   color: $gray;
 }

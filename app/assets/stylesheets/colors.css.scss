@@ -1,7 +1,8 @@
 $off-white: rgb(233, 224, 227);
 $gray: rgb(82, 76, 76);
 $gray_light: lighten($gray, 65%);
-$overlay_grey: rgb(223, 223, 233);
+$overlay_gray: rgb(223, 223, 233);
+$dark_overlay_gray: rgba(darken($overlay_gray, 5%), 0.85);
 $black: rgb(18, 15, 19);
 $pivotal_red: #C21734;
 $winning_green: seagreen;

@@ -142,4 +142,11 @@ feature 'On the dashboard:', :js do
     expect(page).to have_content "Bob 1-1"
     expect(page).to have_content "Sally 0-2"
   end
+
+  scenario 'a viewer can click a tooltip to learn about leaderboard rankings' do
+    visit root_path
+
+    find('#tooltip_link').click
+    expect(page).to have_content I18n.t('overlay.tooltip.copy')
+  end
 end
