@@ -73,11 +73,11 @@ describe PlayerFinder do
     end
 
     it 'returns all players when the substring an empty string' do
-      expect(finder.find_players_by_substring('')).to eq([
+      expect(finder.find_players_by_substring('')).to match_array([
                                                              build_player_struct(bella),
                                                              build_player_struct(bob),
-                                                             build_player_struct(shelby),
                                                              build_player_struct(sally),
+                                                             build_player_struct(shelby),
                                                          ])
     end
   end
