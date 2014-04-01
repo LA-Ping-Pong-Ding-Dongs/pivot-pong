@@ -42,4 +42,36 @@ describe('MatchForm', function () {
         });
     });
 
+    describe('_collectionSearch', function () {
+        beforeEach(function () {
+            this.collection = new pong.PlayerSearch();
+            this.nameSearchSpy = spyOn(this.collection, 'playerNameSearch');
+            this.resetSpy = spyOn(this.collection, 'reset');
+        });
+
+        it('does a player name search if a value is present', function () {
+            var fakeEvent = { target: { value: 'a' } };
+            this.view._collectionSearch(fakeEvent, this.collection);
+
+            expect(this.nameSearchSpy).toHaveBeenCalledWith('a');
+            expect(this.resetSpy).not.toHaveBeenCalled();
+        });
+
+        it('resets the collection if winner field is blank', function () {
+            var fakeEvent = { target: { value: '' } };
+            this.view._collectionSearch(fakeEvent, this.collection);
+
+            expect(this.nameSearchSpy).not.toHaveBeenCalled();
+            expect(this.resetSpy).toHaveBeenCalled();
+        });
+
+        it('resets the collection if winner field is multiple blanks', function () {
+            var fakeEvent = { target: { value: '   ' } };
+            this.view._collectionSearch(fakeEvent, this.collection);
+
+            expect(this.nameSearchSpy).not.toHaveBeenCalled();
+            expect(this.resetSpy).toHaveBeenCalled();
+        });
+    });
+
 });

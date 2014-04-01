@@ -4,7 +4,7 @@ describe PlayerFinder do
   subject(:finder) { PlayerFinder.new(player_creator_double) }
 
   let(:player) { PlayerStruct.new('sally', 'Sally', 1223, 23) }
-  let(:player_creator_double) { double(PlayerCreator, create_player: player )}
+  let(:player_creator_double) { double(PlayerCreator, create_player: player) }
 
   describe '#find_or_create_by_name' do
 
@@ -60,16 +60,25 @@ describe PlayerFinder do
 
     it 'returns an alphabetically ordered array of player names matching substring ' do
       expect(finder.find_players_by_substring('b')).to eql([
-                                                             build_player_struct(bella),
-                                                             build_player_struct(bob),
-                                                         ])
+                                                               build_player_struct(bella),
+                                                               build_player_struct(bob),
+                                                           ])
     end
 
     it 'returns a case-insensitive search' do
       expect(finder.find_players_by_substring('s')).to match_array([
-          build_player_struct(sally),
-          build_player_struct(shelby),
-      ])
+                                                                       build_player_struct(sally),
+                                                                       build_player_struct(shelby),
+                                                                   ])
+    end
+
+    it 'returns all players when the substring an empty string' do
+      expect(finder.find_players_by_substring('')).to eq([
+                                                             build_player_struct(bella),
+                                                             build_player_struct(bob),
+                                                             build_player_struct(shelby),
+                                                             build_player_struct(sally),
+                                                         ])
     end
   end
 

@@ -1,26 +1,21 @@
 describe('Player Search View', function () {
-    describe('collectionSearch', function () {
-        it('fetches a collection of players with names matching the substring argument', function () {
-            var players = new Backbone.Collection();
-            var fetchSpy = spyOn(players, 'fetch');
-
-            var searchView = new pong.PlayerSearchView({collection: players});
-
-            searchView.collectionSearch('b');
-
-            expect(fetchSpy).toHaveBeenCalled();
-
-            expect(players.url).toEqual('/players?search=b')
+    beforeEach(function() {
+        this.collectionNameSearchSpy = spyOn(pong.PlayerSearch.prototype, 'playerNameSearch');
+        this.renderSpy = spyOn(pong.PlayerSearchView.prototype, 'render');
+        this.view = new pong.PlayerSearchView({
+            onClickCallback: function() { return null; },
         });
     });
 
     it('renders when the collection is synced', function () {
-        var renderSpy = spyOn(pong.PlayerSearchView.prototype, 'render');
-        var players = new Backbone.Collection();
-        new pong.PlayerSearchView({ collection: players });
+        this.view.collection.trigger('sync');
 
-        players.trigger('sync');
+        expect(this.renderSpy).toHaveBeenCalled();
+    });
 
-        expect(renderSpy).toHaveBeenCalled();
+    it('renders when the collection is reset', function () {
+        this.view.collection.trigger('reset');
+
+        expect(this.renderSpy).toHaveBeenCalled();
     });
 });

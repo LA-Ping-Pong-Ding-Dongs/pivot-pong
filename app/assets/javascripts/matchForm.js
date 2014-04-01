@@ -38,13 +38,20 @@ pong.MatchForm = Backbone.View.extend({
     },
 
     _winnerSearch: function (e) {
-        var val = e.target.value;
-        pong.activeViews.winnerPlayerSearchView.collectionSearch(val);
+        this._collectionSearch(e, pong.activeViews.winnerPlayerSearchView.collection);
     },
 
     _loserSearch: function (e) {
+        this._collectionSearch(e, pong.activeViews.loserPlayerSearchView.collection);
+    },
+
+    _collectionSearch: function (e, collection) {
         var val = e.target.value;
-        pong.activeViews.loserPlayerSearchView.collectionSearch(val);
+        if (val.match(/^ *$/) == null) {
+            collection.playerNameSearch(val);
+        } else {
+            collection.reset();
+        }
     },
 
     _serializeForm: function () {

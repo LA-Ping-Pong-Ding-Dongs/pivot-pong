@@ -36,6 +36,19 @@ ajaxResponses.Players = {
     },
 };
 
+ajaxResponses.PlayersSearch = {
+    index: {
+        success: {
+            status: '200',
+            responseText: JSON.stringify([{ name: 'Tommy Wiseau' }, { name: 'Denny' }]),
+        },
+        failure: {
+            status: '400',
+            rresponseText: JSON.stringify({ error: 'blowin up' }),
+        },
+    },
+};
+
 ajaxResponses.Tournament = {
   show: {
     success: {

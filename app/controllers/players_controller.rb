@@ -2,26 +2,26 @@ class PlayersController < ApplicationController
   RECENT_MATCHES_LIMIT = 5
 
   def index
-    @players = player_finder.find_players_by_substring(params[:search])
+    players = player_finder.find_all_players
 
     respond_to do |format|
       format.js do
-        render json: players_json_presenter.as_json
+        render json: players_json_presenter(players).as_json
       end
     end
   end
 
   def show
-    @player = player_finder.find(params[:key])
-    @matches = match_finder.find_all_for_player(@player.key)
-    recent_matches = match_finder.find_recent_matches_for_player(@player.key, RECENT_MATCHES_LIMIT)
+    player = player_finder.find(params[:key])
+    matches = match_finder.find_all_for_player(player.key)
+    recent_matches = match_finder.find_recent_matches_for_player(player.key, RECENT_MATCHES_LIMIT)
 
     respond_to do |format|
       format.js do
-        render json: { results: player_info_json_presenter.as_json }
+        render json: { results: player_info_json_presenter(player, matches).as_json }
       end
       format.html do
-        @player_information = PlayerPresenter.new(@player, @matches, recent_matches)
+        @player_information = PlayerPresenter.new(player, matches, recent_matches)
       end
     end
   end
@@ -36,11 +36,11 @@ class PlayersController < ApplicationController
     MatchFinder.new
   end
 
-  def player_info_json_presenter
-    PlayerInfoJsonPresenter.new(@player, @matches)
+  def player_info_json_presenter(player, matches)
+    PlayerInfoJsonPresenter.new(player, matches)
   end
 
-  def players_json_presenter
-    PlayersJsonPresenter.new(@players)
+  def players_json_presenter(players)
+    PlayersJsonPresenter.new(players)
   end
 end

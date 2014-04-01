@@ -4,7 +4,7 @@ pong.PlayerSearchView = Backbone.View.extend({
   template: JST['templates/playerSearch'],
 
   initialize: function (options) {
-    this.collection = this.collection || new Backbone.Collection;
+    this.collection = new pong.PlayerSearch();
     this.collection.on('sync', this.render, this);
     this.collection.on('reset', this.render, this);
     this.onClickCallback = options.onClickCallback;
@@ -14,18 +14,9 @@ pong.PlayerSearchView = Backbone.View.extend({
     this.$el.off('click');
 
     this.$el.html(this.template({
-      names: this.filterPlayers(),
+      names: this.collection.playerNames(),
     }));
     this.$el.on('click', _.bind(this.clickHandler, this));
-  },
-
-  collectionSearch: function (substring) {
-    this.collection.url = '/players?search=' + substring
-    this.collection.fetch();
-  },
-
-  filterPlayers: function () {
-    return this.collection.pluck('name');
   },
 
   clickHandler: function (e) {
