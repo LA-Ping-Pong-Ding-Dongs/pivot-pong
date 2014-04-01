@@ -74,4 +74,23 @@ describe('MatchForm', function () {
         });
     });
 
+    describe('_closeWinnerSearch', function () {
+        it('resets the collection', function () {
+            pong.activeViews.winnerPlayerSearchView.collection = new pong.PlayerSearch();
+            var resetSpy = spyOn(pong.activeViews.winnerPlayerSearchView.collection, 'reset');
+            this.view._closeWinnerSearch();
+
+            expect(resetSpy).toHaveBeenCalled();
+        });
+    });
+
+    describe('_closeLoserSearch', function () {
+        it('resets the collection', function () {
+            pong.activeViews.loserPlayerSearchView.collection = new pong.PlayerSearch();
+            var resetSpy = spyOn(pong.activeViews.loserPlayerSearchView.collection, 'reset');
+            this.view._closeLoserSearch();
+
+            expect(resetSpy).toHaveBeenCalled();
+        });
+    });
 });

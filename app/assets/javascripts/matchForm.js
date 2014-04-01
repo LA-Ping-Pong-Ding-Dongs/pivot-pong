@@ -6,7 +6,11 @@ pong.MatchForm = Backbone.View.extend({
     events: {
         submit: 'commit',
         'keyup .winner-field': '_winnerSearch',
+        'focus .winner-field': '_winnerSearch',
         'keyup .loser-field': '_loserSearch',
+        'focus .loser-field': '_loserSearch',
+        'blur .winner-field': '_closeWinnerSearch',
+        'blur .loser-field': '_closeLoserSearch',
     },
 
     commit: function (e) {
@@ -52,6 +56,14 @@ pong.MatchForm = Backbone.View.extend({
         } else {
             collection.reset();
         }
+    },
+
+    _closeWinnerSearch: function () {
+        pong.activeViews.winnerPlayerSearchView.collection.reset();
+    },
+
+    _closeLoserSearch: function () {
+        pong.activeViews.loserPlayerSearchView.collection.reset();
     },
 
     _serializeForm: function () {
