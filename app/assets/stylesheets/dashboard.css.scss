@@ -127,7 +127,7 @@ span.tooltip {
       @include ellipsis-text;
       text-align: left;
       cursor: pointer;
-      border-bottom: 1px dotted rgba(darken($overlay_grey, 5%), 0.85);
+      border-bottom: 1px dotted rgba(darken($overlay_gray, 5%), 0.85);
       padding: 9px;
       &:hover {
         background-color: $gray_light;
