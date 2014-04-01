@@ -7,13 +7,11 @@
 
       <div class="winner-field">
         <%= f.text_field :winner, placeholder: I18n.t('match.form.winner_label').upcase, tabindex: 1 %>
-        <div id="winner_suggestions" class="search winner"></div>
       </div>
       <span class="defeats-text"><%= I18n.t('match.form.defeats_verb') %></span>
 
       <div class="loser-field">
         <%= f.text_field :loser, placeholder: I18n.t('match.form.loser_label').upcase, tabindex: 2 %>
-        <div id="loser_suggestions" class="search loser"></div>
       </div>
       <%= f.submit t('match.form.commit'), id: 'save_match', tabindex: 3 %>
     <% end -%>
