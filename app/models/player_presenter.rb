@@ -9,12 +9,20 @@ class PlayerPresenter
   end
 
   def overall_winning_percentage
-    percent = 100.0 * wins.count / @matches.count
+    percent = 100.0 * wins(@matches).count / @matches.count
     number_to_percentage(percent, precision: 1)
   end
 
-  def overall_record
-    "#{wins.count}-#{losses.count}"
+  def overall_losses
+    losses(@matches).count
+  end
+
+  def overall_wins
+    wins(@matches).count
+  end
+
+  def overall_record_string
+    "#{overall_wins}-#{overall_losses}"
   end
 
   def current_streak
@@ -41,14 +49,24 @@ class PlayerPresenter
     end
   end
 
-  private
-
-  def wins
-    @matches.select { |match| match.winner_key == @player.key }
+  def as_json
+    {
+        name: name,
+        overall_losses: overall_losses,
+        overall_wins: overall_wins,
+        rating: @player.mean,
+        overall_winning_percentage: overall_winning_percentage,
+    }
   end
 
-  def losses
-    @matches.select { |match| match.loser_key == @player.key }
+  private
+
+  def wins(matches)
+    matches.select { |match| match.winner_key == @player.key }
+  end
+
+  def losses(matches)
+    matches.select { |match| match.loser_key == @player.key }
   end
 
   def streak_count(matches, player, type)

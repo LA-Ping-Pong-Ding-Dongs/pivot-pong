@@ -33,14 +33,26 @@ describe PlayerPresenter do
     end
   end
 
-  describe '#overall_record' do
+  describe '#overall_wins' do
+    it 'returns number of losses from all matches' do
+      expect(subject.overall_wins).to eq 2
+    end
+  end
+
+  describe '#overall_losses' do
+    it 'returns number of losses from all matches' do
+      expect(subject.overall_losses).to eq 1
+    end
+  end
+
+  describe '#overall_record_string' do
     it 'returns wins and losses' do
-      expect(subject.overall_record).to eq '2-1'
+      expect(subject.overall_record_string).to eq '2-1'
     end
 
     it 'returns 0s for users with no losses' do
       player_presenter = PlayerPresenter.new(champ, [losing_match], [])
-      expect(player_presenter.overall_record).to eq '1-0'
+      expect(player_presenter.overall_record_string).to eq '1-0'
     end
   end
 
@@ -88,6 +100,18 @@ describe PlayerPresenter do
         presenter = PlayerPresenter.new(bob, [], [], player_finder_double)
         expect(presenter.current_streak).to eq ''
       end
+    end
+  end
+
+  describe '#as_json' do
+    it 'presents name, overall_wins, overall_losses and rating in json format' do
+      expect(subject.as_json).to eq({
+                                        name: 'Bob',
+                                        overall_wins: 2,
+                                        overall_losses: 1,
+                                        rating: 1200,
+                                        overall_winning_percentage: '66.7%',
+                                    })
     end
   end
 end

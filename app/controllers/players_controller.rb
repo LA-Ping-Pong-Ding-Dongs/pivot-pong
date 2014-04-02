@@ -18,10 +18,10 @@ class PlayersController < ApplicationController
 
     respond_to do |format|
       format.js do
-        render json: { results: player_info_json_presenter(player, matches).as_json }
+        render json: { results: player_presenter(player, matches, recent_matches).as_json }
       end
       format.html do
-        @player_information = PlayerPresenter.new(player, matches, recent_matches)
+        @player_information = player_presenter(player, matches, recent_matches)
       end
     end
   end
@@ -36,8 +36,8 @@ class PlayersController < ApplicationController
     MatchFinder.new
   end
 
-  def player_info_json_presenter(player, matches)
-    PlayerInfoJsonPresenter.new(player, matches)
+  def player_presenter(player, matches, recent_matches)
+    PlayerPresenter.new(player, matches, recent_matches)
   end
 
   def players_json_presenter(players)
