@@ -26,14 +26,14 @@ pong.MatchForm = Backbone.View.extend({
 
         pong.activeViews.winnerPlayerSearchView = new pong.PlayerSearchView({
             el: '#winner_suggestions',
-            onClickCallback: _.bind(function (name) {
+            onMousedownCallback: _.bind(function (name) {
                 this.$el.find('.winner-field input').val(name);
             }, this)
         });
 
         pong.activeViews.loserPlayerSearchView = new pong.PlayerSearchView({
             el: '#loser_suggestions',
-            onClickCallback: _.bind(function (name) {
+            onMousedownCallback: _.bind(function (name) {
                 this.$el.find('.loser-field input').val(name);
             }, this)
         });
@@ -58,7 +58,7 @@ pong.MatchForm = Backbone.View.extend({
         }
     },
 
-    _closeWinnerSearch: function () {
+    _closeWinnerSearch: function (e) {
         pong.activeViews.winnerPlayerSearchView.collection.reset();
     },
 

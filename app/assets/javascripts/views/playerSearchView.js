@@ -7,7 +7,7 @@ pong.PlayerSearchView = Backbone.View.extend({
     this.collection = new pong.PlayerSearch();
     this.collection.on('sync', this.render, this);
     this.collection.on('reset', this.render, this);
-    this.onClickCallback = options.onClickCallback;
+    this.onMousedownCallback = options.onMousedownCallback;
   },
 
   render: function () {
@@ -16,13 +16,12 @@ pong.PlayerSearchView = Backbone.View.extend({
     this.$el.html(this.template({
       names: this.collection.playerNames(),
     }));
-    this.$el.on('click', _.bind(this.clickHandler, this));
+    this.$el.on('mousedown', _.bind(this.mousedownHandler, this));
   },
 
-  clickHandler: function (e) {
-    // Selection click can fire a click event on the parent ul
+  mousedownHandler: function (e) {
     if (e.target.localName === 'li') {
-      this.onClickCallback(e.target.textContent);
+      this.onMousedownCallback(e.target.textContent);
       this.collection.reset();
     }
   },
