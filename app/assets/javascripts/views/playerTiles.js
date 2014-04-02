@@ -129,6 +129,8 @@ pong.PlayerTiles = Backbone.View.extend({
             .shuffle()
             .value();
 
+        this.data = this.savedData;
+
         if (percentBlankCells) {
             centers  = _.initial(centers, parseInt(centers.length * percentBlankCells));
         }
@@ -137,6 +139,7 @@ pong.PlayerTiles = Backbone.View.extend({
         this.data = _(_.take(this.data, centers.length)).map(function (player, index) {
             var column = centers[index][0];
             var row = centers[index][1];
+
             player = _.clone(player);
 
             return _.extend(player, {
@@ -173,15 +176,26 @@ pong.PlayerTiles = Backbone.View.extend({
         return colorClasses[index];
     },
 
+    renderTilesOnResize: function () {
+        var timeout = false;
+
+        $(window).resize(_.bind(function() {
+            if(timeout !== false)
+                clearTimeout(timeout);
+            timeout = setTimeout(_.bind(this.renderTiles, this), 200);
+        }, this));
+    },
+
     initialize: function (options) {
         this.data = this.collection.toJSON();
+        this.savedData = this.data;
         this.svg = d3.select(this.el).append('svg');
         this.excludeCells = options.excludeCells;
         this.PERCENT_BLANK_TILES = 0.33;
 
         this.collection.on('sync', _.bind(this.render, this));
         $(window).resize(_.bind(this.renderMesh, this));
-        $(window).resize(_.debounce(_.bind(this.renderTiles, this), 500, true));
+        this.renderTilesOnResize();
     },
 
 });

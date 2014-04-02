@@ -6,6 +6,7 @@ describe('PlayerTiles', function () {
         ];
         this.renderMeshSpy = spyOn(pong.PlayerTiles.prototype, 'renderMesh');
         this.renderTilesSpy = spyOn(pong.PlayerTiles.prototype, 'renderTiles');
+        this.renderTilesOnResizeSpy = spyOn(pong.PlayerTiles.prototype, 'renderTilesOnResize');
 
         this.view = new pong.PlayerTiles({ collection: new Backbone.Collection(this.playerData) });
     });
@@ -15,11 +16,21 @@ describe('PlayerTiles', function () {
             expect(this.view.data).toEqual(this.playerData);
         });
 
-        it('re-renders when the window is resized', function () {
+        it('calls render functions for resize', function () {
             $(window).trigger('resize');
 
             expect(this.renderMeshSpy).toHaveBeenCalled();
+            expect(this.renderTilesOnResizeSpy).toHaveBeenCalled();
+        });
+    });
+
+    describe('renderTilesOnResize', function () {
+        it('calls renderTiles after a delayed resize detection', function () {
+            jasmine.clock().install();
+            $(window).trigger('resize');
+            jasmine.clock().tick(201);
             expect(this.renderTilesSpy).toHaveBeenCalled();
+            jasmine.clock().uninstall();
         });
     });
 
