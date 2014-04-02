@@ -75,9 +75,9 @@ describe MatchesController do
   end
 
   describe '#index' do
-    let(:match_1) { MatchStruct.new(1, 'Bob', 'Templeton', Time.now) }
-    let(:match_2) { MatchStruct.new(2, 'Bob', 'Sally', Time.now) }
-    let(:match_3) { MatchStruct.new(3, 'Sally', 'Templeton', Time.now) }
+    let(:match_1) { MatchWithNamesStruct.new(1, 'bob', 'templeton', 'Bob', 'Templeton', Time.now) }
+    let(:match_2) { MatchWithNamesStruct.new(2, 'bob', 'sally', 'Bob', 'Sally', Time.now) }
+    let(:match_3) { MatchWithNamesStruct.new(3, 'sally', 'templeton', 'Sally', 'Templeton', Time.now) }
     let(:recent_matches) { [match_1, match_3] }
     let(:all_matches) { [match_1, match_2, match_3] }
     let(:match_finder_double) { double(MatchFinder, find_matches_for_tournament: recent_matches, find_all: all_matches) }
@@ -90,7 +90,7 @@ describe MatchesController do
       it 'returns all matches' do
         xhr :get, :index
 
-        expected = all_matches.map{ |match| MatchJsonPresenter.new(match).as_json }
+        expected = all_matches.map{ |match| MatchPresenter.new(match).as_json }
 
         expect(response).to be_success
         expect(response.body).to eq({ 'results' => expected }.to_json)
@@ -99,7 +99,7 @@ describe MatchesController do
       it 'returns a list of recent matches' do
         xhr :get, :index, recent: 'true'
 
-        expected = recent_matches.map{ |match| MatchJsonPresenter.new(match).as_json }
+        expected = recent_matches.map{ |match| MatchPresenter.new(match).as_json }
 
         expect(response).to be_success
         expect(response.body).to eq({ 'results' => expected }.to_json)
@@ -111,7 +111,11 @@ describe MatchesController do
         get :index
 
         expect(response).to be_success
-        expect(response.body).to eq ' '
+        expect(assigns[:matches_presenter].length).to eq 3
+        first_match = assigns[:matches_presenter][0]
+        expect(first_match.winner_name).to eq 'Bob'
+        expect(first_match.loser_name).to eq 'Templeton'
+        expect(first_match.human_readable_time).to eq 'less than a minute ago'
       end
     end
 

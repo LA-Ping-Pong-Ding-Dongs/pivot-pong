@@ -29,8 +29,8 @@
 
   <div class="dashboard-pane overlay">
     <div class="pane-toggle">
-      <%= link_to I18n.t('overlay.leaderboard.title'), tournament_path, class: 'tab leaderboard-link active' %>
-      <%= link_to I18n.t('overlay.recent_matches.title'), matches_path, class: 'tab recent-matches-link' %>
+      <%= link_to I18n.t('overlay.leaderboard.tab_title'), tournament_path, class: 'tab leaderboard-link active' %>
+      <%= link_to I18n.t('overlay.recent_matches.tab_title'), matches_path, class: 'tab recent-matches-link' %>
       <div class="tab tab-spacer">&nbsp;</div>
     </div>
 
@@ -57,7 +57,7 @@
     </div>
 
     <div id="recent_matches_container">
-      <h3><%= I18n.t('player.recent_matches.title') %></h3>
+      <h3><%= I18n.t('recent_matches.title') %></h3>
     </div>
 
   </div>

@@ -47,7 +47,7 @@ feature 'On the dashboard:', :js do
     visit root_path
 
     step '1. type initial name string and expect pop up list to display' do
-      fill_in "Winner".upcase, with: 'b'
+      fill_in I18n.t('match.form.winner_label').upcase, with: 'b'
       within '.winner-field .search' do
         expect(page).to have_content 'Bob'
       end
@@ -71,7 +71,7 @@ feature 'On the dashboard:', :js do
     visit root_path
 
     step '1. type initial name string and expect pop up list to display' do
-      fill_in "Loser".upcase, with: 'b'
+      fill_in I18n.t('match.form.loser_label').upcase, with: 'b'
       within '.loser-field .search' do
         expect(page).to have_content 'Bob'
       end

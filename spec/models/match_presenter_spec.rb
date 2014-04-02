@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe MatchJsonPresenter do
+describe MatchPresenter do
   let(:match_time) { 1.hour.ago }
   let(:match) { MatchWithNamesStruct.new(34, 'bob', 'templeton', 'Bob', 'Templeton', match_time) }
 
-  subject { MatchJsonPresenter.new(match) }
+  subject { MatchPresenter.new(match) }
 
   describe '#as_json' do
     it 'returns match data as JSON' do
