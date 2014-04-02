@@ -14,8 +14,8 @@ en:
       title: 'Recent Matches'
       won: Beat
       lost: Lost to
-    tournament_rankings:
-      title: 'Tournament Leaderboard'
+      on: on
+    title: 'Player Stats:'
   player_info:
     record:
       overall: Overall Record

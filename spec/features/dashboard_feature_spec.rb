@@ -136,10 +136,10 @@ feature 'On the dashboard:', :js do
 
     find('.recent-matches-link').click
     expect(page).to have_content I18n.t('player.recent_matches.title').upcase
-    expect(page).to_not have_content I18n.t('player.tournament_rankings.title').upcase
+    expect(page).to_not have_content I18n.t('leaderboard.title').upcase
 
     find('.leaderboard-link').click
-    expect(page).to have_content I18n.t('player.tournament_rankings.title').upcase
+    expect(page).to have_content I18n.t('leaderboard.title').upcase
     expect(page).to_not have_content I18n.t('player.recent_matches.title').upcase
 
     expect(page).to have_content 'Godzilla 2-0'

@@ -57,7 +57,7 @@ describe PlayerPresenter do
 
   describe '#recent_matches' do
     it 'returns an array of human-readable strings' do
-      expect(subject.recent_matches).to eq ["#{I18n.t('player.recent_matches.won')} Loser on 04/04/2014", "#{I18n.t('player.recent_matches.lost')} Champ on 04/03/2014"]
+      expect(subject.recent_matches).to eq ["#{I18n.t('player.recent_matches.won')} Loser #{I18n.t('player.recent_matches.on')} 04/04/2014", "#{I18n.t('player.recent_matches.lost')} Champ #{I18n.t('player.recent_matches.on')} 04/03/2014"]
     end
   end
 end
