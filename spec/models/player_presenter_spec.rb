@@ -13,6 +13,7 @@ describe PlayerPresenter do
   let(:winning_match_1) { MatchStruct.new(2, bob.key, loser.key, april_1) }
   let(:winning_match_2) { MatchStruct.new(3, bob.key, loser.key, april_4) }
   let(:losing_match) { MatchStruct.new(4, champ.key, bob.key, april_3) }
+  let(:other_losing_match) { MatchStruct.new(4, champ.key, loser.key, april_1) }
 
   let(:all_matches) { [winning_match_2, losing_match, winning_match_1] }
   let(:recent_matches) do
@@ -57,7 +58,36 @@ describe PlayerPresenter do
 
   describe '#recent_matches' do
     it 'returns an array of human-readable strings' do
-      expect(subject.recent_matches).to eq ["#{I18n.t('player.recent_matches.won')} Loser #{I18n.t('player.recent_matches.on')} 04/04/2014", "#{I18n.t('player.recent_matches.lost')} Champ #{I18n.t('player.recent_matches.on')} 04/03/2014"]
+      expect(subject.recent_matches).to eq ["#{I18n.t('player.recent_matches.won')} Loser #{I18n.t('player.recent_matches.on_date')} 04/04/2014", "#{I18n.t('player.recent_matches.lost')} Champ #{I18n.t('player.recent_matches.on_date')} 04/03/2014"]
+    end
+  end
+
+  describe '#current_streak' do
+    context 'player is on winning streak but also has a loss to break up streak' do
+      it 'returns the current winning streak' do
+        expect(subject.current_streak).to eq "1#{I18n.t('player.streak.type.winner')}"
+      end
+    end
+
+    context 'player is on losing streak' do
+      it 'returns the current losing streak' do
+        presenter = PlayerPresenter.new(loser, [winning_match_1, winning_match_2, other_losing_match], [], player_finder_double)
+        expect(presenter.current_streak).to eq "3#{I18n.t('player.streak.type.loser')}"
+      end
+    end
+
+    context 'player is on winning streak' do
+      it 'returns the current winning streak' do
+        presenter = PlayerPresenter.new(champ, [losing_match, other_losing_match], [], player_finder_double)
+        expect(presenter.current_streak).to eq "2#{I18n.t('player.streak.type.winner')}"
+      end
+    end
+
+    context 'player has not played in a match' do
+      it 'returns the an empty string' do
+        presenter = PlayerPresenter.new(bob, [], [], player_finder_double)
+        expect(presenter.current_streak).to eq ''
+      end
     end
   end
 end

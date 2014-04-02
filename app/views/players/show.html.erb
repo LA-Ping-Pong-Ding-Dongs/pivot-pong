@@ -1,7 +1,12 @@
 <h1><%= I18n.t('player.title') %> <%= @player_information.name %></h1>
 <div class="record">
+  <%= I18n.t('player_info.record.overall') %>
   <%= @player_information.overall_record %>
   (<%= @player_information.overall_winning_percentage %>)
+</div>
+<div class="streak">
+  <%= I18n.t('player.streak.title') %>
+  <%= @player_information.current_streak %>
 </div>
 
 <ul class="recent-matches">

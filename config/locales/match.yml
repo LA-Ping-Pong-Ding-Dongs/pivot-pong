@@ -14,8 +14,13 @@ en:
       title: 'Recent Matches'
       won: Beat
       lost: Lost to
-      on: on
+      on_date: 'on'
     title: 'Player Stats:'
+    streak:
+      title: 'Current Streak'
+      type:
+        winner: W
+        loser: L
   player_info:
     record:
       overall: Overall Record
