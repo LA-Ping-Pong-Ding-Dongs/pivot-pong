@@ -26,7 +26,11 @@
             collections: pong.collections
         });
         Backbone.history.start({pushState: true, hashChange: false});
+
         $(document).click('a', pong.navigator);
+        $(document).keyup(function(e) {
+            if (e.keyCode == 27) { pong.reloadDashboard(); }   // esc key
+        });
     });
 </script>
 

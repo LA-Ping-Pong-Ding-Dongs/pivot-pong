@@ -1,7 +1,7 @@
 describe('MatchForm', function () {
     beforeEach(function () {
         this.view = new pong.MatchForm();
-        this.renderSpy = spyOn(this.view, 'render');
+        this.renderSpy = spyOn(this.view, 'render').and.callThrough();
         this.eventSpy = spyOn(pong.EventBus, 'trigger');
     });
 
@@ -75,6 +75,10 @@ describe('MatchForm', function () {
     });
 
     describe('_closeWinnerSearch', function () {
+        beforeEach(function() {
+            this.view.render();
+        });
+
         it('resets the collection', function () {
             pong.activeViews.winnerPlayerSearchView.collection = new pong.PlayerSearch();
             var resetSpy = spyOn(pong.activeViews.winnerPlayerSearchView.collection, 'reset');
@@ -85,6 +89,10 @@ describe('MatchForm', function () {
     });
 
     describe('_closeLoserSearch', function () {
+        beforeEach(function() {
+            this.view.render();
+        });
+
         it('resets the collection', function () {
             pong.activeViews.loserPlayerSearchView.collection = new pong.PlayerSearch();
             var resetSpy = spyOn(pong.activeViews.loserPlayerSearchView.collection, 'reset');

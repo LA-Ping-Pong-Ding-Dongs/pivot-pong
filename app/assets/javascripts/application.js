@@ -5,9 +5,15 @@
 //= require backbone-min
 //= require backbone.poller
 //= require backbone.syphon.min
+//= require closeView
 //= require d3.min
 //= require hexbin
 //= require ./navigator
 //= require ./eventBus
+//= require_tree ./util
 //= require_tree ./templates
+//= require_tree ./models
+//= require_tree ./collections
+//= require_tree ./views
+//= require_tree ./routers
 //= require_tree .
