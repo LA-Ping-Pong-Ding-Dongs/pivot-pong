@@ -3,7 +3,7 @@
 <head>
   <title>PivotPong</title>
   <link href='http://fonts.googleapis.com/css?family=Cambo' rel='stylesheet' type='text/css'>
-  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
 </head>
@@ -12,22 +12,22 @@
 <%= yield %>
 
 <script type="text/javascript">
-  $(function() {
-    pong.collections = {};
-    pong.collections.recentMatches = new pong.RecentMatches();
-    pong.collections.playerStandings = new pong.PlayerStandings();
-    pong.collections.players = new pong.Players(pong.players);
+    $(function() {
+        pong.collections = {};
+        pong.collections.recentMatches = new pong.RecentMatches();
+        pong.collections.playerStandings = new pong.PlayerStandings();
+        pong.collections.players = new pong.Players(pong.players);
 
-    Backbone.Poller.get(pong.collections.recentMatches, { delay: 15000 }).start();
-    Backbone.Poller.get(pong.collections.playerStandings, { delay: 15000 }).start();
-    Backbone.Poller.get(pong.collections.players, { delay: 300000, delayed: true }).start();
+        Backbone.Poller.get(pong.collections.recentMatches, { delay: 15000 }).start();
+        Backbone.Poller.get(pong.collections.playerStandings, { delay: 15000 }).start();
+        Backbone.Poller.get(pong.collections.players, { delay: 300000, delayed: true }).start();
 
-    new pong.AppRouter({
-      collections: pong.collections
+        pong.appRouter = new pong.AppRouter({
+            collections: pong.collections
+        });
+        Backbone.history.start({pushState: true, hashChange: false});
+        $(document).click('a', pong.navigator);
     });
-    Backbone.history.start({pushState: true, hashChange: false});
-    $(document).click('a', pong.navigator);
-  });
 </script>
 
 </body>

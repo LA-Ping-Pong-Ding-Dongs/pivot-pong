@@ -22,4 +22,8 @@ pong.initializeDashboard = function (options) {
         excludeCells: pong.underOverlayChecker.underOverlays,
     });
     pong.activeViews.PlayerTiles.render();
+
+    $(document).keyup(function(e) {
+        if (e.keyCode == 27) { pong.reloadDashboard(); }   // esc key
+    });
 };
