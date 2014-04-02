@@ -1,28 +1,27 @@
-== README
+= Pivot Pong Los Angeles Style
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Welcome to the Los Angeles version of Pivot Pong. The app tracks players as they participate in tournaments, providing macro information via ranking/performance and micro information on tournament play. For the Pivotal version of this application github.com/dipolesource | Pivotal Tracker @mmccormick is acting as the PM. Tracker project is https://www.pivotaltracker.com/n/projects/795077
 
-Things you may want to cover:
+== Players
 
-* Ruby version
+Players are identified by a case insensitive name. Mike and mike are the same while mikem is a new player.
 
-* System dependencies
+== Tournaments
 
-* Configuration
+Tournaments start on Monday at 00:00 and are one week in length. A match is any best of three game competition between any two players. The matches should respect proper service (http://www.killerspin.com/spin-info-table-tennis-rules#06) and none of this bouncing off the walls monkey business.
 
-* Database creation
+= Code Patterns
 
-* Database initialization
+This application has a few patterns we ask you to respect while contributing code. Think of it as a chance to explore the unfamiliar.
 
-* How to run the test suite
+== Dependency Injection
 
-* Services (job queues, cache servers, search engines, etc.)
+We make heavy use of DI[http://en.wikipedia.org/wiki/Dependency_injection] in Rails for the purpose of faster tests. Rails doesn't make this particularly easy, so you should look a few places before getting started. Of note, controllers use a form of property injection to compensate for our inability to hook their instantiation, most POROs (plain old ruby objects) have an initializer signature–form objects are a good example–that instantiate dependencies as defaults, and we heavily leverage Rspec > 3's instance_double method (see relishapp[https://www.relishapp.com/rspec/rspec-mocks/v/3-0/docs/verifying-doubles/using-an-instance-double]).
 
-* Deployment instructions
+== Form Backing Objects
 
-* ...
+== Data Mapper
 
+== Semantic HTML
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+== JS/Non-JS
