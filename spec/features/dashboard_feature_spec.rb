@@ -124,6 +124,10 @@ feature 'On the dashboard:', :js do
       expect(page).to have_content 'Bob'
       expect(page).to have_content '1-0 (100.0%)'
     end
+
+    expect(current_path).to eq '/players/bob'
+    find('#match_winner').native.send_keys(:Escape)
+    expect(current_path).to eq '/'
   end
 
   scenario 'a viewer can see current tournament player rankings' do
@@ -138,9 +142,9 @@ feature 'On the dashboard:', :js do
     expect(page).to have_content I18n.t('player.tournament_rankings.title').upcase
     expect(page).to_not have_content I18n.t('player.recent_matches.title').upcase
 
-    expect(page).to have_content "Godzilla 2-0"
-    expect(page).to have_content "Bob 1-1"
-    expect(page).to have_content "Sally 0-2"
+    expect(page).to have_content 'Godzilla 2-0'
+    expect(page).to have_content 'Bob 1-1'
+    expect(page).to have_content 'Sally 0-2'
   end
 
   scenario 'a viewer can click a tooltip to learn about leaderboard rankings' do
