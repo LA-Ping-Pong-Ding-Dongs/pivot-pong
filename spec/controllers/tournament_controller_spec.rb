@@ -23,11 +23,16 @@ describe TournamentController do
     end
 
     context 'responds with html' do
-      it 'is successful' do
+      before do
         get :show
+      end
 
+      it 'is successful' do
         expect(response).to be_success
-        expect(response.body).to eq ' '
+      end
+
+      it 'assigns tournament data to @standings' do
+        expect(assigns(:standings)).to eq(tournament_double.determine_rankings)
       end
     end
   end

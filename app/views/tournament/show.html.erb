@@ -1,0 +1,23 @@
+<section class="leaderboard">
+  <h1><%= I18n.t('leaderboard.title').upcase %></h1>
+  <table>
+      <tr>
+        <th class="player-ranking"><%= I18n.t('leaderboard.rank') %></th>
+        <th><%= I18n.t('leaderboard.name') %></th>
+        <th  class="player-record"><%= I18n.t('leaderboard.record') %></th>
+      </tr>
+      <% @standings.each_with_index do |standing, index| %>
+      <tr>
+        <td class="player-ranking">
+          <%= index + 1 %>
+        </td>
+        <td class="player-name">
+          <%= standing.name %>
+        </td>
+        <td class="player-record">
+          <%= standing.wins %>-<%= standing.losses %>
+        </td>
+      </tr>
+      <% end %>
+  </table>
+</section>
