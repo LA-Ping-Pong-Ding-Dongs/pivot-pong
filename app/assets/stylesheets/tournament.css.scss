@@ -11,6 +11,11 @@
         padding: .5em;
         text-align: left;
       }
+      .player-name {
+        @include ellipsis-text;
+        width: 200px;
+        max-width: 200px;
+      }
       .player-ranking {
         width: 3em;
         max-width: 3em;
@@ -19,6 +24,7 @@
       }
       .player-record {
         text-align: right;
+        min-width: 4em;
       }
       border-bottom: 1px solid $gray_light;
     }
