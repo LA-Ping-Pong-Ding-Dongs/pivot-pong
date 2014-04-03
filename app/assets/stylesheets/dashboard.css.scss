@@ -263,47 +263,10 @@ span.tooltip {
   .general-info, .record {
     vertical-align: middle;
     display: inline-block;
+  }
+
+  .general-info {
     width: 25%;
-
-    dl {
-      margin: 0;
-    }
-    dd, dt {
-      display: inline-block;
-      margin-left: 1%;
-    }
-
-    dt {
-      width: 100px;
-      vertical-align: top;
-      text-transform: uppercase;
-      font-weight: 700;
-      text-align: right;
-      letter-spacing: 0.2em;
-      font-size: 10pt;
-      line-height: 12pt;
-    }
-
-    dd {
-      font-size: 21pt;
-      vertical-align: top;
-      line-height: 23pt;
-      font-weight: 500;
-      margin-left: 20px;
-
-      &.winning {
-        color: $winning_green;
-      }
-      &.losing {
-        color: $losing_red;
-      }
-      &.hot-streak {
-        color: $hot-streak-orange;
-      }
-      &.cold-streak {
-        color: $cold-streak-blue;
-      }
-    }
 
     h4 {
       @include ellipsis-text;
@@ -312,9 +275,21 @@ span.tooltip {
       line-height: 34pt;
     }
   }
-
   .record {
+    width: 60%;
     margin-left: 4%;
+
+    dd, dt {
+      margin-left: 1%;
+    }
+
+    dt {
+      text-align: right;
+    }
+
+    dd {
+      margin-left: 20px;
+    }
   }
 }
 

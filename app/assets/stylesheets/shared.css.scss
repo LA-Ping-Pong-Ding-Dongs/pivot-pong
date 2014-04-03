@@ -1,0 +1,38 @@
+.player-statistics, #player_info {
+  dl {
+    margin: 0;
+  }
+  dd, dt {
+    display: inline-block;
+  }
+
+  dt {
+    width: 100px;
+    vertical-align: top;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    font-size: 10pt;
+    line-height: 12pt;
+  }
+
+  dd {
+    font-size: 21pt;
+    vertical-align: top;
+    line-height: 23pt;
+    font-weight: 500;
+
+    &.winning {
+      color: $winning_green;
+    }
+    &.losing {
+      color: $losing_red;
+    }
+    &.hot-streak {
+      color: $hot-streak-orange;
+    }
+    &.cold-streak {
+      color: $cold-streak-blue;
+    }
+  }
+}

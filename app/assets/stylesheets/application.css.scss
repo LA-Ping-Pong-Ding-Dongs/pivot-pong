@@ -3,10 +3,12 @@
 
 @import 'mixins';
 @import 'colors';
+@import 'shared';
 @import 'dashboard';
 @import 'tournament';
 @import 'icons';
 @import 'recent_matches';
+@import 'player_statistics';
 
 body {
   position: absolute;
