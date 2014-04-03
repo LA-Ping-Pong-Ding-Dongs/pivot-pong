@@ -123,6 +123,7 @@ feature 'On the dashboard:', :js do
     within '#player_info' do
       expect(page).to have_content 'Bob'
       expect(page).to have_content '1-0 (100.0%)'
+      expect(page).to have_css '.hot-streak', text: '1W'
     end
 
     expect(current_path).to eq '/players/bob'

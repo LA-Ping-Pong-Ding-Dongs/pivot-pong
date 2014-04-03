@@ -297,6 +297,12 @@ span.tooltip {
       &.losing {
         color: $losing_red;
       }
+      &.hot-streak {
+        color: $hot-streak-orange;
+      }
+      &.cold-streak {
+        color: $cold-streak-blue;
+      }
     }
 
     h4 {

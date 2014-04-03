@@ -25,14 +25,23 @@ class PlayerPresenter
     "#{overall_wins}-#{overall_losses}"
   end
 
-  def current_streak
+  def current_streak_type
+    string_map = {
+        'winner' => I18n.t('player.streak.type.winner'),
+        'loser' => I18n.t('player.streak.type.loser'),
+    }
+    string_map[streak_type(@matches, @player)]
+  end
+
+  def current_streak_count
+    type = streak_type(@matches, @player)
+    streak_count(@matches, @player, type)
+  end
+
+  def current_streak_string
     return '' unless @matches.first
 
-    type = streak_type(@matches, @player)
-    count = streak_count(@matches, @player, type)
-    type_text = "player.streak.type.#{type}"
-
-    "#{count}#{I18n.t(type_text)}"
+    "#{current_streak_count}#{current_streak_type}"
   end
 
   def name
@@ -54,6 +63,8 @@ class PlayerPresenter
         name: name,
         overall_losses: overall_losses,
         overall_wins: overall_wins,
+        current_streak_count: current_streak_count,
+        current_streak_type: current_streak_type,
         rating: @player.mean,
         overall_winning_percentage: overall_winning_percentage,
     }

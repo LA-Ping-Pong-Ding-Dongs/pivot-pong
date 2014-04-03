@@ -9,6 +9,12 @@
         <dd class="<%= overallType %>">
             <%= player.overall_wins %>-<%= player.overall_losses %> (<%= player.overall_winning_percentage %>)
         </dd>
+        <dt>
+            Current Streak
+        </dt>
+        <dd class="<%= streakDirectionClass %>">
+            <%= player.current_streak_count %><%= player.current_streak_type %>
+        </dd>
     </dl>
 </div>
 

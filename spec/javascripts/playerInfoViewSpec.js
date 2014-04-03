@@ -26,4 +26,21 @@ describe('PlayerInfoView', function () {
             expect(this.view.overallRecordClass()).toEqual('losing');
         });
     });
+
+    describe('streakDirectionClass', function () {
+        it('returns hot-streak when on winning streak', function () {
+            this.model.set({ current_streak_type: 'W' }, { silent: true });
+            expect(this.view.streakDirectionClass()).toEqual('hot-streak');
+        });
+
+        it('returns cold-streak when on a losing streak', function () {
+            this.model.set({ current_streak_type: 'L' }, { silent: true });
+            expect(this.view.streakDirectionClass()).toEqual('cold-streak');
+        });
+
+        it('returns nothing when no streak', function () {
+            this.model.set({ current_streak_type: null }, { silent: true });
+            expect(this.view.streakDirectionClass()).toEqual('');
+        });
+    });
 });

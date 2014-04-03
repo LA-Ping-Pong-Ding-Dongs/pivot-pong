@@ -11,6 +11,7 @@ pong.PlayerInfoView = Backbone.View.extend({
         this.$el.html(this.template({
             player: this.model.attributes,
             overallType: this.overallRecordClass(),
+            streakDirectionClass: this.streakDirectionClass(),
         }));
     },
 
@@ -26,4 +27,16 @@ pong.PlayerInfoView = Backbone.View.extend({
             return 'even';
         }
     },
+
+    streakDirectionClass: function () {
+        var streak = this.model.get('current_streak_type');
+
+        if (streak === 'W') {
+            return 'hot-streak';
+        } else if (streak === 'L') {
+            return 'cold-streak';
+        } else {
+            return '';
+        }
+    }
 });

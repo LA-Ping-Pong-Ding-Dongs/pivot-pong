@@ -74,32 +74,62 @@ describe PlayerPresenter do
     end
   end
 
-  describe '#current_streak' do
+  describe '#current_streak_count' do
     context 'player is on winning streak but also has a loss to break up streak' do
       it 'returns the current winning streak' do
-        expect(subject.current_streak).to eq "1#{I18n.t('player.streak.type.winner')}"
+        expect(subject.current_streak_count).to eq 1
       end
     end
 
     context 'player is on losing streak' do
       it 'returns the current losing streak' do
         presenter = PlayerPresenter.new(loser, [winning_match_1, winning_match_2, other_losing_match], [], player_finder_double)
-        expect(presenter.current_streak).to eq "3#{I18n.t('player.streak.type.loser')}"
+        expect(presenter.current_streak_count).to eq 3
       end
     end
 
     context 'player is on winning streak' do
       it 'returns the current winning streak' do
         presenter = PlayerPresenter.new(champ, [losing_match, other_losing_match], [], player_finder_double)
-        expect(presenter.current_streak).to eq "2#{I18n.t('player.streak.type.winner')}"
+        expect(presenter.current_streak_count).to eq 2
       end
     end
 
     context 'player has not played in a match' do
       it 'returns the an empty string' do
         presenter = PlayerPresenter.new(bob, [], [], player_finder_double)
-        expect(presenter.current_streak).to eq ''
+        expect(presenter.current_streak_count).to eq nil
       end
+    end
+  end
+
+  describe '#current_streak_string' do
+    it 'returns the an empty string when player has not played a match' do
+      presenter = PlayerPresenter.new(bob, [], [], player_finder_double)
+      expect(presenter.current_streak_string).to eq ''
+    end
+
+    it 'delegates to current_streak_count and current_streak_type' do
+      expect(subject).to receive(:current_streak_type).and_return('LOSS')
+      expect(subject).to receive(:current_streak_count).and_return(42343)
+
+      expect(subject.current_streak_string).to eq "42343LOSS"
+    end
+  end
+
+  describe '#current_streak_type' do
+    it 'returns W when on a winning streak' do
+      expect(subject.current_streak_type).to eq 'W'
+    end
+
+    it 'returns L when on a losing streak' do
+      presenter = PlayerPresenter.new(loser, [winning_match_1, winning_match_2, other_losing_match], [], player_finder_double)
+      expect(presenter.current_streak_type).to eq 'L'
+    end
+
+    it 'returns nil when no matches exist' do
+      presenter = PlayerPresenter.new(loser, [], [], player_finder_double)
+      expect(presenter.current_streak_type).to eq nil
     end
   end
 
@@ -109,6 +139,8 @@ describe PlayerPresenter do
                                         name: 'Bob',
                                         overall_wins: 2,
                                         overall_losses: 1,
+                                        current_streak_count: 1,
+                                        current_streak_type: 'W',
                                         rating: 1200,
                                         overall_winning_percentage: '66.7%',
                                     })
