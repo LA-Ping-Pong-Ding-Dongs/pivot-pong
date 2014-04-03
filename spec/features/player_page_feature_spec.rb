@@ -34,6 +34,7 @@ feature 'On the player show page:', :js do
     expect(page).to have_content I18n.t('player.streak.title').upcase
     within '.hot-streak' do
       expect(page).to have_content "2#{I18n.t('player.streak.type.winner')}"
+      expect(page).to have_css("img[src='/assets/smoke.png']")
     end
   end
 end

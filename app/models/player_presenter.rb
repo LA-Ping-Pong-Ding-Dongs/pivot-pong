@@ -44,6 +44,20 @@ class PlayerPresenter
     "#{current_streak_count}#{current_streak_type}"
   end
 
+  def current_streak_totem_image
+    type = current_streak_type
+    count = current_streak_count
+
+    if type == 'W'
+      return '/assets/smoke.png' if count == 2
+      return '/assets/fire.png' if count > 2
+    elsif type == 'L'
+      return '/assets/ice.png' if count > 2
+    end
+
+    ''
+  end
+
   def name
     @player.name
   end
@@ -67,6 +81,7 @@ class PlayerPresenter
         overall_wins: overall_wins,
         current_streak_count: current_streak_count,
         current_streak_type: current_streak_type,
+        current_streak_totem_image: current_streak_totem_image,
         rating: @player.mean,
         overall_winning_percentage: overall_winning_percentage,
     }

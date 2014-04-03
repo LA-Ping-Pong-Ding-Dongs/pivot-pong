@@ -15,6 +15,16 @@
     margin: 15px 150px 15px 10px;
   }
 
+  .hot-streak, .cold-streak {
+    position: relative;
+    img {
+      height: 50px;
+      position: absolute;
+      top: -10px;
+      left: 50px;
+    }
+  }
+
   h3 {
     text-align: left;
     margin: 50px 0 0;

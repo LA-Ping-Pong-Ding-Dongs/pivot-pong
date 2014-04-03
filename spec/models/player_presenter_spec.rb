@@ -113,7 +113,7 @@ describe PlayerPresenter do
       expect(subject).to receive(:current_streak_type).and_return('LOSS')
       expect(subject).to receive(:current_streak_count).and_return(42343)
 
-      expect(subject.current_streak_string).to eq "42343LOSS"
+      expect(subject.current_streak_string).to eq '42343LOSS'
     end
   end
 
@@ -133,14 +133,61 @@ describe PlayerPresenter do
     end
   end
 
+  describe '#current_streak_totem_image' do
+    it 'returns smoke.png when on a 2 game win streak' do
+      expect(subject).to receive(:current_streak_type).and_return('W')
+      expect(subject).to receive(:current_streak_count).and_return(2)
+
+      expect(subject.current_streak_totem_image).to eq '/assets/smoke.png'
+    end
+
+    it 'returns fire.png when on a 3 game win streak' do
+      expect(subject).to receive(:current_streak_type).and_return('W')
+      expect(subject).to receive(:current_streak_count).and_return(3)
+
+      expect(subject.current_streak_totem_image).to eq '/assets/fire.png'
+    end
+
+    it 'returns ice.png when on a 3 game losing skid' do
+      expect(subject).to receive(:current_streak_type).and_return('L')
+      expect(subject).to receive(:current_streak_count).and_return(3)
+
+      expect(subject.current_streak_totem_image).to eq '/assets/ice.png'
+    end
+
+    it 'returns an empty string at a 2L streak' do
+      expect(subject).to receive(:current_streak_type).and_return('L')
+      expect(subject).to receive(:current_streak_count).and_return(2)
+
+      expect(subject.current_streak_totem_image).to eq ''
+    end
+
+    it 'returns an empty string at a 1W streak' do
+      expect(subject).to receive(:current_streak_type).and_return('W')
+      expect(subject).to receive(:current_streak_count).and_return(1)
+
+      expect(subject.current_streak_totem_image).to eq ''
+    end
+
+    it 'returns an empty string if player has not played a match' do
+      expect(subject).to receive(:current_streak_type).and_return(nil)
+      expect(subject).to receive(:current_streak_count).and_return(nil)
+
+      expect(subject.current_streak_totem_image).to eq ''
+    end
+  end
+
   describe '#as_json' do
     it 'presents name, overall_wins, overall_losses and rating in json format' do
+      expect(subject).to receive(:current_streak_totem_image).and_return('fire.bmp')
+
       expect(subject.as_json).to eq({
                                         name: 'Bob',
                                         overall_wins: 2,
                                         overall_losses: 1,
                                         current_streak_count: 1,
                                         current_streak_type: 'W',
+                                        current_streak_totem_image: 'fire.bmp',
                                         rating: 1200,
                                         overall_winning_percentage: '66.7%',
                                     })

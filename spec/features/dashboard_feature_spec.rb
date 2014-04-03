@@ -112,21 +112,22 @@ feature 'On the dashboard:', :js do
   end
 
   scenario 'a user can view player info' do
-    match_1
+    create_leaderboard_objects
     visit root_path
 
-    expect(page).to have_content('Bob')
+    expect(page).to have_content('Godzilla')
 
     # svg selection seems to generally suck on attributes, this is a work around
-    page.execute_script "$('a').filter('[title=Bob]').first().click();"
+    page.execute_script "$('a').filter('[title=Godzilla]').first().click();"
 
     within '#player_info' do
-      expect(page).to have_content 'Bob'
-      expect(page).to have_content '1-0 (100.0%)'
-      expect(page).to have_css '.hot-streak', text: '1W'
+      expect(page).to have_content 'Godzilla'
+      expect(page).to have_content '2-0 (100.0%)'
+      expect(page).to have_css '.hot-streak', text: '2W'
+      expect(page).to have_css("img[src='/assets/smoke.png']")
     end
 
-    expect(current_path).to eq '/players/bob'
+    expect(current_path).to eq '/players/godzilla'
     find('#match_winner').native.send_keys(:Escape)
     expect(current_path).to eq '/'
   end

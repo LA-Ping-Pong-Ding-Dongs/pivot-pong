@@ -290,6 +290,17 @@ span.tooltip {
     dd {
       margin-left: 20px;
     }
+
+    .hot-streak, .cold-streak {
+      position: relative;
+
+      img {
+        height: 180px;
+        position: absolute;
+        top: -105px;
+        left: 30px;
+      }
+    }
   }
 }
 
