@@ -1,5 +1,5 @@
 language: ruby
 script:
-  - license_finder && bundle exec rake
+  - bundle exec license_finder && bundle exec rake
 rvm:
   - 2.1.0
