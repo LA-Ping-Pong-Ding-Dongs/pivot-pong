@@ -51,10 +51,12 @@ class PlayerPresenter
   def recent_matches
     @recent_matches.map do |match|
       if match.winner_key == @player.key
-        "#{I18n.t('player.recent_matches.won')} #{match.loser_name} #{I18n.t('player.recent_matches.on_date')} #{match.created_at.to_s(:pivot_pong_time)}"
+        result = "#{I18n.t('player.recent_matches.won')} #{match.loser_name}"
       else
-        "#{I18n.t('player.recent_matches.lost')} #{match.winner_name} #{I18n.t('player.recent_matches.on_date')} #{match.created_at.to_s(:pivot_pong_time)}"
+        result = "#{I18n.t('player.recent_matches.lost')} #{match.winner_name}"
       end
+
+      "#{result} #{I18n.t('player.recent_matches.on_date')} #{match.created_at.to_s(:pivot_pong_time)}"
     end
   end
 

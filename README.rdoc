@@ -1,3 +1,6 @@
+{<img src="https://travis-ci.org/LA-Ping-Pong-Ding-Dongs/pivot-pong.svg" alt="Build Status" />}[https://travis-ci.org/LA-Ping-Pong-Ding-Dongs/pivot-pong]
+{<img src="https://codeclimate.com/github/LA-Ping-Pong-Ding-Dongs/pivot-pong.png" />}[https://codeclimate.com/github/LA-Ping-Pong-Ding-Dongs/pivot-pong]
+
 = Pivot Pong Los Angeles Style
 
 Welcome to the Los Angeles version of Pivot Pong. The app tracks players as they participate in tournaments, providing macro information via ranking/performance and micro information on tournament play. For the Pivotal version of this application github.com/dipolesource | Pivotal Tracker @mmccormick is acting as the PM. Tracker project is https://www.pivotaltracker.com/n/projects/795077
