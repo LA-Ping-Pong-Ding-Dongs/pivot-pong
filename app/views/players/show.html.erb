@@ -3,36 +3,40 @@
 
   <div class="stats">
     <dl>
-      <dt>
-        <%= I18n.t('player_info.record.overall') %>
-      </dt>
+      <div class="definition-wrapper">
+        <dt>
+          <%= I18n.t('player_info.record.overall') %>
+        </dt>
 
-      <% if @player_information.overall_winning_percentage.to_f > 50 %>
-          <% record_class = 'winning' %>
-      <% elsif @player_information.overall_winning_percentage.to_f < 50 %>
-          <% record_class = 'losing' %>
-      <% else %>
-          <% record_class = 'even' %>
-      <% end %>
+        <% if @player_information.overall_winning_percentage.to_f > 50 %>
+            <% record_class = 'winning' %>
+        <% elsif @player_information.overall_winning_percentage.to_f < 50 %>
+            <% record_class = 'losing' %>
+        <% else %>
+            <% record_class = 'even' %>
+        <% end %>
 
-      <dd class="<%= record_class %>">
-        <%= @player_information.overall_record_string %> (<%= @player_information.overall_winning_percentage %>)
-      </dd>
-      <dt>
-        <%= I18n.t('player.streak.title') %>
-      </dt>
+        <dd class="<%= record_class %>">
+          <%= @player_information.overall_record_string %> (<%= @player_information.overall_winning_percentage %>)
+        </dd>
+      </div>
+      <div class="definition-wrapper">
+        <dt>
+          <%= I18n.t('player.streak.title') %>
+        </dt>
 
-      <% if @player_information.current_streak_type == 'W' %>
-          <% streak_class = 'hot-streak' %>
-      <% elsif @player_information.current_streak_type == 'L' %>
-          <% streak_class = 'cold-streak' %>
-      <% else %>
-          <% streak_class = '' %>
-      <% end %>
+        <% if @player_information.current_streak_type == 'W' %>
+            <% streak_class = 'hot-streak' %>
+        <% elsif @player_information.current_streak_type == 'L' %>
+            <% streak_class = 'cold-streak' %>
+        <% else %>
+            <% streak_class = '' %>
+        <% end %>
 
-      <dd class="<%= streak_class %>">
-        <%= @player_information.current_streak_string %>
-      </dd>
+        <dd class="<%= streak_class %>">
+          <%= @player_information.current_streak_string %>
+        </dd>
+      </div>
     </dl>
   </div>
 
