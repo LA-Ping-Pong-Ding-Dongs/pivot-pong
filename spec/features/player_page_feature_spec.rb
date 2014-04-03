@@ -19,7 +19,10 @@ feature 'On the player show page:', :js do
     expect(page).to have_content "#{I18n.t('player.title')} Bob"
 
     #overall record
-    expect(page).to have_content "#{I18n.t('player_info.record.overall')} 3-1 (75.0%)"
+    expect(page).to have_content I18n.t('player_info.record.overall').upcase
+    within '.winning' do
+      expect(page).to have_content "3-1 (75.0%)"
+    end
 
     #recent matches
     expect(page).to have_content "#{I18n.t('player.recent_matches.won')} Sally #{I18n.t('player.recent_matches.on_date')} 02/04/2014"
@@ -28,6 +31,9 @@ feature 'On the player show page:', :js do
     expect(page).to have_content "#{I18n.t('player.recent_matches.won')} Sally #{I18n.t('player.recent_matches.on_date')} 01/16/2012"
 
     #streak
-    expect(page).to have_content "#{I18n.t('player.streak.title')} 2#{I18n.t('player.streak.type.winner')}"
+    expect(page).to have_content I18n.t('player.streak.title').upcase
+    within '.hot-streak' do
+      expect(page).to have_content "2#{I18n.t('player.streak.type.winner')}"
+    end
   end
 end
