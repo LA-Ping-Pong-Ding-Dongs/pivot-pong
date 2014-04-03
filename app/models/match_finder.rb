@@ -14,14 +14,12 @@ class MatchFinder
     .map { |record| match_and_player_struct(record) }
   end
 
-  TOURNAMENT_MATCHES_LIMIT = 10
-
-  def find_matches_for_tournament(start_time, end_time, limit: TOURNAMENT_MATCHES_LIMIT )
-    match_with_player_names
+  def find_matches_for_tournament(start_time, end_time, limit = nil)
+    query = match_with_player_names
     .where('matches.created_at > ? AND matches.created_at <= ?', start_time, end_time)
     .order('matches.created_at DESC')
-    .limit(limit)
-    .map { |record| match_and_player_struct(record) }
+    query = query.limit(limit) if limit
+    query.map { |record| match_and_player_struct(record) }
   end
 
   def find_all

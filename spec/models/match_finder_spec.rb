@@ -54,29 +54,13 @@ describe MatchFinder do
       expect(subject.find_matches_for_tournament(5.days.ago, Time.now)).to eq(expected)
     end
 
-    it 'returns TOURNAMENT_MATCHES_LIMIT matches if no limit specified' do
-      player_limit = described_class::TOURNAMENT_MATCHES_LIMIT
-      Kernel.silence_warnings do
-        described_class::TOURNAMENT_MATCHES_LIMIT = 2
-      end
-
+    it 'returns a limited amount of matches if limit specified' do
       expected = [
         build_match_with_names_struct(not_relevant_match, 'Champ', 'Loser'),
         build_match_with_names_struct(losing_match_1, 'Champ', 'Bob'),
       ]
-      expect(subject.find_matches_for_tournament(5.days.ago, Time.now)).to eq(expected)
-
-      Kernel.silence_warnings do
-        described_class::TOURNAMENT_MATCHES_LIMIT = player_limit
-      end
+      expect(subject.find_matches_for_tournament(5.days.ago, Time.now, 2)).to eq(expected)
     end
-
-    it 'returns specified number of matches if limit specified' do
-      expected = [
-        build_match_with_names_struct(not_relevant_match, 'Champ', 'Loser'),
-      ]
-      expect(subject.find_matches_for_tournament(5.days.ago, Time.now, limit: 1)).to eq(expected)
-    end
-
   end
+
 end

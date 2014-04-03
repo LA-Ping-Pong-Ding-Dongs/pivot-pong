@@ -1,6 +1,8 @@
 class MatchesController < ApplicationController
   before_action :match_form, only: :create
 
+  TOURNAMENT_MATCHES_LIMIT = 10
+
   def create
     respond_to do |format|
       if match_validator.valid?
@@ -18,7 +20,7 @@ class MatchesController < ApplicationController
 
   def index
     if params[:recent]
-      matches = match_finder.find_matches_for_tournament(tournament.start_time, tournament.end_time)
+      matches = match_finder.find_matches_for_tournament(tournament.start_time, tournament.end_time, TOURNAMENT_MATCHES_LIMIT)
     else
       matches = match_finder.find_all
     end
