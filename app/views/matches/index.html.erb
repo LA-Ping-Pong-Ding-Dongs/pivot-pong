@@ -1,11 +1,11 @@
 <div class="recent-matches">
-  <h3><%= I18n.t('recent_matches.title') %></h3>
+  <h3><%= I18n.t('matches.title') %></h3>
   <div class="table-container">
     <table>
       <tr>
-        <th class="player-name"><%= I18n.t('recent_matches.winner') %></th>
-        <th class="player-name"><%= I18n.t('recent_matches.loser') %></th>
-        <th class="time"><%= I18n.t('recent_matches.time') %></th>
+        <th class="player-name"><%= I18n.t('matches.winner') %></th>
+        <th class="player-name"><%= I18n.t('matches.loser') %></th>
+        <th class="time"><%= I18n.t('matches.time') %></th>
       </tr>
       <% @matches_presenter.each do |match| %>
           <tr>
@@ -15,5 +15,6 @@
           </tr>
       <% end %>
     </table>
+    <%= paginate @page %>
   </div>
 </div>

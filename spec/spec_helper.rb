@@ -14,6 +14,7 @@ Capybara.javascript_driver = :poltergeist
 RSpec.configure do |config|
   config.include StructBuilder
   config.include FeatureHelper, type: :feature
+  config.include ConstantModifierHelper
   config.use_transactional_fixtures = true
   config.order = 'random'
 

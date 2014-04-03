@@ -24,8 +24,8 @@ en:
   player_info:
     record:
       overall: Overall Record
-  recent_matches:
-    title: Recent Matches
+  matches:
+    title: Matches
     winner: Winner
     loser: Loser
     time: Time

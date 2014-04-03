@@ -1,4 +1,7 @@
 class MatchesController < ApplicationController
+
+  PAGE_SIZE = 10
+
   before_action :match_form, only: :create
 
   TOURNAMENT_MATCHES_LIMIT = 10
@@ -22,7 +25,10 @@ class MatchesController < ApplicationController
     if params[:recent]
       matches = match_finder.find_matches_for_tournament(tournament.start_time, tournament.end_time, TOURNAMENT_MATCHES_LIMIT)
     else
-      matches = match_finder.find_all
+      page_number = params[:page] || 1
+      page = match_finder.find_page_of_matches(page_number, PAGE_SIZE)
+      @page = page[:page]
+      matches = page[:matches]
     end
 
     @matches_presenter = matches.map { |match| MatchPresenter.new(match) }

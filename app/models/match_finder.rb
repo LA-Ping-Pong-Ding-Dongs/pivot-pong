@@ -28,6 +28,15 @@ class MatchFinder
     .map { |record| match_and_player_struct(record) }
   end
 
+  def find_page_of_matches(page_number, page_size)
+    page = match_with_player_names
+    .order('created_at DESC')
+    .page(page_number)
+    .per(page_size)
+    matches = page.map { |record| match_and_player_struct(record) }
+    { page: page, matches: matches }
+  end
+
   private
 
   def match_with_player_names

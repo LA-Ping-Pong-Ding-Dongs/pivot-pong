@@ -80,8 +80,9 @@ describe MatchesController do
     let(:match_3) { MatchWithNamesStruct.new(3, 'sally', 'templeton', 'Sally', 'Templeton', Time.now) }
     let(:recent_matches) { [match_1, match_3] }
     let(:all_matches) { [match_1, match_2, match_3] }
-    let(:match_finder_double) { double(MatchFinder, find_matches_for_tournament: true, find_all: all_matches) }
     let(:tournament) { Tournament.new }
+    let(:test_page_hash) { { page: 'page', matches: all_matches } }
+    let(:match_finder_double) { double(MatchFinder, find_matches_for_tournament: true, find_page_of_matches: test_page_hash) }
 
     before do
       expect(controller).to receive(:match_finder) { match_finder_double }
@@ -119,6 +120,7 @@ describe MatchesController do
         expect(first_match.winner_name).to eq 'Bob'
         expect(first_match.loser_name).to eq 'Templeton'
         expect(first_match.human_readable_time).to eq 'less than a minute ago'
+        expect(assigns[:page]).to eq 'page'
       end
     end
 

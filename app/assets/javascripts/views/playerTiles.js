@@ -80,7 +80,7 @@ pong.PlayerTiles = Backbone.View.extend({
                 .style('opacity', 1);
             newAnchorGroups
                 .append('a')
-                .classed('hex-o-link', true)
+                .classed('hex-o-link js', true)
                 .classed('color1', function(d) { return keyFunctions.color(d) === 'color1'; })
                 .classed('color2', function(d) { return keyFunctions.color(d) === 'color2'; })
                 .classed('color3', function(d) { return keyFunctions.color(d) === 'color3'; })
@@ -93,7 +93,7 @@ pong.PlayerTiles = Backbone.View.extend({
                 .attr('transform', keyFunctions.translate);
             newAnchorGroups
                 .append('a')
-                .classed('hex-o-text', true)
+                .classed('hex-o-text js', true)
                 .attr('xlink:href', keyFunctions.url)
                 .attr('xlink:title', keyFunctions.name)
                 .append('text')
@@ -104,7 +104,7 @@ pong.PlayerTiles = Backbone.View.extend({
                 .text(keyFunctions.name);
             newAnchorGroups
                 .append('a')
-                .classed('hex-o-text', true)
+                .classed('hex-o-text js', true)
                 .attr('xlink:href', keyFunctions.url)
                 .attr('xlink:title', keyFunctions.mean)
                 .append('text')
