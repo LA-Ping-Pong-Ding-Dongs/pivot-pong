@@ -19,12 +19,12 @@ end
 group :development, :test do
   gem 'license_finder'
   gem 'rspec-rails', git: 'https://github.com/rspec/rspec-rails.git', tag: 'v3.0.0.beta2'
-  gem 'capybara', '~> 2.2.1'
+  gem 'capybara', git: 'https://github.com/jnicklas/capybara.git', branch: 'master'
   gem 'poltergeist', '~> 1.5.0'
   gem 'jasmine', '~> 2.0.0'
   gem 'timecop'
 end
 
 group :test do
-  gem 'nyan-cat-formatter'
+  gem 'nyan-cat-formatter', git: 'https://github.com/mattsears/nyan-cat-formatter.git', branch: 'master'
 end
