@@ -8,8 +8,6 @@ pong.initializeDashboard = function(options) {
     setupPlayerStandings(this.options);
     setupPlayerTiles(this.options);
 
-    $('a.js').click(pong.navigator);
-
     return;
 
     function setupMatchForm () {

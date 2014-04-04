@@ -1,8 +1,11 @@
 window.pong = window.pong || {};
 
 pong.PlayerTiles = Backbone.View.extend({
+    events: {
+        'click a.js': '_routeLinks',
+    },
 
-    render: function() {
+    render: function () {
         this.renderMesh();
         this.renderTiles();
     },
@@ -123,7 +126,9 @@ pong.PlayerTiles = Backbone.View.extend({
     },
 
     distributePlayersAroundMesh: function (excludeCells, percentBlankCells) {
-        excludeCells = excludeCells || function() { return false };
+        excludeCells = excludeCells || function () {
+            return false
+        };
         var centers = _(availableTileCenters(this.hexbin.centers()))
             .chain()
             .shuffle()
@@ -132,9 +137,9 @@ pong.PlayerTiles = Backbone.View.extend({
         this.data = this.savedData;
 
         if (percentBlankCells) {
-            centers  = _.initial(centers, parseInt(centers.length * percentBlankCells));
+            centers = _.initial(centers, parseInt(centers.length * percentBlankCells));
         }
-        centers  = _.take(centers, this.data.length);
+        centers = _.take(centers, this.data.length);
 
         this.data = _(_.take(this.data, centers.length)).map(function (player, index) {
             var column = centers[index][0];
@@ -179,8 +184,8 @@ pong.PlayerTiles = Backbone.View.extend({
     renderTilesOnResize: function () {
         var timeout = false;
 
-        $(window).resize(_.bind(function() {
-            if(timeout !== false)
+        $(window).resize(_.bind(function () {
+            if (timeout !== false)
                 clearTimeout(timeout);
             timeout = setTimeout(_.bind(this.renderTiles, this), 200);
         }, this));
@@ -198,4 +203,7 @@ pong.PlayerTiles = Backbone.View.extend({
         this.renderTilesOnResize();
     },
 
+    _routeLinks: function (e) {
+        pong.navigator(e);
+    },
 });

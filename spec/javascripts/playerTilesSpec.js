@@ -104,4 +104,12 @@ describe('PlayerTiles', function () {
             }, this));
         });
     });
+
+    describe('_routeLinks', function () {
+        it('delegates to pong.navigator', function () {
+            spyOn(pong, 'navigator');
+            this.view._routeLinks('e');
+            expect(pong.navigator).toHaveBeenCalledWith('e');
+        });
+    });
 });
