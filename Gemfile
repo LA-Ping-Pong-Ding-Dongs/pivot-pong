@@ -10,6 +10,7 @@ gem 'ejs'
 gem 'trueskill', git: 'git://github.com/saulabs/trueskill.git', require: 'saulabs/trueskill'
 gem 'pg'
 gem 'kaminari'
+gem 'psych', '~> 2.0.5'
 
 group :production, :staging do
   gem 'rails_12factor'
