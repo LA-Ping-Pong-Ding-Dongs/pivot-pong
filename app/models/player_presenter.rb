@@ -49,10 +49,10 @@ class PlayerPresenter
     count = current_streak_count
 
     if type == 'W'
-      return '/assets/smoke.png' if count == 2
-      return '/assets/fire.png' if count > 2
+      return 'smoke.png' if count == 2
+      return 'fire.png' if count > 2
     elsif type == 'L'
-      return '/assets/ice.png' if count > 2
+      return 'ice.png' if count > 2
     end
 
     ''

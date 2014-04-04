@@ -10,6 +10,7 @@
 //= require hexbin
 //= require ./navigator
 //= require ./eventBus
+//= require ./imageAssets
 //= require_tree ./util
 //= require_tree ./templates
 //= require_tree ./models
