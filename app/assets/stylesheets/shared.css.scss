@@ -29,10 +29,34 @@
       color: $losing_red;
     }
     &.hot-streak {
-      color: $hot-streak-orange;
+      color: $hot_streak_orange;
     }
     &.cold-streak {
-      color: $cold-streak-blue;
+      color: $cold_streak_blue;
+    }
+  }
+}
+
+.recent-matches, .leaderboard, .players {
+  color: $gray;
+  text-align: center;
+  table {
+    width: 75%;
+    margin: 0 auto;
+    min-width: 200px;
+    max-width: 600px;
+    tr {
+      border-bottom: 1px solid $gray_light;
+
+      th, td {
+        padding: .5em;
+        text-align: left;
+      }
+      .player-name {
+        @include ellipsis-text;
+        width: 200px;
+        max-width: 200px;
+      }
     }
   }
 }

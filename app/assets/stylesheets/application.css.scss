@@ -19,7 +19,13 @@ body {
   background-color: white;
   font-family: 'Open Sans', sans-serif;
 }
-
+a {
+  text-decoration: none;
+  color: $link_color;
+  &:hover {
+    color: $link_hover_color;
+  }
+}
 input[type=text] {
   border-radius: 5px;
   border: 3px solid $gray_light;

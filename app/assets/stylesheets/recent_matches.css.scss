@@ -1,26 +1,11 @@
 .recent-matches {
-  color: $gray;
-  text-align: center;
   padding: 40px;
-  table {
-    width: 75%;
-    margin: 0 auto;
-    min-width: 200px;
-    max-width: 600px;
-    tr {
-      th, td {
-        padding: .5em;
-        text-align: left;
-      }
-      .player-name {
-        @include ellipsis-text;
-        width: 200px;
-        max-width: 200px;
-      }
-      .time {
-        text-align: right;
-      }
-      border-bottom: 1px solid $gray_light;
+  tr {
+    .time {
+      text-align: right;
     }
+  }
+  .pagination {
+    margin-top: 30px;
   }
 }

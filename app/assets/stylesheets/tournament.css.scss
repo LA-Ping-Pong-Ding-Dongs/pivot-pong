@@ -1,32 +1,14 @@
 .leaderboard {
-  color: $gray;
-  text-align: center;
-  table {
-    width: 75%;
-    margin: 0 auto;
-    min-width: 200px;
-    max-width: 600px;
-    tr {
-      th, td {
-        padding: .5em;
-        text-align: left;
-      }
-      .player-name {
-        @include ellipsis-text;
-        width: 200px;
-        max-width: 200px;
-      }
-      .player-ranking {
-        width: 3em;
-        max-width: 3em;
-        padding-right: 1em;
-        text-align: right;
-      }
-      .player-record {
-        text-align: right;
-        min-width: 4em;
-      }
-      border-bottom: 1px solid $gray_light;
+  tr {
+    .player-ranking {
+      width: 3em;
+      max-width: 3em;
+      padding-right: 1em;
+      text-align: right;
+    }
+    .player-record {
+      text-align: right;
+      min-width: 4em;
     }
   }
 }
