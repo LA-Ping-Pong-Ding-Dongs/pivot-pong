@@ -1,0 +1,35 @@
+header {
+  max-width: 1500px;
+  margin: 0 auto;
+  .logo, nav {
+    float: left;
+    padding-top: 30px;
+    box-sizing: border-box;
+  }
+
+  .logo {
+    width: 70%;
+    text-align: left;
+    padding-left: 3%;
+  }
+
+  nav {
+    width: 30%;
+    text-align: right;
+    padding-right: 3%;
+  }
+
+  .app-name {
+    text-transform: uppercase;
+    margin: 0;
+    font-size: 13pt;
+    color: darken($overlay_gray, 15%);
+    letter-spacing: 0.1em;
+  }
+
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}

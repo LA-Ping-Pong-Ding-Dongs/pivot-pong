@@ -46,3 +46,5 @@ en:
       tab_title: Recent Matches
     tooltip:
       copy: Leaderboard ranking is determined by tournament win % multiplied by the number of unique players faced in the tournament.
+  dashboard:
+    link_title: Dashboard

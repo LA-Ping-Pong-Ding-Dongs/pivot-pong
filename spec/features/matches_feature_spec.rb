@@ -11,15 +11,13 @@ feature 'at the matches URL:' do
   let!(:match_2) { Match.create(winner_key: godzilla.key, loser_key: sally.key, created_at: Time.now) }
   let!(:match_3) { Match.create(winner_key: sally.key, loser_key: bob.key, created_at: 2.hours.ago) }
 
-  scenario 'it shows the first page of matches in reverse order' do
+  scenario 'it shows the first page of matches in reverse order' do |example|
 
     execute_with_modified_constant(MatchesController, 'PAGE_SIZE', 2) do
 
-      step '1. go to matches path' do
-        visit matches_path
-      end
+      visit matches_path
 
-      step '2. expect to see first page of all matches' do
+      step '1. expect to see first page of all matches', current: example do
 
         expect(page).to have_content I18n.t('matches.title')
 
@@ -37,22 +35,26 @@ feature 'at the matches URL:' do
 
         expect(page).to have_css '.last', text: 'Last'
       end
+
+      step '2. return to the dashboard', current: example do
+        click_link I18n.t('dashboard.link_title').upcase
+
+        expect(current_path).to eq root_path
+      end
     end
   end
 
-  scenario 'you can navigate to the last page from the first page' do
+  scenario 'you can navigate to the last page from the first page' do |example|
 
     execute_with_modified_constant(MatchesController, 'PAGE_SIZE', 2) do
 
-      step '1. go to matches path' do
-        visit matches_path
-      end
+      visit matches_path
 
-      step '2. click on "Last" link' do
+      step '1. click on "Last" link', current: example do
         click_link 'Last'
       end
 
-      step '3. expect to see last page of all matches' do
+      step '2. expect to see last page of all matches', current: example do
 
         expect(page).to have_content I18n.t('matches.title')
 

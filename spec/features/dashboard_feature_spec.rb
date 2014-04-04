@@ -42,18 +42,18 @@ feature 'On the dashboard:', :js do
     end
   end
 
-  scenario 'as they enter a match winner a player can click on a name from a dropdown' do
+  scenario 'as they enter a match winner a player can click on a name from a dropdown' do |example|
     create_players
     visit root_path
 
-    step '1. type initial name string and expect pop up list to display' do
+    step '1. type initial name string and expect pop up list to display', current: example do
       fill_in I18n.t('match.form.winner_label').upcase, with: 'b'
       within '.winner-field .search' do
         expect(page).to have_content 'Bob'
       end
     end
 
-    step '2. clicking a name will fill in winner with player name' do
+    step '2. clicking a name will fill in winner with player name', current: example do
       within '.winner-field .search' do
         page.find('li', 'Bob').click
       end
@@ -66,18 +66,18 @@ feature 'On the dashboard:', :js do
     end
   end
 
-  scenario 'as they enter a match loser a player can click on a name from a dropdown' do
+  scenario 'as they enter a match loser a player can click on a name from a dropdown' do |example|
     create_players
     visit root_path
 
-    step '1. type initial name string and expect pop up list to display' do
+    step '1. type initial name string and expect pop up list to display', current: example do
       fill_in I18n.t('match.form.loser_label').upcase, with: 'b'
       within '.loser-field .search' do
         expect(page).to have_content 'Bob'
       end
     end
 
-    step '2. clicking a name will fill in loser with player name' do
+    step '2. clicking a name will fill in loser with player name', current: example do
       within '.loser-field .search' do
         page.find('li', 'Bob').click
       end
@@ -101,17 +101,28 @@ feature 'On the dashboard:', :js do
     expect(page).to have_content(2105)
   end
 
-  scenario 'a viewer can see existing matches' do
+  scenario 'a viewer can see existing matches' do |example|
     match_1
     visit root_path
 
-    find('.recent-matches-link').click
+    step '1. clicking recent matches tab will show recent matches', current: example do
+      find('.recent-matches-link').click
 
-    expect(page).to have_css '.winner', text: 'Bob'
-    expect(page).to have_css '.loser', text: 'Sally'
+      expect(page).to have_css '.winner', text: 'Bob'
+      expect(page).to have_css '.loser', text: 'Sally'
+    end
+
+    step '2. a view can go to matches page by clicking recent matches title', current: example do
+      click_link I18n.t('overlay.recent_matches.tab_title')
+      within '#recent_matches_container' do
+        click_link (I18n.t('recent_matches.title').upcase)
+      end
+
+      expect(current_path).to eq matches_path
+    end
   end
 
-  scenario 'a user can view player info' do
+  scenario 'a user can view player info' do |example|
     create_leaderboard_objects
     visit root_path
 
@@ -120,33 +131,57 @@ feature 'On the dashboard:', :js do
     # svg selection seems to generally suck on attributes, this is a work around
     page.execute_script "$('a').filter('[title=Godzilla]').first().click();"
 
-    within '#player_info' do
-      expect(page).to have_content 'Godzilla'
-      expect(page).to have_content '2-0 (100.0%)'
-      expect(page).to have_css '.hot-streak', text: '2W'
-      expect(page).to have_css("img[src='/assets/smoke.png']")
+    step '1. information is displayed in player info window', current: example do
+      within '#player_info' do
+        expect(page).to have_content 'Godzilla'
+        expect(page).to have_content '2-0 (100.0%)'
+        expect(page).to have_css '.hot-streak', text: '2W'
+        expect(page).to have_css("img[src='/assets/smoke.png']")
+      end
     end
 
-    expect(current_path).to eq '/players/godzilla'
-    find('#match_winner').native.send_keys(:Escape)
-    expect(current_path).to eq '/'
+    step '2. user can press escape to reload dashboard', current: example do
+      expect(current_path).to eq '/players/godzilla'
+      find('#match_winner').native.send_keys(:Escape)
+      expect(current_path).to eq '/'
+    end
+
+    step '3. user can click link to player show page', current: example do
+      page.execute_script "$('a').filter('[title=Godzilla]').first().click();"
+
+      within '#player_info' do
+        click_link 'Godzilla'
+      end
+
+      expect(current_path).to eq player_path('godzilla')
+    end
   end
 
-  scenario 'a viewer can see current tournament player rankings' do
+  scenario 'a viewer can see current tournament player rankings' do |example|
     create_leaderboard_objects
     visit root_path
 
-    find('.recent-matches-link').click
-    expect(page).to have_content I18n.t('player.recent_matches.title').upcase
-    expect(page).to_not have_content I18n.t('leaderboard.title').upcase
+    step '1. a viewer can see current tournament information', current: example do
+      find('.recent-matches-link').click
+      expect(page).to have_content I18n.t('player.recent_matches.title').upcase
+      expect(page).to_not have_content I18n.t('leaderboard.title').upcase
 
-    find('.leaderboard-link').click
-    expect(page).to have_content I18n.t('leaderboard.title').upcase
-    expect(page).to_not have_content I18n.t('player.recent_matches.title').upcase
+      find('.leaderboard-link').click
+      expect(page).to have_content I18n.t('leaderboard.title').upcase
+      expect(page).to_not have_content I18n.t('player.recent_matches.title').upcase
 
-    expect(page).to have_content 'Godzilla 2-0'
-    expect(page).to have_content 'Bob 1-1'
-    expect(page).to have_content 'Sally 0-2'
+      expect(page).to have_content 'Godzilla 2-0'
+      expect(page).to have_content 'Bob 1-1'
+      expect(page).to have_content 'Sally 0-2'
+    end
+
+    step '2. a view can click leaderboard title to go to leaderboard page', current: example do
+      within '#leaderboard_container' do
+        click_link I18n.t('leaderboard.title').upcase
+      end
+
+      expect(current_path).to eq tournament_path
+    end
   end
 
   scenario 'a viewer can click a tooltip to learn about leaderboard rankings' do
