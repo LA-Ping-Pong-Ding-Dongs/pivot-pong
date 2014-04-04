@@ -15,7 +15,9 @@ class PlayerFinder
   end
 
   def find_all_players
-    Player.all.map { |player| player_to_struct(player) }
+    Player
+    .order('LOWER(name) ASC')
+    .map { |player| player_to_struct(player) }
   end
 
   def find(key)

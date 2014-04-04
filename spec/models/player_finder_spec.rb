@@ -37,13 +37,12 @@ describe PlayerFinder do
   end
 
   describe '#find_all_players' do
-
     let!(:bob) { Player.create(key: 'bob', name: 'Bob') }
-    let!(:sally) { Player.create(key: 'sally', name: 'Sally') }
     let!(:templeton) { Player.create(key: 'templeton', name: 'Templeton') }
+    let!(:sally) { Player.create(key: 'sally', name: 'sally') }
 
-    it 'returns an array of structs containing all players' do
-      expect(finder.find_all_players).to match_array([
+    it 'returns an array of structs containing all players in alphabeticsl order' do
+      expect(finder.find_all_players).to eq([
                                                          build_player_struct(bob),
                                                          build_player_struct(sally),
                                                          build_player_struct(templeton),

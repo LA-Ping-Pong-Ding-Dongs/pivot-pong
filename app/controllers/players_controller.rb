@@ -2,12 +2,13 @@ class PlayersController < ApplicationController
   RECENT_MATCHES_LIMIT = 5
 
   def index
-    players = player_finder.find_all_players
+    @players = player_finder.find_all_players
 
     respond_to do |format|
       format.js do
-        render json: players_json_presenter(players).as_json
+        render json: players_json_presenter(@players).as_json
       end
+      format.html
     end
   end
 

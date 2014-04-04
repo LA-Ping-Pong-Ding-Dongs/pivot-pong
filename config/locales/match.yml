@@ -24,6 +24,9 @@ en:
   player_info:
     record:
       overall: Overall Record
+  players:
+    title: Players
+    name: Player
   recent_matches:
     title: Recent Matches
   matches:
