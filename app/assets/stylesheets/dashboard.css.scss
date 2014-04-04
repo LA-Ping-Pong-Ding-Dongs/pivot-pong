@@ -56,6 +56,41 @@ span.tooltip {
 
 #player_tiles_container {
   background-color: transparent;
+  .nojs-players {
+    position: absolute;
+    left: 40px;
+    top: 100px;
+    bottom: 110px;
+    width: 410px;
+    border: 1px solid $gray_light;
+    overflow-y: scroll;
+    table {
+      width: 100%;
+      tr {
+        border-bottom: 1px dotted rgba(darken($overlay_gray, 5%), 0.85);
+        &:hover {
+          background-color: $gray_light;
+        }
+        &:last-child {
+          border-bottom: none;
+        }
+        td {
+          padding: 9px;
+        }
+        .player-name {
+          @include ellipsis-text;
+          width: 135px;
+          max-width: 135px;
+          box-sizing: border-box;
+          text-align: left;
+        }
+        .player-record {
+          text-align: right;
+          width: 5em;
+        }
+      }
+    }
+  }
 }
 
 #match_form_container {

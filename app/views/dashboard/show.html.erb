@@ -1,5 +1,17 @@
 <div class="dashboard-container">
-  <div id="player_tiles_container"></div>
+  <div id="player_tiles_container">
+    <section class="nojs-players">
+      <h3><%= I18n.t('players.title') %></h3>
+      <table>
+        <% @players.each do |player| %>
+          <tr>
+            <td class="player-name"><%= link_to player.name, player_path(player.key) %></td>
+            <td class="player-record"><%= player.mean %></td>
+          </tr>
+        <% end %>
+      </table>
+    </section>
+  </div>
 
   <div id="match_form_container" class="overlay">
     <%= form_for @match, url: matches_path, as: 'match' do |f| %>

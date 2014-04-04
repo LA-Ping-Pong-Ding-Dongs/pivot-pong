@@ -192,6 +192,7 @@ pong.PlayerTiles = Backbone.View.extend({
     },
 
     initialize: function (options) {
+        $('.nojs-players').hide();
         this.data = this.collection.toJSON();
         this.savedData = this.data;
         this.svg = d3.select(this.el).append('svg');
