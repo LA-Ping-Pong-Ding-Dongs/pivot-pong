@@ -54,7 +54,6 @@ feature 'On the player show page:', :js do
   scenario 'player can link to edit name' do
     bob
     visit player_path(bob)
-
     click_link 'edit_player_link'
 
     expect(current_path).to eq edit_player_path bob.key
