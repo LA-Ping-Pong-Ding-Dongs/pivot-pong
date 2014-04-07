@@ -55,7 +55,7 @@ class PlayerPresenter
       return 'ice.png' if count > 2
     end
 
-    ''
+    return ''
   end
 
   def name

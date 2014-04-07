@@ -23,14 +23,23 @@ feature 'On the dashboard:' do
     end
   end
 
-  scenario 'a viewer can see all of the players and their data' do
+  scenario 'a viewer can see all of the players and their data' do |example|
     create_players
     visit root_path
 
-    expect(page).to have_content('Bob')
-    expect(page).to have_content(800)
+    step '1. expect to see a list players and their ratings', current: example do
+      expect(page).to have_content('Bob')
+      expect(page).to have_content(800)
 
-    expect(page).to have_content('Sally')
-    expect(page).to have_content(2105)
+      expect(page).to have_content('Sally')
+      expect(page).to have_content(2105)
+    end
+
+    step '2. a viewer can navigate to the players page', current: example do
+      click_link I18n.t('players.title')
+
+      expect(current_path).to eq players_path
+    end
   end
+
 end
