@@ -80,13 +80,13 @@ describe MatchesController do
     let(:match_3) { MatchWithNamesStruct.new(3, 'sally', 'templeton', 'Sally', 'Templeton', Time.now) }
     let(:recent_matches) { [match_1, match_3] }
     let(:all_matches) { [match_1, match_2, match_3] }
-    let(:tournament) { Tournament.new }
+    let(:tournament_ranking) { TournamentRanking.new }
     let(:test_page_hash) { { page: 'page', matches: all_matches } }
     let(:match_finder_double) { double(MatchFinder, find_matches_for_tournament: true, find_page_of_matches: test_page_hash) }
 
     before do
       expect(controller).to receive(:match_finder) { match_finder_double }
-      allow(controller).to receive(:tournament) { tournament }
+      allow(controller).to receive(:tournament_ranking) { tournament_ranking }
     end
 
     context 'responds with json' do
@@ -100,7 +100,7 @@ describe MatchesController do
       end
 
       it 'returns a list of recent matches' do
-        expect(match_finder_double).to receive(:find_matches_for_tournament).with(tournament.start_time, tournament.end_time, described_class::TOURNAMENT_MATCHES_LIMIT).and_return(recent_matches)
+        expect(match_finder_double).to receive(:find_matches_for_tournament).with(tournament_ranking.start_time, tournament_ranking.end_time, described_class::TOURNAMENT_MATCHES_LIMIT).and_return(recent_matches)
         xhr :get, :index, recent: 'true'
 
         expected = recent_matches.map{ |match| MatchPresenter.new(match).as_json }

@@ -10,4 +10,8 @@ module StructBuilder
   def build_player_struct(player)
     PlayerStruct.new(player.key, player.name, player.mean, player.sigma)
   end
+
+  def build_tournament_struct(tournament)
+    TournamentStruct.new(tournament.start_time, tournament.end_time, tournament.winner_key)
+  end
 end

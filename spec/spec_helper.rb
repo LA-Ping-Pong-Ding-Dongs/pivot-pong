@@ -3,6 +3,7 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 require 'capybara/rails'
 require 'capybara/poltergeist'
+require 'database_cleaner'
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 Dir[Rails.root.join('spec/matchers/*.rb')].each { |f| require f }
@@ -19,9 +20,24 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = true
   config.order = 'random'
 
-  config.after(:each) do
-    Player.delete_all
-    Match.delete_all
+  config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.before do
+    DatabaseCleaner.strategy = :transaction
+  end
+
+  config.before type: :feature do
+    DatabaseCleaner.strategy = :truncation
+  end
+
+  config.before do
+    DatabaseCleaner.start
+  end
+
+  config.after do
+    DatabaseCleaner.clean
   end
 
   if ENV['APIPIE_RECORD']

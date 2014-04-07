@@ -1,11 +1,11 @@
 class PlayerPresenter
   include ActionView::Helpers::NumberHelper
 
-  def initialize(player, matches, recent_matches, player_finder = PlayerFinder.new)
+  def initialize(player, matches, recent_matches, tournament_wins)
     @player = player
     @matches = matches
-    @player_finder = player_finder
     @recent_matches = recent_matches
+    @tournament_wins = tournament_wins
   end
 
   attr_reader :player
@@ -25,6 +25,10 @@ class PlayerPresenter
 
   def overall_record_string
     "#{overall_wins}-#{overall_losses}"
+  end
+
+  def tournament_win_count
+    @tournament_wins.count
   end
 
   def current_streak_type

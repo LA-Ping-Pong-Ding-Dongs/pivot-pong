@@ -23,15 +23,11 @@ describe PlayerPresenter do
     ]
   end
 
-  let(:player_finder_double) { double(PlayerFinder) }
+  let(:tourney_win_1) { TournamentStruct.new(3.weeks.ago, 2.weeks.ago, 'bob') }
+  let(:tourney_win_2) { TournamentStruct.new(4.weeks.ago, 3.weeks.ago, 'bob') }
+  let(:tournament_wins) { [tourney_win_1, tourney_win_2] }
 
-  subject(:player_presenter) { PlayerPresenter.new(bob, all_matches, recent_matches, player_finder_double) }
-
-  before do
-    allow(player_finder_double).to receive(:find) do |key|
-      PlayerStruct.new(key, key.camelize, 1200, 50)
-    end
-  end
+  subject(:player_presenter) { PlayerPresenter.new(bob, all_matches, recent_matches, tournament_wins) }
 
   describe '#overall_wins' do
     it 'returns number of losses from all matches' do
@@ -45,13 +41,19 @@ describe PlayerPresenter do
     end
   end
 
+  describe '#tournament_win_count' do
+    it 'returns number of tournament wins' do
+      expect(subject.tournament_win_count).to eq 2
+    end
+  end
+
   describe '#overall_record_string' do
     it 'returns wins and losses' do
       expect(subject.overall_record_string).to eq '2-1'
     end
 
     it 'returns 0s for users with no losses' do
-      player_presenter = PlayerPresenter.new(champ, [losing_match], [])
+      player_presenter = PlayerPresenter.new(champ, [losing_match], [], [])
       expect(player_presenter.overall_record_string).to eq '1-0'
     end
   end
@@ -83,21 +85,21 @@ describe PlayerPresenter do
 
     context 'player is on losing streak' do
       it 'returns the current losing streak' do
-        presenter = PlayerPresenter.new(loser, [winning_match_1, winning_match_2, other_losing_match], [], player_finder_double)
+        presenter = PlayerPresenter.new(loser, [winning_match_1, winning_match_2, other_losing_match], [], [])
         expect(presenter.current_streak_count).to eq 3
       end
     end
 
     context 'player is on winning streak' do
       it 'returns the current winning streak' do
-        presenter = PlayerPresenter.new(champ, [losing_match, other_losing_match], [], player_finder_double)
+        presenter = PlayerPresenter.new(champ, [losing_match, other_losing_match], [], [])
         expect(presenter.current_streak_count).to eq 2
       end
     end
 
     context 'player has not played in a match' do
       it 'returns the an empty string' do
-        presenter = PlayerPresenter.new(bob, [], [], player_finder_double)
+        presenter = PlayerPresenter.new(bob, [], [], [])
         expect(presenter.current_streak_count).to eq nil
       end
     end
@@ -105,7 +107,7 @@ describe PlayerPresenter do
 
   describe '#current_streak_string' do
     it 'returns the an empty string when player has not played a match' do
-      presenter = PlayerPresenter.new(bob, [], [], player_finder_double)
+      presenter = PlayerPresenter.new(bob, [], [], [])
       expect(presenter.current_streak_string).to eq ''
     end
 
@@ -123,12 +125,12 @@ describe PlayerPresenter do
     end
 
     it 'returns L when on a losing streak' do
-      presenter = PlayerPresenter.new(loser, [winning_match_1, winning_match_2, other_losing_match], [], player_finder_double)
+      presenter = PlayerPresenter.new(loser, [winning_match_1, winning_match_2, other_losing_match], [], [])
       expect(presenter.current_streak_type).to eq 'L'
     end
 
     it 'returns nil when no matches exist' do
-      presenter = PlayerPresenter.new(loser, [], [], player_finder_double)
+      presenter = PlayerPresenter.new(loser, [], [], [])
       expect(presenter.current_streak_type).to eq nil
     end
   end

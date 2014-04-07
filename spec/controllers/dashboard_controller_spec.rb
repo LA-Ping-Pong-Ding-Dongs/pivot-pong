@@ -6,11 +6,11 @@ describe DashboardController do
 
     let(:players) { ['player one data', 'player two data'] }
     let(:player_finder) { instance_double(PlayerFinder, find_all_players: players) }
-    let(:tournament_double) { double(Tournament, determine_rankings: 'data')}
+    let(:tournament_ranking_double) { double(TournamentRanking, determine_rankings: 'data')}
 
     before do
       allow(controller).to receive(:new_player_finder).and_return(player_finder)
-      allow(controller).to receive(:tournament).and_return(tournament_double)
+      allow(controller).to receive(:tournament_ranking).and_return(tournament_ranking_double)
     end
 
     it 'responds successfully' do

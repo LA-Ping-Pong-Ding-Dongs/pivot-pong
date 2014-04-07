@@ -19,5 +19,11 @@ describe MatchCreator do
       expect(record.winner_key).to eq 'abfa9dba916f2e487d64ccdb658ce6d0'
       expect(record.loser_key).to eq '9621b65bf7c398ee7fd4a708a8171a54'
     end
+
+    it 'raises argument error if any of the arguments are missing' do
+      expect{
+        creator.create_match
+      }.to raise_error(ArgumentError)
+    end
   end
 end

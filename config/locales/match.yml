@@ -24,6 +24,10 @@ en:
     edit:
       link: Edit Player
       commit: Update Name
+    trophy_case:
+      title: Trophy Case
+      trophy_names:
+        tournament_winner: Tournament Winner
   player_info:
     record:
       overall: Overall Record

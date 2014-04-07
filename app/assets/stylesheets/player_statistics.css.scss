@@ -34,6 +34,15 @@
     margin: 50px 0 0;
   }
 
+  .trophy-case {
+    .trophy {
+      display: inline-block;
+      .name {
+        text-align: center;
+      }
+    }
+  }
+
   .recent-matches {
     list-style: none;
     margin: 10px 0;

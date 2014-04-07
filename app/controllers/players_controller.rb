@@ -16,20 +16,21 @@ class PlayersController < ApplicationController
     player = player_finder.find(params[:key])
     matches = match_finder.find_all_for_player(player.key)
     recent_matches = match_finder.find_recent_matches_for_player(player.key, RECENT_MATCHES_LIMIT)
+    tournament_wins = tournament_finder.find_wins_for_player(player.key)
 
     respond_to do |format|
       format.js do
-        render json: { results: player_presenter(player, matches, recent_matches).as_json }
+        render json: { results: player_presenter(player, matches, recent_matches, tournament_wins).as_json }
       end
       format.html do
-        @player_information = player_presenter(player, matches, recent_matches)
+        @player_information = player_presenter(player, matches, recent_matches, tournament_wins)
       end
     end
   end
 
   def edit
     player = player_finder.find(params[:key])
-    @player = player_presenter(player, nil, nil)
+    @player = player_presenter(player, nil, nil, nil)
   end
 
   def update
@@ -75,8 +76,12 @@ class PlayersController < ApplicationController
     MatchFinder.new
   end
 
-  def player_presenter(player, matches, recent_matches)
-    PlayerPresenter.new(player, matches, recent_matches)
+  def tournament_finder
+    TournamentFinder.new
+  end
+
+  def player_presenter(player, matches, recent_matches, tournament_wins)
+    PlayerPresenter.new(player, matches, recent_matches, tournament_wins)
   end
 
   def players_json_presenter(players)

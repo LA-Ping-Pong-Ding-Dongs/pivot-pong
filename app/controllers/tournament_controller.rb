@@ -1,7 +1,7 @@
 class TournamentController < ApplicationController
 
   def show
-    @standings = tournament.determine_rankings
+    @standings = tournament_ranking.determine_rankings
 
     respond_to do |format|
       format.js { render json: { results: @standings.map{ |standing| PlayerStandingJsonPresenter.new(standing).as_json } }.as_json }
@@ -11,8 +11,8 @@ class TournamentController < ApplicationController
 
   private
 
-  def tournament
-    Tournament.new
+  def tournament_ranking
+    TournamentRanking.new
   end
 
 end

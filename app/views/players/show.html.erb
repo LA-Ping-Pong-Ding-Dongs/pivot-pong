@@ -42,7 +42,17 @@
     </dl>
   </div>
 
-  <h3><%= I18n.t('recent_matches.title') %></h3>
+  <% if @player_information.tournament_win_count > 0 %>
+      <div class="trophy-case">
+        <h3><%= I18n.t('player.trophy_case.title') %></h3>
+        <div class="trophy tournament-winner-trophy">
+          <%= image_tag('trophy.png') %>
+          <p class="name"><%= I18n.t('player.trophy_case.trophy_names.tournament_winner') %></p>
+        </div>
+      </div>
+  <% end %>
+
+  <h3><%= I18n.t('player.recent_matches.title') %></h3>
   <ul class="recent-matches">
     <% @player_information.recent_matches.each do |match| %>
         <li><%= match %></li>

@@ -9,7 +9,9 @@ pairs:
   ih: Ira Herman
   jb: jbritz
   jm: Jalil Mohammed
+  jr: John Ryan
   jrhb: Jonathan Barnes
+  jvdd: Julian Vergel de Dios
   mc: Michael McCormick;mc
   ml: Mariana Lenetis
   pa: Pete Alfvin
@@ -18,7 +20,6 @@ pairs:
   ta: tina
   vh: Vance Heron
   zg: Zachary Gershman; zg
-  jr: John Ryan
 
 email:
   prefix: pair

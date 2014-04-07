@@ -35,4 +35,12 @@ ActiveRecord::Schema.define(version: 20140411223757) do
 
   add_index "players", ["key"], name: "index_players_on_key", unique: true, using: :btree
 
+  create_table "tournaments", force: true do |t|
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.string   "winner_key"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
 end

@@ -13,6 +13,9 @@ gem 'kaminari'
 gem 'psych', '~> 2.0.5'
 gem 'font-awesome-sass'
 gem 'apipie-rails'
+gem 'redis'
+gem 'resque'
+gem 'clockwork'
 
 group :production, :staging do
   gem 'rails_12factor'
@@ -28,6 +31,11 @@ group :development, :test do
   gem 'faker'
 end
 
+group :development do
+  gem 'foreman'
+end
+
 group :test do
   gem 'nyan-cat-formatter', git: 'https://github.com/mattsears/nyan-cat-formatter.git', branch: 'master'
+  gem 'database_cleaner'
 end
