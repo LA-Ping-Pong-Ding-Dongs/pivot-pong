@@ -7,7 +7,7 @@ module Clockwork
     Resque.enqueue(job)
   end
 
-  every(1.week, TournamentWinnerPickerJob, at: 'Sunday 23:59')
+  every(10.seconds, TournamentWinnerPickerJob)
 end
 
 

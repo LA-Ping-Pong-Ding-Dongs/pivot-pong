@@ -37,6 +37,13 @@ class MatchFinder
     { page: page, matches: matches }
   end
 
+  def find_oldest_match
+    match = match_with_player_names
+    .order('created_at ASC')
+    .first
+    match_and_player_struct(match)
+  end
+
   private
 
   def match_with_player_names

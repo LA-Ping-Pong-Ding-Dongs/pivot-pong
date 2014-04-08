@@ -8,6 +8,7 @@ describe MatchFinder do
   let!(:not_relevant_match) { Match.create(winner_key: champ.key, loser_key: loser.key, created_at: 3.minutes.ago).reload }
   let!(:losing_match_1) { Match.create(winner_key: champ.key, loser_key: bob.key, created_at: 2.days.ago).reload }
   let!(:losing_match_2) { Match.create(winner_key: champ.key, loser_key: bob.key, created_at: 3.months.ago).reload }
+  let(:oldest_match) { losing_match_2 }
 
   subject(:match_finder) { MatchFinder.new }
 
@@ -63,4 +64,11 @@ describe MatchFinder do
     end
   end
 
+  # this is the spec we're verifying...
+  describe '#find_oldest_match' do
+    it 'returns the oldest match' do
+      expected = build_match_with_names_struct(oldest_match, 'Champ', 'Bob')
+      expect(subject.find_oldest_match).to eq(expected)
+    end
+  end
 end
