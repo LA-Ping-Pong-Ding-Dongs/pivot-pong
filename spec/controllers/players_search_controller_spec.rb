@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe PlayersSearchController do
-  let(:bob) { PlayerStruct.new('bob', 'Bob', 1200, 50) }
-  let(:bally) { PlayerStruct.new('bally', 'Bally', 1500, 150) }
+  let(:bob) { PlayerStruct.new('99ce27141314607c8d0d3cec9807c67f', 'Bob', 1200, 50) }
+  let(:bally) { PlayerStruct.new('dda629140ba03c2e861a248d2c2579cb', 'Bally', 1500, 150) }
   let(:player_finder_double) { double(PlayerFinder) }
   let(:players_json_presenter_double) { double(PlayersJsonPresenter) }
 

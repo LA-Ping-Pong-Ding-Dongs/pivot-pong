@@ -10,28 +10,28 @@ describe MatchForm do
     )
   end
 
-  let(:winner) { double(Player, key: 'bob', name: 'Bob') }
-  let(:loser) { double(Player, key: 'sally', name: 'Sally') }
+  let(:bob) { double(Player, key: '544151cd41aaa51edfd4a0bd2ccbef03', name: 'Bob') }
+  let(:sally) { double(Player, key: '9621b65bf7c398ee7fd4a708a8171a54', name: 'Sally') }
   let(:player_finder) { instance_double(PlayerFinder) }
   let(:match_creator) { instance_double(MatchCreator, create_match: nil) }
   let(:ratings_updater) { instance_double(RatingsUpdater, update_for_match: nil) }
 
   describe '#save' do
     before do
-      allow(player_finder).to receive(:find_or_create_by_name).with(winner.name).and_return(winner)
-      allow(player_finder).to receive(:find_or_create_by_name).with(loser.name).and_return(loser)
+      allow(player_finder).to receive(:find_or_create_by_name).with(bob.name).and_return(bob)
+      allow(player_finder).to receive(:find_or_create_by_name).with(sally.name).and_return(sally)
     end
 
     it 'creates a match with the winner and the loser' do
       form.save
 
-      expect(match_creator).to have_received(:create_match).with(loser_key: 'sally', winner_key: 'bob')
+      expect(match_creator).to have_received(:create_match).with(loser_key: sally.key, winner_key: bob.key)
     end
 
     it 'updates player ratings for players in the match' do
       form.save
 
-      expect(ratings_updater).to have_received(:update_for_match).with(winner_key: 'bob', loser_key: 'sally')
+      expect(ratings_updater).to have_received(:update_for_match).with(winner_key: bob.key, loser_key: sally.key)
     end
   end
 

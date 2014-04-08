@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe PlayersController do
 
-  let(:player) { PlayerStruct.new('bob', 'Bob', 1200, 50) }
-  let(:nemesis) { PlayerStruct.new('sally', 'Sally', 1500, 150) }
+  let(:player) { PlayerStruct.new('f2b8be6ba879e2b1bd1653852f1a33ab', 'Bob', 1200, 50) }
+  let(:nemesis) { PlayerStruct.new('99ce27141314607c8d0d3cec9807c67f', 'Sally', 1500, 150) }
   let(:player_finder_double) { double(PlayerFinder, find: player, find_all_players: [player, nemesis]) }
   let(:match_finder_double) { double(MatchFinder, find_all_for_player: 'all matches', find_recent_matches_for_player: 'recent matches') }
   let(:player_presenter_double) { double(PlayerPresenter, as_json: { field: 'val' }) }

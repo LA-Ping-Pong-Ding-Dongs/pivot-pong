@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 feature 'On the Tournament Leaderboard' do
-  let(:bob) { Player.create(name: 'Bob', key: 'bob', mean: 1200, sigma: 140) }
-  let(:bella) { Player.create(name: 'Bella', key: 'bella', mean: 960, sigma: 100) }
-  let(:godzilla) { Player.create(name: 'Godzilla', key: 'godzilla', mean: 800, sigma: 90) }
+  let(:bob) { Player.create(name: 'Bob', key: 'abfa9dba916f2e487d64ccdb658ce6d0', mean: 1200, sigma: 140) }
+  let(:bella) { Player.create(name: 'Bella', key: '9621b65bf7c398ee7fd4a708a8171a54', mean: 960, sigma: 100) }
+  let(:godzilla) { Player.create(name: 'Godzilla', key: '544151cd41aaa51edfd4a0bd2ccbef03', mean: 800, sigma: 90) }
 
   let(:match_1) { Match.create(winner_key: bob.key, loser_key: godzilla.key) }
   let(:match_2) { Match.create(winner_key: bella.key, loser_key: godzilla.key) }

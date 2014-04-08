@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe PlayerPresenter do
 
-  let(:bob) { PlayerStruct.new('bob', 'Bob', 1200, 50) }
-  let(:loser) { PlayerStruct.new('loser', 'Loser', 1200, 50) }
-  let(:champ) { PlayerStruct.new('champ', 'Champ', 1200, 50) }
+  let(:bob) { PlayerStruct.new('dda629140ba03c2e861a248d2c2579cb', 'Bob', 1200, 50) }
+  let(:loser) { PlayerStruct.new('99ce27141314607c8d0d3cec9807c67f', 'Loser', 1200, 50) }
+  let(:champ) { PlayerStruct.new('f2b8be6ba879e2b1bd1653852f1a33ab', 'Champ', 1200, 50) }
 
   let(:april_1) { DateTime.new(2014, 04, 01) }
   let(:april_3) { DateTime.new(2014, 04, 03) }

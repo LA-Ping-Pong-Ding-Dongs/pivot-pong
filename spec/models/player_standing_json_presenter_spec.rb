@@ -3,7 +3,7 @@ require 'spec_helper'
 describe PlayerStandingJsonPresenter do
 
   let(:player_standing) { double(PlayerStanding, {
-    key: 'bob',
+    key: 'abfa9dba916f2e487d64ccdb658ce6d0',
     name: 'Bob',
     wins: 1,
     losses: 10,
@@ -13,7 +13,7 @@ describe PlayerStandingJsonPresenter do
 
   describe '#as_json' do
     it 'returns player data as JSON' do
-      expect(subject.as_json).to eq({key: 'bob', name: 'Bob', wins: 1, losses: 10 })
+      expect(subject.as_json).to eq({key: 'abfa9dba916f2e487d64ccdb658ce6d0', name: 'Bob', wins: 1, losses: 10 })
     end
   end
 

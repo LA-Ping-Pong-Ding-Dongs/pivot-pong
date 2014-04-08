@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 feature 'at the players URL:' do
-  let!(:bob) { Player.create(name: 'Bob', key: 'bob') }
-  let!(:sally) { Player.create(name: 'Sally', key: 'sally') }
-  let!(:godzilla) { Player.create(name: 'Godzilla', key: 'godzilla') }
+  let!(:bob) { Player.create(name: 'Bob', key: '99ce27141314607c8d0d3cec9807c67f') }
+  let!(:sally) { Player.create(name: 'Sally', key: 'dda629140ba03c2e861a248d2c2579cb') }
+  let!(:godzilla) { Player.create(name: 'Godzilla', key: 'f2b8be6ba879e2b1bd1653852f1a33ab') }
 
   scenario 'it shows a list of players' do |example|
     step '1. go to matches path', current: example do
@@ -23,7 +23,7 @@ feature 'at the players URL:' do
     end
 
     step '4. expect URL to be updated', current: example do
-      expect(current_path).to eq(player_path('bob'))
+      expect(current_path).to eq(player_path('99ce27141314607c8d0d3cec9807c67f'))
     end
   end
 

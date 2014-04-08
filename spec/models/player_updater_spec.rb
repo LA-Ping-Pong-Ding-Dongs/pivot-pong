@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe PlayerUpdater do
-  let(:player) { Player.create key: 'bob', sigma: 40 }
+  let(:player) { Player.create key: '93fb9466661fe0da4f07df6a745ffb81', sigma: 40 }
 
   subject(:updater) { PlayerUpdater.new }
 

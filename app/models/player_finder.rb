@@ -6,9 +6,10 @@ class PlayerFinder
 
   def find_or_create_by_name(name)
     begin
-      player = Player.find(name.downcase)
+      player = Player.where('LOWER(name) = LOWER(?)', name).first
+      raise ActiveRecord::RecordNotFound if player.nil?
     rescue ActiveRecord::RecordNotFound
-      player = @player_creator.create_player(key: name.downcase, name: name)
+      player = @player_creator.create_player(key: SecureRandom.hex, name: name)
     end
 
     player_to_struct(player)

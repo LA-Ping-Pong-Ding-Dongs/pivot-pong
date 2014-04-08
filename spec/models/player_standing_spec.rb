@@ -2,11 +2,13 @@ require 'spec_helper'
 
 describe PlayerStanding do
 
-  subject(:standing) { PlayerStanding.new('bob', 'Bob') }
+  subject(:standing) { PlayerStanding.new('abfa9dba916f2e487d64ccdb658ce6d0', 'Bob') }
+  let(:sally) { {key: '99ce27141314607c8d0d3cec9807c67f'} }
+  let(:templeton) { {key: '544151cd41aaa51edfd4a0bd2ccbef03'} }
 
   it 'sets defaults upon initialization' do
     expect(standing.name).to eq 'Bob'
-    expect(standing.key).to eq 'bob'
+    expect(standing.key).to eq 'abfa9dba916f2e487d64ccdb658ce6d0'
     expect(standing.wins).to eq 0
     expect(standing.losses).to eq 0
     expect(standing.most_recent_win).to eq Time.new(0)
@@ -37,21 +39,21 @@ describe PlayerStanding do
     end
 
     it 'Adds an opponent for the player' do
-      subject.add_opponent('sally')
+      subject.add_opponent(sally[:key])
 
       expect(subject.unique_opponents_count).to eq 1
     end
 
     it 'does not count the same opponent twice' do
-      subject.add_opponent('sally')
-      subject.add_opponent('sally')
+      subject.add_opponent(sally[:key])
+      subject.add_opponent(sally[:key])
 
       expect(subject.unique_opponents_count).to eq 1
     end
 
     it 'allows adding multiple opponents' do
-      subject.add_opponent('sally')
-      subject.add_opponent('templeton')
+      subject.add_opponent(sally[:key])
+      subject.add_opponent(templeton[:key])
 
       expect(subject.unique_opponents_count).to eq 2
     end
@@ -116,9 +118,9 @@ describe PlayerStanding do
       subject.add_to_wins
       subject.add_to_wins
       subject.add_to_losses
-      subject.add_opponent('sally')
-      subject.add_opponent('sally')
-      subject.add_opponent('templeton')
+      subject.add_opponent(sally[:key])
+      subject.add_opponent(sally[:key])
+      subject.add_opponent(templeton[:key])
 
       expect(subject.standings_score).to eq (2.0 / 3 * 2)
     end

@@ -3,9 +3,9 @@ require 'spec_helper'
 feature 'On the dashboard:', :js do
   let(:match_time) { 1.hour.ago }
 
-  let(:bob) { Player.create(name: 'Bob', key: 'bob', mean: 800, sigma: 100, last_tournament_date: 5.weeks.ago) }
-  let(:sally) { Player.create(name: 'Sally', key: 'sally', mean: 2105, sigma: 60, last_tournament_date: 1.week.ago) }
-  let(:godzilla) { Player.create(name: 'Godzilla', key: 'godzilla') }
+  let(:bob) { Player.create(name: 'Bob', key: 'dda629140ba03c2e861a248d2c2579cb', mean: 800, sigma: 100, last_tournament_date: 5.weeks.ago) }
+  let(:sally) { Player.create(name: 'Sally', key: '99ce27141314607c8d0d3cec9807c67f', mean: 2105, sigma: 60, last_tournament_date: 1.week.ago) }
+  let(:godzilla) { Player.create(name: 'Godzilla', key: 'f2b8be6ba879e2b1bd1653852f1a33ab') }
 
   let(:match_1) { Match.create(winner_key: bob.key, loser_key: sally.key, created_at: match_time) }
   let(:match_2) { Match.create(winner_key: godzilla.key, loser_key: sally.key) }
@@ -151,7 +151,7 @@ feature 'On the dashboard:', :js do
     end
 
     step '2. user can press escape to reload dashboard', current: example do
-      expect(current_path).to eq '/players/godzilla'
+      expect(current_path).to eq "/players/#{godzilla.key}"
       find('#match_winner').native.send_keys(:Escape)
       expect(current_path).to eq '/'
     end
@@ -163,7 +163,7 @@ feature 'On the dashboard:', :js do
         click_link 'Godzilla'
       end
 
-      expect(current_path).to eq player_path('godzilla')
+      expect(current_path).to eq player_path("#{godzilla.key}")
     end
   end
 

@@ -1,13 +1,13 @@
 require 'spec_helper'
 
 describe MatchFinder do
-  let!(:bob) { Player.create(key: 'bob', name: 'Bob') }
-  let!(:champ) { Player.create(key: 'champ', name: 'Champ') }
-  let!(:loser) { Player.create(key: 'loser', name: 'Loser') }
-  let!(:winning_match) { Match.create(winner_key: 'bob', loser_key: 'loser', created_at: 4.days.ago).reload }
-  let!(:not_relevant_match) { Match.create(winner_key: 'champ', loser_key: 'loser', created_at: 3.minutes.ago).reload }
-  let!(:losing_match_1) { Match.create(winner_key: 'champ', loser_key: 'bob', created_at: 2.days.ago).reload }
-  let!(:losing_match_2) { Match.create(winner_key: 'champ', loser_key: 'bob', created_at: 3.months.ago).reload }
+  let!(:bob) { Player.create(key: '9621b65bf7c398ee7fd4a708a8171a54', name: 'Bob') }
+  let!(:champ) { Player.create(key: '99ce27141314607c8d0d3cec9807c67f', name: 'Champ') }
+  let!(:loser) { Player.create(key: '544151cd41aaa51edfd4a0bd2ccbef03', name: 'Loser') }
+  let!(:winning_match) { Match.create(winner_key: bob.key, loser_key: loser.key, created_at: 4.days.ago).reload }
+  let!(:not_relevant_match) { Match.create(winner_key: champ.key, loser_key: loser.key, created_at: 3.minutes.ago).reload }
+  let!(:losing_match_1) { Match.create(winner_key: champ.key, loser_key: bob.key, created_at: 2.days.ago).reload }
+  let!(:losing_match_2) { Match.create(winner_key: champ.key, loser_key: bob.key, created_at: 3.months.ago).reload }
 
   subject(:match_finder) { MatchFinder.new }
 
@@ -18,7 +18,7 @@ describe MatchFinder do
         build_match_struct(winning_match),
         build_match_struct(losing_match_2),
       ]
-      expect(match_finder.find_all_for_player('bob')).to eq(expected)
+      expect(match_finder.find_all_for_player(bob.key)).to eq(expected)
     end
   end
 
@@ -28,7 +28,7 @@ describe MatchFinder do
         build_match_with_names_struct(losing_match_1, 'Champ', 'Bob'),
         build_match_with_names_struct(winning_match, 'Bob', 'Loser'),
       ]
-      expect(match_finder.find_recent_matches_for_player('bob', 2)).to eq(expected)
+      expect(match_finder.find_recent_matches_for_player(bob.key, 2)).to eq(expected)
     end
   end
 

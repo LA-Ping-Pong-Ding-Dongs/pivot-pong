@@ -2,7 +2,9 @@ require 'spec_helper'
 
 describe MatchPresenter do
   let(:match_time) { 1.hour.ago }
-  let(:match) { MatchWithNamesStruct.new(34, 'bob', 'templeton', 'Bob', 'Templeton', match_time) }
+  let(:match) { MatchWithNamesStruct.new(34, '9621b65bf7c398ee7fd4a708a8171a54',
+                                         '544151cd41aaa51edfd4a0bd2ccbef03',
+                                         'Bob', 'Templeton', match_time) }
 
   subject { MatchPresenter.new(match) }
 
