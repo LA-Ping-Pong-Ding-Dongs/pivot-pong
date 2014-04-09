@@ -6,6 +6,7 @@ rvm:
 - 2.1.0
 deploy:
   provider: cloudfoundry
+  edge: true
   username:
     secure: HX60jYjZyrKIu7eM4wbzgQuhj22kaH7ZwQ9AcnTTA+eNy+QS86UFmbggJoPgzLNSqiYP+LMOPEGuiCytNOCtNzDx5vaJdqAI5LuXJ2dzgZAHi8Kxc0STp0vYPZludNOPzt3RIWTIqPIIh3wmryAdfdShf3ikQZ99fk6wJ6sE/aI=
   password:
@@ -13,5 +14,3 @@ deploy:
   organization: LA-Ping-Pong-Ding-Dongs
   target: api.run.pivotal.io
   space: staging
-  edge: true
-
