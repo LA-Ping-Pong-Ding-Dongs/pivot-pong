@@ -40,9 +40,18 @@ feature 'On the player show page:', :js do
     end
 
     step '2. a viewer can return to the dashboard page', current: example do
-        click_link I18n.t('dashboard.link_title').upcase
+      click_link I18n.t('dashboard.link_title').upcase
 
       expect(current_path).to eq root_path
     end
+  end
+
+  scenario 'player can link to edit name' do
+    bob
+    visit player_path(bob)
+
+    click_link I18n.t('player.edit.link')
+
+    expect(current_path).to eq edit_player_path bob.key
   end
 end

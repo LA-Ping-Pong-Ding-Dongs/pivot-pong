@@ -21,6 +21,9 @@ en:
       type:
         winner: W
         loser: L
+    edit:
+      link: Edit Player
+      commit: Update Name
   player_info:
     record:
       overall: Overall Record

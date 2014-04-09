@@ -9,6 +9,9 @@ describe PlayersController do
   let(:player_presenter_double) { double(PlayerPresenter, as_json: { field: 'val' }) }
   let(:players_json_presenter_double) { double(PlayersJsonPresenter, as_json: true) }
 
+  let(:bella) { PlayerStruct.new('93fb9466661fe0da4f07df6a745ffb81', 'Bella', 1200, 100) }
+  let(:single_player_finder_double) { double(PlayerFinder, find: bella) }
+
   before do
     allow(controller).to receive(:player_finder).and_return(player_finder_double)
     allow(controller).to receive(:match_finder).and_return(match_finder_double)
@@ -35,6 +38,36 @@ describe PlayersController do
 
         expect(response).to be_success
         expect(JSON(response.body).map(&:deep_symbolize_keys)).to match_array([{wut: 'wat'}])
+      end
+    end
+  end
+
+  describe '#edit' do
+    before do
+      allow(controller).to receive(:player_finder).and_return(single_player_finder_double)
+      allow(controller).to receive(:player_presenter).with(bella, nil, nil).and_return(single_player_finder_double)
+    end
+    context 'js request' do
+      it 'renders a player name edit form' do
+        xhr :get, :edit, key: bella.key
+
+        expect(response).to be_success
+      end
+    end
+  end
+
+  describe '#update' do
+    let(:templeton) { Player.create(key: '6ce6380961f7b389e51a4080767f9aeb', name: 'Templeton') }
+
+    context 'js response' do
+      it 'redirects to player page on success' do
+        xhr :patch, :update, key: templeton.key, player: { name: 'Mallomar' }
+        expect(response).to redirect_to player_path templeton.key
+      end
+
+      it 'renders edit with errors if save fails' do
+        xhr :patch, :update, key: templeton.key, player: { name: 'Templeton' }
+        expect(response).to redirect_to edit_player_path(templeton.key)
       end
     end
   end

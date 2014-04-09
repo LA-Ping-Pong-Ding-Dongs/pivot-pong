@@ -27,10 +27,48 @@ class PlayersController < ApplicationController
     end
   end
 
+  def edit
+    player = player_finder.find(params[:key])
+    @player = player_presenter(player, nil, nil)
+  end
+
+  def update
+    if player_validator.valid?
+      player_updater.update_for_player(params[:key], player_updater_params)
+      redirect_to player_path(params[:key])
+    else
+      redirect_to edit_player_path(params[:key]), alert: player_validator.errors.full_messages
+    end
+  end
+
   private
+
+  def player_validator_params
+    params.require(:player).permit(:name).merge({key: params[:key]})
+  end
+
+  def player_updater_params
+    params.require(:player).permit(:name)
+  end
 
   def player_finder
     PlayerFinder.new
+  end
+
+  def player_updater
+    @player_updater ||= new_player_updater
+  end
+
+  def new_player_updater
+    PlayerUpdater.new
+  end
+
+  def player_validator
+    @player_validator ||= new_player_validator
+  end
+
+  def new_player_validator
+    PlayerValidator.new(player_validator_params)
   end
 
   def match_finder

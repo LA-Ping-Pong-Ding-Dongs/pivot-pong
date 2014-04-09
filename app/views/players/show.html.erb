@@ -1,6 +1,6 @@
 <%= render 'shared/header' %>
 <div class="player-statistics">
-  <h1><%= I18n.t('player.title') %> <%= @player_information.name %></h1>
+  <h1><%= I18n.t('player.title') %> <%= @player_information.name %> <%= link_to I18n.t('player.edit.link'), edit_player_path, class: 'edit_player_link'  %></h1>
 
   <div class="stats">
     <dl>

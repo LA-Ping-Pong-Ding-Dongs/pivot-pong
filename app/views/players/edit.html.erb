@@ -1,0 +1,19 @@
+<%= render 'shared/header' %>
+<%= form_for @player, url: { controller: 'players', action: 'update' }, method: 'patch', as: 'player' do |f| %>
+    <fieldset class="player-name-field">
+      <%= f.text_field :name, placeholder: @player.name, tabindex: 1 %>
+    </fieldset>
+    <fieldset>
+      <%= f.submit I18n.t('player.edit.commit').upcase, id: 'update_player', tabindex: 2 %>
+    </fieldset>
+<% end %>
+
+<% if flash[:alert] %>
+    <div class="errors-container">
+      <ul>
+        <% flash[:alert].each do |msg| %>
+            <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+<% end %>

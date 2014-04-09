@@ -8,6 +8,8 @@ class PlayerPresenter
     @recent_matches = recent_matches
   end
 
+  attr_reader :player
+
   def overall_winning_percentage
     percent = 100.0 * wins(@matches).count / @matches.count
     number_to_percentage(percent, precision: 1)
