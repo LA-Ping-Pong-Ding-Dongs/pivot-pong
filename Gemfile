@@ -11,6 +11,7 @@ gem 'trueskill', git: 'git://github.com/saulabs/trueskill.git', require: 'saulab
 gem 'pg'
 gem 'kaminari'
 gem 'psych', '~> 2.0.5'
+gem 'font-awesome-sass'
 
 group :production, :staging do
   gem 'rails_12factor'

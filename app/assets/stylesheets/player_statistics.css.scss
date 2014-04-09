@@ -3,6 +3,10 @@
   width: 50%;
   margin: 0 auto;
 
+  span h1, span .fa {
+    display: inline;
+  }
+
   .definition-wrapper {
     display: inline-block;
   }

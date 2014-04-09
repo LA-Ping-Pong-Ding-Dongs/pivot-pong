@@ -5,7 +5,7 @@ feature 'On the player edit page:', :js do
 
   scenario 'a viewer can edit a player name' do |example|
     visit player_path key: bob.key
-    click_link I18n.t('player.edit.link')
+    click_link 'edit_player_link'
 
     step '1. the edit page is available', current: example do
       expect(current_path).to eq edit_player_path key: bob.key

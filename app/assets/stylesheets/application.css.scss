@@ -10,16 +10,9 @@
 @import 'recent_matches';
 @import 'player_statistics';
 @import 'header';
+@import 'player_edit';
+@import 'font-awesome';
 
-body {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: white;
-  font-family: 'Open Sans', sans-serif;
-}
 a {
   text-decoration: none;
   color: $link_color;
