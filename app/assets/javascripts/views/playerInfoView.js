@@ -4,6 +4,7 @@ pong.PlayerInfoView = Backbone.View.extend({
     template: JST['templates/playerInfoView'],
 
     initialize: function () {
+        pong.EventBus.on('match:created', this._fetchUpdatedModel, this);
         this.listenTo(this.model, 'sync', this.render);
     },
 
@@ -38,5 +39,9 @@ pong.PlayerInfoView = Backbone.View.extend({
         } else {
             return '';
         }
+    },
+
+    _fetchUpdatedModel: function() {
+        this.model.fetch({silent: true});
     }
 });
