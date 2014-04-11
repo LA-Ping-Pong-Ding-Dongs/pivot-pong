@@ -72,7 +72,6 @@ pong.PlayerTiles = Backbone.View.extend({
             };
 
             var anchorGroups = this.svg.selectAll('g.player-ranking')
-                .remove()
                 .data(this.data, keyFunctions.location);
 
             var newAnchorGroups = anchorGroups.enter()
