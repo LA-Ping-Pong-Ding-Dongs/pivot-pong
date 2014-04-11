@@ -1,5 +1,14 @@
 language: ruby
 script:
-  - bundle exec license_finder && bundle exec rake
+- bundle exec license_finder && bundle exec rake
 rvm:
-  - 2.1.0
+- 2.1.0
+deploy:
+  edge: true
+  provider: cloudfoundry
+  api: https://api.run.pivotal.io
+  username: pivot-pong-developers@googlegroups.com
+  password:
+    secure: aw4B4Yr8o+MoDyBCXI4irB7GBnp85NTz/wKsJBCtBbdNx3h6EXLGcSwiltHfpFOsZVZooCm5rDYCzjUzQ9YJ8HHlk6r31lG+1Bid4SXpPrneAF0PLICML+3VdtbCbybDu7q2m8OAGigpidk5XI9sQKdW3QkbrW6AQAt+Glwjd78=
+  organization: LA-Ping-Pong-Ding-Dongs
+  space: staging
