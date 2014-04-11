@@ -136,8 +136,6 @@ pong.PlayerTiles = Backbone.View.extend({
 
         this.data = this.savedData;
 
-        this.data = _.shuffle(this.data);
-
         if (percentBlankCells) {
             centers = _.initial(centers, parseInt(centers.length * percentBlankCells));
         }
