@@ -24,6 +24,7 @@ group :development, :test do
   gem 'poltergeist', '~> 1.5.0'
   gem 'jasmine', '~> 2.0.0'
   gem 'timecop'
+  gem 'faker'
 end
 
 group :test do
