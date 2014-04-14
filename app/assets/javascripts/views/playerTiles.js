@@ -73,6 +73,35 @@ pong.PlayerTiles = Backbone.View.extend({
 
             var anchorGroups = this.svg.selectAll('g.player-ranking')
                 .data(this.data, keyFunctions.location);
+            anchorGroups
+                .append('a')
+                .attr('xlink:href', keyFunctions.url)
+                .attr('xlink:title', keyFunctions.name)
+                .append('path')
+                .attr('d', this.hexbin.hexagon())
+                .attr('transform', keyFunctions.translate);
+            anchorGroups
+                .append('a')
+                .classed('hex-o-text js', true)
+                .attr('xlink:href', keyFunctions.url)
+                .attr('xlink:title', keyFunctions.name)
+                .append('text')
+                .attr('x', keyFunctions.column)
+                .attr('y', keyFunctions.row)
+                .attr('dy', '-20')
+                .attr('text-anchor', 'middle')
+                .text(keyFunctions.name);
+            anchorGroups
+                .append('a')
+                .classed('hex-o-text js', true)
+                .attr('xlink:href', keyFunctions.url)
+                .attr('xlink:title', keyFunctions.mean)
+                .append('text')
+                .attr('x', keyFunctions.column)
+                .attr('y', keyFunctions.row)
+                .attr('dy', '20')
+                .attr('text-anchor', 'middle')
+                .text(keyFunctions.mean);
 
             var newAnchorGroups = anchorGroups.enter()
                 .append('g').attr('class', 'player-ranking');
