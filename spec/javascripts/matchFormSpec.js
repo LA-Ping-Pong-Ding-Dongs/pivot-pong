@@ -5,6 +5,32 @@ describe('MatchForm', function () {
         this.eventSpy = spyOn(pong.EventBus, 'trigger');
     });
 
+    describe('selecting winner w/ arrow keys', function() {
+        beforeEach(function() {
+            this.event = jasmine.createSpyObj('event', ['preventDefault']);
+            this.searchResultView = jasmine.createSpyObj('searchResultView', ['selectNext', 'selectPrev']);
+        });
+
+        it('selects the next search result on arrow key down', function() {
+            this.event.keyCode = 40;
+            this.view._inputKeyDown(this.searchResultView, this.event);
+            expect(this.searchResultView.selectNext).toHaveBeenCalled();
+        });
+
+        it('selects the previous search result on arrow key up', function() {
+            this.event.keyCode = 38;
+            this.view._inputKeyDown(this.searchResultView, this.event);
+            expect(this.searchResultView.selectPrev).toHaveBeenCalled();
+        });
+
+        it('doesnt submit the form on enter key while the search field is active', function() {
+            this.event.keyCode = 13;
+            spyOn(this.view, 'commit');
+            this.view._inputKeyDown(this.searchResultView, this.event);
+            expect(this.view.commit).not.toHaveBeenCalled();
+        });
+    });
+
     describe('saving match data', function () {
         beforeEach(function () {
             this.event = jasmine.createSpyObj('event', ['preventDefault']);

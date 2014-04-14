@@ -170,6 +170,9 @@ span.tooltip {
       &:last-child {
         border-bottom: none;
       }
+      &.selected {
+        background-color: $overlay_gray;
+      }
     }
   }
 }
