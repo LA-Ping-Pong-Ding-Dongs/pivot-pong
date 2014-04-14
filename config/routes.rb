@@ -6,4 +6,8 @@ PivotPong::Application.routes.draw do
   resource :tournament, only: :show, controller: :tournament
 
   root 'dashboard#show'
+
+  namespace :api do
+    resources :players, only: :index
+  end
 end

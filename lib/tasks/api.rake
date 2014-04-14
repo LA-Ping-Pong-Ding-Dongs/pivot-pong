@@ -12,4 +12,14 @@ namespace :api do
 
     ENV.replace old_env
   end
+
+  def api_files
+    ['app/controllers/api/**/*.rb',
+      'app/views/api/**/*.*'].map {|x| Dir.glob(x) }.flatten
+  end
+
+  file 'doc/apipie_examples.yml' => api_files do
+    Rake::Task['api:document'].invoke
+  end
+
 end
