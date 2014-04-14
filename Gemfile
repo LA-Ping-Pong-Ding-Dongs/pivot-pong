@@ -12,6 +12,7 @@ gem 'pg'
 gem 'kaminari'
 gem 'psych', '~> 2.0.5'
 gem 'font-awesome-sass'
+gem 'apipie-rails'
 
 group :production, :staging do
   gem 'rails_12factor'

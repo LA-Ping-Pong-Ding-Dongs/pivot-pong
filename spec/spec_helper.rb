@@ -23,4 +23,8 @@ RSpec.configure do |config|
     Match.delete_all
   end
 
+  if ENV['APIPIE_RECORD']
+    config.filter_run show_in_doc: true
+    config.order = nil
+  end
 end
