@@ -1,9 +1,9 @@
 # pivot-pong
 
-As of April  3, 2014 11:23am. 42 total, _0 unapproved_
+As of April 14, 2014 11:10am. 46 total, _0 unapproved_
 
 ## Summary
-  * 34 MIT
+  * 38 MIT
   * 4 other
   * 2 Apache 2.0
   * 2 LICENSE
@@ -79,6 +79,17 @@ As of April  3, 2014 11:23am. 42 total, _0 unapproved_
 > A toolkit of support libraries and Ruby core extensions extracted from the Rails framework. Rich support for multibyte strings, internationalization, time zones, and testing.
 
 
+<a name="apipie-rails"></a>
+### [apipie-rails](http://github.com/Pajk/apipie-rails) v0.1.3(default)
+
+| Summary | License | Approved? |
+|---------|-------------|---------|
+|Rails REST API documentation tool|<a href='http://opensource.org/licenses/mit-license'>MIT</a>| Yes |
+
+
+> Rails REST API documentation tool
+
+
 <a name="arel"></a>
 ### [arel](http://github.com/rails/arel) v4.0.2
 
@@ -98,7 +109,7 @@ As of April  3, 2014 11:23am. 42 total, _0 unapproved_
 
 
 <a name="atomic"></a>
-### [atomic](http://github.com/headius/ruby-atomic) v1.1.14
+### [atomic](http://github.com/headius/ruby-atomic) v1.1.16
 
 | Summary | License | Approved? |
 |---------|-------------|---------|
@@ -125,7 +136,7 @@ As of April  3, 2014 11:23am. 42 total, _0 unapproved_
 
 
 <a name="bundler"></a>
-### [bundler](http://bundler.io) v1.5.3
+### [bundler](http://bundler.io) v1.6.1
 
 | Summary | License | Approved? |
 |---------|-------------|---------|
@@ -180,6 +191,17 @@ As of April  3, 2014 11:23am. 42 total, _0 unapproved_
 > ExecJS lets you run JavaScript code from Ruby.
 
 
+<a name="font-awesome-sass"></a>
+### [font-awesome-sass](https://github.com/FortAwesome/font-awesome-sass) v4.0.3.1(default)
+
+| Summary | License | Approved? |
+|---------|-------------|---------|
+|Font-Awesome SASS|<a href='http://opensource.org/licenses/mit-license'>MIT</a>| Yes |
+
+
+> Font-Awesome SASS gem for use in Ruby projects
+
+
 <a name="hike"></a>
 ### [hike](http://github.com/sstephenson/hike) v1.2.3
 
@@ -219,6 +241,17 @@ As of April  3, 2014 11:23am. 42 total, _0 unapproved_
 |---------|-------------|---------|
 |This json is bundled with Ruby|other| Yes |
 
+
+
+<a name="kaminari"></a>
+### [kaminari](https://github.com/amatsuda/kaminari) v0.15.1(default)
+
+| Summary | License | Approved? |
+|---------|-------------|---------|
+|A pagination engine plugin for Rails 3+ and other modern frameworks|<a href='http://opensource.org/licenses/mit-license'>MIT</a>| Yes |
+
+
+> Kaminari is a Scope & Engine based, clean, powerful, agnostic, customizable and sophisticated paginator for Rails 3+
 
 
 <a name="mail"></a>
@@ -299,7 +332,7 @@ As of April  3, 2014 11:23am. 42 total, _0 unapproved_
 
 
 <a name="multi_json"></a>
-### [multi_json](http://github.com/intridea/multi_json) v1.8.4
+### [multi_json](http://github.com/intridea/multi_json) v1.9.2
 
 | Summary | License | Approved? |
 |---------|-------------|---------|
@@ -350,6 +383,20 @@ As of April  3, 2014 11:23am. 42 total, _0 unapproved_
 > The Polyglot library allows a Ruby module to register a loader
 > for the file type associated with a filename extension, and it
 > augments 'require' to find and load matching files.
+
+
+<a name="psych"></a>
+### [psych](http://github.com/tenderlove/psych) v2.0.5(default)
+
+| Summary | License | Approved? |
+|---------|-------------|---------|
+|Psych is a YAML parser and emitter|<a href='http://opensource.org/licenses/mit-license'>MIT</a>| Yes |
+
+
+> Psych is a YAML parser and emitter.  Psych leverages libyaml[http://pyyaml.org/wiki/LibYAML]
+> for its YAML parsing and emitting capabilities.  In addition to wrapping
+> libyaml, Psych also knows how to serialize and de-serialize most Ruby objects
+> to and from the YAML format.
 
 
 <a name="rack"></a>
@@ -440,18 +487,39 @@ As of April  3, 2014 11:23am. 42 total, _0 unapproved_
 
 
 <a name="rake"></a>
-### [rake](http://github.com/jimweirich/rake) v10.1.1
+### [rake](https://github.com/jimweirich/rake) v10.2.2
 
 | Summary | License | Approved? |
 |---------|-------------|---------|
-|Ruby based make-like utility.|<a href='http://opensource.org/licenses/mit-license'>MIT</a>| Yes |
+|Rake is a Make-like program implemented in Ruby|<a href='http://opensource.org/licenses/mit-license'>MIT</a>| Yes |
 
 
-> Rake is a Make-like program implemented in Ruby. Tasks and dependencies arespecified in standard Ruby syntax.
+> Rake is a Make-like program implemented in Ruby. Tasks and dependencies are
+> specified in standard Ruby syntax.
+> 
+> Rake has the following features:
+> 
+> * Rakefiles (rake's version of Makefiles) are completely defined in
+>   standard Ruby syntax.  No XML files to edit.  No quirky Makefile
+>   syntax to worry about (is that a tab or a space?)
+> 
+> * Users can specify tasks with prerequisites.
+> 
+> * Rake supports rule patterns to synthesize implicit tasks.
+> 
+> * Flexible FileLists that act like arrays but know about manipulating
+>   file names and paths.
+> 
+> * A library of prepackaged tasks to make building rakefiles easier. For example,
+>   tasks for building tarballs and publishing to FTP or SSH sites.  (Formerly
+>   tasks for building RDoc and Gems were included in rake but they're now
+>   available in RDoc and RubyGems respectively.)
+> 
+> * Supports parallel execution of tasks.
 
 
 <a name="sass"></a>
-### [sass](http://sass-lang.com/) v3.2.14
+### [sass](http://sass-lang.com/) v3.2.18
 
 | Summary | License | Approved? |
 |---------|-------------|---------|
@@ -466,7 +534,7 @@ As of April  3, 2014 11:23am. 42 total, _0 unapproved_
 
 
 <a name="sass-rails"></a>
-### [sass-rails](https://github.com/rails/sass-rails) v4.0.1(default)
+### [sass-rails](https://github.com/rails/sass-rails) v4.0.2(default)
 
 | Summary | License | Approved? |
 |---------|-------------|---------|
@@ -477,7 +545,7 @@ As of April  3, 2014 11:23am. 42 total, _0 unapproved_
 
 
 <a name="sprockets"></a>
-### [sprockets](http://getsprockets.org/) v2.10.1
+### [sprockets](http://getsprockets.org/) v2.11.0
 
 | Summary | License | Approved? |
 |---------|-------------|---------|
@@ -497,18 +565,18 @@ As of April  3, 2014 11:23am. 42 total, _0 unapproved_
 
 
 <a name="thor"></a>
-### [thor](http://whatisthor.com/) v0.18.1
+### [thor](http://whatisthor.com/) v0.19.1
 
 | Summary | License | Approved? |
 |---------|-------------|---------|
-|A scripting framework that replaces rake, sake and rubigen|<a href='http://opensource.org/licenses/mit-license'>MIT</a>| Yes |
+|Thor is a toolkit for building powerful command-line interfaces.|<a href='http://opensource.org/licenses/mit-license'>MIT</a>| Yes |
 
 
-> A scripting framework that replaces rake, sake and rubigen
+> Thor is a toolkit for building powerful command-line interfaces.
 
 
 <a name="thread_safe"></a>
-### [thread_safe](https://github.com/headius/thread_safe) v0.1.3
+### [thread_safe](https://github.com/headius/thread_safe) v0.3.1
 
 | Summary | License | Approved? |
 |---------|-------------|---------|
@@ -550,7 +618,7 @@ As of April  3, 2014 11:23am. 42 total, _0 unapproved_
 
 
 <a name="tzinfo"></a>
-### [tzinfo](http://tzinfo.github.io) v0.3.38
+### [tzinfo](http://tzinfo.github.io) v0.3.39
 
 | Summary | License | Approved? |
 |---------|-------------|---------|
@@ -561,7 +629,7 @@ As of April  3, 2014 11:23am. 42 total, _0 unapproved_
 
 
 <a name="uglifier"></a>
-### [uglifier](http://github.com/lautis/uglifier) v2.4.0(default)
+### [uglifier](http://github.com/lautis/uglifier) v2.5.0(default)
 
 | Summary | License | Approved? |
 |---------|-------------|---------|

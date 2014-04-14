@@ -31,15 +31,15 @@
   <div class="summary hero-unit">
     <h2>Dependencies</h2>
 
-    <p>As of April  3, 2014 11:23am</p>
+    <p>As of April 14, 2014 11:10am</p>
 
     <h4>
-      42 total
+      46 total
 
           </h4>
 
     <ul>
-              <li>34 MIT</li>
+              <li>38 MIT</li>
               <li>4 other</li>
               <li>2 Apache 2.0</li>
               <li>2 LICENSE</li>
@@ -108,6 +108,7 @@
                           <dd>railties</dd>
                           <dd>sprockets-rails</dd>
                           <dd>rails</dd>
+                          <dd>kaminari</dd>
                       </dl>
                           <dl>
             <dt>Children</dt>
@@ -256,6 +257,7 @@
                           <dd>railties</dd>
                           <dd>sprockets-rails</dd>
                           <dd>rails</dd>
+                          <dd>kaminari</dd>
                       </dl>
                           <dl>
             <dt>Children</dt>
@@ -264,6 +266,38 @@
                           <dd>tzinfo</dd>
                           <dd>minitest</dd>
                           <dd>thread_safe</dd>
+                      </dl>
+              </div>
+          <div id="apipie-rails" class="approved">
+        <h2>
+                      <a href="http://github.com/Pajk/apipie-rails">apipie-rails</a>
+                    v0.1.3
+                      (default)
+                  </h2>
+        <table class="table table-striped table-bordered">
+          <thead>
+          <tr>
+            <th>Summary</th>
+            <th>Description</th>
+            <th>License</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>Rails REST API documentation tool</td>
+            <td>Rails REST API documentation tool</td>
+            <td>
+                              <a href="http://opensource.org/licenses/mit-license">MIT</a>
+                          </td>
+          </tr>
+          </tbody>
+        </table>
+                          <dl>
+            <dt>Children</dt>
+                          <dd>rails</dd>
+                          <dd>json</dd>
+                          <dd>minitest</dd>
+                          <dd>rake</dd>
                       </dl>
               </div>
           <div id="arel" class="approved">
@@ -308,7 +342,7 @@ database compatibility and query generation.</td>
           <div id="atomic" class="approved">
         <h2>
                       <a href="http://github.com/headius/ruby-atomic">atomic</a>
-                    v1.1.14
+                    v1.1.16
                   </h2>
         <table class="table table-striped table-bordered">
           <thead>
@@ -371,7 +405,7 @@ simple to do.  Currently the following builder objects are supported:
           <div id="bundler" class="approved">
         <h2>
                       <a href="http://bundler.io">bundler</a>
-                    v1.5.3
+                    v1.6.1
                   </h2>
         <table class="table table-striped table-bordered">
           <thead>
@@ -398,6 +432,8 @@ simple to do.  Currently the following builder objects are supported:
                           <dd>thor</dd>
                           <dd>rails</dd>
                           <dd>uglifier</dd>
+                          <dd>font-awesome-sass</dd>
+                          <dd>kaminari</dd>
                       </dl>
                       </div>
           <div id="ejs" class="approved">
@@ -506,6 +542,38 @@ simple to do.  Currently the following builder objects are supported:
                           <dl>
             <dt>Children</dt>
                           <dd>rake</dd>
+                      </dl>
+              </div>
+          <div id="font-awesome-sass" class="approved">
+        <h2>
+                      <a href="https://github.com/FortAwesome/font-awesome-sass">font-awesome-sass</a>
+                    v4.0.3.1
+                      (default)
+                  </h2>
+        <table class="table table-striped table-bordered">
+          <thead>
+          <tr>
+            <th>Summary</th>
+            <th>Description</th>
+            <th>License</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>Font-Awesome SASS</td>
+            <td>Font-Awesome SASS gem for use in Ruby projects</td>
+            <td>
+                              <a href="http://opensource.org/licenses/mit-license">MIT</a>
+                          </td>
+          </tr>
+          </tbody>
+        </table>
+                          <dl>
+            <dt>Children</dt>
+                          <dd>bundler</dd>
+                          <dd>rake</dd>
+                          <dd>sass-rails</dd>
+                          <dd>sass</dd>
                       </dl>
               </div>
           <div id="hike" class="approved">
@@ -630,8 +698,42 @@ simple to do.  Currently the following builder objects are supported:
             <dt>Parents</dt>
                           <dd>sprockets</dd>
                           <dd>uglifier</dd>
+                          <dd>apipie-rails</dd>
                       </dl>
                       </div>
+          <div id="kaminari" class="approved">
+        <h2>
+                      <a href="https://github.com/amatsuda/kaminari">kaminari</a>
+                    v0.15.1
+                      (default)
+                  </h2>
+        <table class="table table-striped table-bordered">
+          <thead>
+          <tr>
+            <th>Summary</th>
+            <th>Description</th>
+            <th>License</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>A pagination engine plugin for Rails 3+ and other modern frameworks</td>
+            <td>Kaminari is a Scope & Engine based, clean, powerful, agnostic, customizable and sophisticated paginator for Rails 3+</td>
+            <td>
+                              <a href="http://opensource.org/licenses/mit-license">MIT</a>
+                          </td>
+          </tr>
+          </tbody>
+        </table>
+                          <dl>
+            <dt>Children</dt>
+                          <dd>activesupport</dd>
+                          <dd>actionpack</dd>
+                          <dd>bundler</dd>
+                          <dd>rake</dd>
+                          <dd>tzinfo</dd>
+                      </dl>
+              </div>
           <div id="mail" class="approved">
         <h2>
                       <a href="http://github.com/mikel/mail">mail</a>
@@ -777,12 +879,13 @@ and added by the users of MIME::Types.</td>
                           <dd>mime-types</dd>
                           <dd>activerecord-deprecated_finders</dd>
                           <dd>arel</dd>
+                          <dd>apipie-rails</dd>
                       </dl>
                       </div>
           <div id="multi_json" class="approved">
         <h2>
                       <a href="http://github.com/intridea/multi_json">multi_json</a>
-                    v1.8.4
+                    v1.9.2
                   </h2>
         <table class="table table-striped table-bordered">
           <thead>
@@ -887,6 +990,34 @@ augments 'require' to find and load matching files.</td>
                           <dd>treetop</dd>
                       </dl>
                       </div>
+          <div id="psych" class="approved">
+        <h2>
+                      <a href="http://github.com/tenderlove/psych">psych</a>
+                    v2.0.5
+                      (default)
+                  </h2>
+        <table class="table table-striped table-bordered">
+          <thead>
+          <tr>
+            <th>Summary</th>
+            <th>Description</th>
+            <th>License</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>Psych is a YAML parser and emitter</td>
+            <td>Psych is a YAML parser and emitter.  Psych leverages libyaml[http://pyyaml.org/wiki/LibYAML]
+for its YAML parsing and emitting capabilities.  In addition to wrapping
+libyaml, Psych also knows how to serialize and de-serialize most Ruby objects
+to and from the YAML format.</td>
+            <td>
+                              <a href="http://opensource.org/licenses/mit-license">MIT</a>
+                          </td>
+          </tr>
+          </tbody>
+        </table>
+                      </div>
           <div id="rack" class="approved">
         <h2>
                       <a href="http://rack.github.com/">rack</a>
@@ -988,6 +1119,10 @@ request helpers feature.</td>
           </tr>
           </tbody>
         </table>
+                  <dl>
+            <dt>Parents</dt>
+                          <dd>apipie-rails</dd>
+                      </dl>
                           <dl>
             <dt>Children</dt>
                           <dd>activesupport</dd>
@@ -1124,8 +1259,8 @@ request helpers feature.</td>
               </div>
           <div id="rake" class="approved">
         <h2>
-                      <a href="http://github.com/jimweirich/rake">rake</a>
-                    v10.1.1
+                      <a href="https://github.com/jimweirich/rake">rake</a>
+                    v10.2.2
                   </h2>
         <table class="table table-striped table-bordered">
           <thead>
@@ -1137,8 +1272,29 @@ request helpers feature.</td>
           </thead>
           <tbody>
           <tr>
-            <td>Ruby based make-like utility.</td>
-            <td>Rake is a Make-like program implemented in Ruby. Tasks and dependencies arespecified in standard Ruby syntax.</td>
+            <td>Rake is a Make-like program implemented in Ruby</td>
+            <td>Rake is a Make-like program implemented in Ruby. Tasks and dependencies are
+specified in standard Ruby syntax.
+
+Rake has the following features:
+
+* Rakefiles (rake's version of Makefiles) are completely defined in
+  standard Ruby syntax.  No XML files to edit.  No quirky Makefile
+  syntax to worry about (is that a tab or a space?)
+
+* Users can specify tasks with prerequisites.
+
+* Rake supports rule patterns to synthesize implicit tasks.
+
+* Flexible FileLists that act like arrays but know about manipulating
+  file names and paths.
+
+* A library of prepackaged tasks to make building rakefiles easier. For example,
+  tasks for building tarballs and publishing to FTP or SSH sites.  (Formerly
+  tasks for building RDoc and Gems were included in rake but they're now
+  available in RDoc and RubyGems respectively.)
+
+* Supports parallel execution of tasks.</td>
             <td>
                               <a href="http://opensource.org/licenses/mit-license">MIT</a>
                           </td>
@@ -1157,6 +1313,10 @@ request helpers feature.</td>
                           <dd>sprockets</dd>
                           <dd>sprockets-rails</dd>
                           <dd>uglifier</dd>
+                          <dd>thread_safe</dd>
+                          <dd>apipie-rails</dd>
+                          <dd>font-awesome-sass</dd>
+                          <dd>kaminari</dd>
                       </dl>
                           <dl>
             <dt>Children</dt>
@@ -1166,7 +1326,7 @@ request helpers feature.</td>
           <div id="sass" class="approved">
         <h2>
                       <a href="http://sass-lang.com/">sass</a>
-                    v3.2.14
+                    v3.2.18
                   </h2>
         <table class="table table-striped table-bordered">
           <thead>
@@ -1195,12 +1355,13 @@ request helpers feature.</td>
                           <dd>tilt</dd>
                           <dd>sprockets</dd>
                           <dd>sass-rails</dd>
+                          <dd>font-awesome-sass</dd>
                       </dl>
                       </div>
           <div id="sass-rails" class="approved">
         <h2>
                       <a href="https://github.com/rails/sass-rails">sass-rails</a>
-                    v4.0.1
+                    v4.0.2
                       (default)
                   </h2>
         <table class="table table-striped table-bordered">
@@ -1221,17 +1382,22 @@ request helpers feature.</td>
           </tr>
           </tbody>
         </table>
+                  <dl>
+            <dt>Parents</dt>
+                          <dd>font-awesome-sass</dd>
+                      </dl>
                           <dl>
             <dt>Children</dt>
                           <dd>sass</dd>
                           <dd>railties</dd>
                           <dd>sprockets-rails</dd>
+                          <dd>sprockets</dd>
                       </dl>
               </div>
           <div id="sprockets" class="approved">
         <h2>
                       <a href="http://getsprockets.org/">sprockets</a>
-                    v2.10.1
+                    v2.11.0
                   </h2>
         <table class="table table-striped table-bordered">
           <thead>
@@ -1254,6 +1420,7 @@ request helpers feature.</td>
                   <dl>
             <dt>Parents</dt>
                           <dd>sprockets-rails</dd>
+                          <dd>sass-rails</dd>
                       </dl>
                           <dl>
             <dt>Children</dt>
@@ -1309,7 +1476,7 @@ request helpers feature.</td>
           <div id="thor" class="approved">
         <h2>
                       <a href="http://whatisthor.com/">thor</a>
-                    v0.18.1
+                    v0.19.1
                   </h2>
         <table class="table table-striped table-bordered">
           <thead>
@@ -1321,8 +1488,8 @@ request helpers feature.</td>
           </thead>
           <tbody>
           <tr>
-            <td>A scripting framework that replaces rake, sake and rubigen</td>
-            <td>A scripting framework that replaces rake, sake and rubigen</td>
+            <td>Thor is a toolkit for building powerful command-line interfaces.</td>
+            <td>Thor is a toolkit for building powerful command-line interfaces.</td>
             <td>
                               <a href="http://opensource.org/licenses/mit-license">MIT</a>
                           </td>
@@ -1342,7 +1509,7 @@ request helpers feature.</td>
           <div id="thread_safe" class="approved">
         <h2>
                       <a href="https://github.com/headius/thread_safe">thread_safe</a>
-                    v0.1.3
+                    v0.3.1
                   </h2>
         <table class="table table-striped table-bordered">
           <thead>
@@ -1369,6 +1536,7 @@ request helpers feature.</td>
                           <dl>
             <dt>Children</dt>
                           <dd>atomic</dd>
+                          <dd>rake</dd>
                       </dl>
               </div>
           <div id="tilt" class="approved">
@@ -1469,7 +1637,7 @@ request helpers feature.</td>
           <div id="tzinfo" class="approved">
         <h2>
                       <a href="http://tzinfo.github.io">tzinfo</a>
-                    v0.3.38
+                    v0.3.39
                   </h2>
         <table class="table table-striped table-bordered">
           <thead>
@@ -1493,12 +1661,13 @@ request helpers feature.</td>
             <dt>Parents</dt>
                           <dd>activesupport</dd>
                           <dd>actionpack</dd>
+                          <dd>kaminari</dd>
                       </dl>
                       </div>
           <div id="uglifier" class="approved">
         <h2>
                       <a href="http://github.com/lautis/uglifier">uglifier</a>
-                    v2.4.0
+                    v2.5.0
                       (default)
                   </h2>
         <table class="table table-striped table-bordered">
