@@ -25,6 +25,6 @@ RSpec.configure do |config|
 
   if ENV['APIPIE_RECORD']
     config.filter_run show_in_doc: true
-    config.order = nil
+    config.order = 'defined'
   end
 end

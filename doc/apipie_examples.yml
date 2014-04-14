@@ -1,0 +1,21 @@
+--- !omap
+- players#index:
+  - !omap
+    - verb: :GET
+    - path: "/players.js"
+    - versions:
+      - '1.0'
+    - query: 
+    - request_data: 
+    - response_data:
+      - name: Ehren
+        url: "/players/ehren"
+        mean: 1112
+        key: ehren
+      - name: Patrick
+        url: "/players/patrick"
+        mean: 1200
+        key: patrick
+    - code: 200
+    - show_in_doc: 1
+    - recorded: true

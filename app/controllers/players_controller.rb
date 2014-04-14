@@ -1,6 +1,7 @@
 class PlayersController < ApplicationController
   RECENT_MATCHES_LIMIT = 5
 
+  api :GET, 'players.js'
   def index
     @players = player_finder.find_all_players
 
