@@ -12,6 +12,7 @@ feature 'On the dashboard:', :js do
   let(:match_3) { Match.create(winner_key: godzilla.key, loser_key: bob.key) }
 
   let(:create_players) { bob and sally and nil }
+
   let(:create_leaderboard_objects) { match_1 and match_2 and match_3 and nil }
 
   scenario 'a player can enter a match' do |example|
@@ -90,7 +91,7 @@ feature 'On the dashboard:', :js do
     end
   end
 
-  scenario 'a viewer can see all of the players and their data' do |example|
+  scenario 'a viewer can sees a of the players and their data' do |example|
     create_players
     visit root_path
 
