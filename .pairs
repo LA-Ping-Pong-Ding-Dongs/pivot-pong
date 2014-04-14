@@ -2,20 +2,21 @@
 # Override node.default["git_pairs_authors"] and node.default["git_pairs_domain"] in attributes/git_pairs.rb to modify.
 
 pairs:
+  bj: Brian Jennings;bjennings
+  db: David Bellotti;dbellotti
+  eh: Eric Hu; ehu
+  em: Ehren Murdick; emurdick
+  ih: Ira Herman
+  jb: jbritz
+  jm: Jalil Mohammed
   jrhb: Jonathan Barnes
   mc: Michael McCormick;mc
-  ih: Ira Herman
-  sk: Sung Kim;sk
-  jb: jbritz
-  pc: pcollins
-  ta: tina
-  jm: Jalil Mohammed
-  bj: Brian Jennings;bjennings
-  vh: Vance Heron
-  db: David Bellotti;dbellotti
   ml: Mariana Lenetis
   pa: Pete Alfvin
-  eh: Eric Hu; ehu
+  pc: pcollins
+  sk: Sung Kim;sk
+  ta: tina
+  vh: Vance Heron
   zg: Zachary Gershman; zg
 
 email:
