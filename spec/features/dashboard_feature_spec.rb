@@ -12,11 +12,6 @@ feature 'On the dashboard:', :js do
   let(:match_3) { Match.create(winner_key: godzilla.key, loser_key: bob.key) }
 
   let(:create_players) { bob and sally and nil }
-  let(:create_a_lot_of_players) do
-    1..100.times do |idx|
-      Player.create(name: "Playa"+idx, key: 'weeeeee'+idx, mean: Random.rand(2000), sigma: Random.rand(100), last_tournament_date: Random.rand(14).days.ago)
-    end
-  end
 
   let(:create_leaderboard_objects) { match_1 and match_2 and match_3 and nil }
 
@@ -97,7 +92,7 @@ feature 'On the dashboard:', :js do
   end
 
   scenario 'a viewer can sees a of the players and their data' do |example|
-    create_a_lot_of_players
+    create_players
     visit root_path
 
     step '1. players will be displayed on the dashboard', current: example do
