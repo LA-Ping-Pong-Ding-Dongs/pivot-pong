@@ -164,14 +164,11 @@ span.tooltip {
       cursor: pointer;
       border-bottom: 1px dotted rgba(darken($overlay_gray, 5%), 0.85);
       padding: 9px;
-      &:hover {
-        background-color: $gray_light;
-      }
       &:last-child {
         border-bottom: none;
       }
       &.selected {
-        background-color: $overlay_gray;
+        background-color: $gray_light;
       }
     }
   }
