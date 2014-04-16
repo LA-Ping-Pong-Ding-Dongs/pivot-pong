@@ -89,22 +89,6 @@ describe('PlayerTiles', function () {
         });
     });
 
-    describe('colorize', function () {
-        it('picks a color based on the tiles location', function () {
-            var colorSelectors = [
-                { val: 0, color: 'color1' },
-                { val: 1, color: 'color2' },
-                { val: 2, color: 'color3' },
-                { val: 3, color: 'color4' },
-                { val: 4, color: 'color5' },
-            ];
-
-            _.each(colorSelectors, _.bind(function(colorSelector) {
-                expect(this.view.colorize({ i: 0, j: colorSelector.val })).toEqual(colorSelector.color);
-            }, this));
-        });
-    });
-
     describe('_routeLinks', function () {
         it('delegates to pong.navigator', function () {
             spyOn(pong, 'navigator');

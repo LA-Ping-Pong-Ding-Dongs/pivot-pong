@@ -6,8 +6,8 @@ pong.PlayerTiles = Backbone.View.extend({
     },
 
     render: function () {
-        this.renderMesh();
-        this.renderTiles();
+        var mesh = this.renderMesh();
+        this.renderTiles(mesh);
     },
 
     renderMesh: function () {
@@ -35,123 +35,8 @@ pong.PlayerTiles = Backbone.View.extend({
 
     renderTiles: function () {
         this.distributePlayersAroundMesh(this.excludeCells, this.PERCENT_BLANK_TILES);
-        joinPlayerDataToDom.apply(this);
-
+        pong.PlayerTilesBinder.setupD3Strategies(this.data, this.svg, this.hexbin);
         return this;
-
-        function joinPlayerDataToDom() {
-            var keyFunctions = {
-                column: function (d) {
-                    return d.i;
-                },
-                row: function (d) {
-                    return d.j;
-                },
-                location: function (d) {
-                    return  d.location;
-                },
-                name: function (d) {
-                    if (d.name.length > 8) {
-                        return $.trim(d.name).substring(0, 8).trim(this) + '...';
-                    } else {
-                        return d.name;
-                    }
-                },
-                url: function (d) {
-                    return d.url;
-                },
-                mean: function (d) {
-                    return d.mean;
-                },
-                color: _.bind(function (d) {
-                    return this.colorize(d);
-                }, this),
-                translate: function (d) {
-                    return 'translate(' + d.i + ',' + d.j + ')';
-                },
-            };
-
-            var anchorGroups = this.svg.selectAll('g.player-ranking')
-                .data(this.data, keyFunctions.location);
-            anchorGroups
-                .append('a')
-                .attr('xlink:href', keyFunctions.url)
-                .attr('xlink:title', keyFunctions.name)
-                .append('path')
-                .attr('d', this.hexbin.hexagon())
-                .attr('transform', keyFunctions.translate);
-            anchorGroups
-                .append('a')
-                .classed('hex-o-text js', true)
-                .attr('xlink:href', keyFunctions.url)
-                .attr('xlink:title', keyFunctions.name)
-                .append('text')
-                .attr('x', keyFunctions.column)
-                .attr('y', keyFunctions.row)
-                .attr('dy', '-20')
-                .attr('text-anchor', 'middle')
-                .text(keyFunctions.name);
-            anchorGroups
-                .append('a')
-                .classed('hex-o-text js', true)
-                .attr('xlink:href', keyFunctions.url)
-                .attr('xlink:title', keyFunctions.mean)
-                .append('text')
-                .attr('x', keyFunctions.column)
-                .attr('y', keyFunctions.row)
-                .attr('dy', '20')
-                .attr('text-anchor', 'middle')
-                .text(keyFunctions.mean);
-
-            var newAnchorGroups = anchorGroups.enter()
-                .append('g').attr('class', 'player-ranking');
-            newAnchorGroups
-                .style('opacity', 0)
-                .transition()
-                .duration(1000)
-                .style('opacity', 1);
-            newAnchorGroups
-                .append('a')
-                .classed('hex-o-link js', true)
-                .classed('color1', function(d) { return keyFunctions.color(d) === 'color1'; })
-                .classed('color2', function(d) { return keyFunctions.color(d) === 'color2'; })
-                .classed('color3', function(d) { return keyFunctions.color(d) === 'color3'; })
-                .classed('color4', function(d) { return keyFunctions.color(d) === 'color4'; })
-                .classed('color5', function(d) { return keyFunctions.color(d) === 'color5'; })
-                .attr('xlink:href', keyFunctions.url)
-                .attr('xlink:title', keyFunctions.name)
-                .append('path')
-                .attr('d', this.hexbin.hexagon())
-                .attr('transform', keyFunctions.translate);
-            newAnchorGroups
-                .append('a')
-                .classed('hex-o-text js', true)
-                .attr('xlink:href', keyFunctions.url)
-                .attr('xlink:title', keyFunctions.name)
-                .append('text')
-                .attr('x', keyFunctions.column)
-                .attr('y', keyFunctions.row)
-                .attr('dy', '-20')
-                .attr('text-anchor', 'middle')
-                .text(keyFunctions.name);
-            newAnchorGroups
-                .append('a')
-                .classed('hex-o-text js', true)
-                .attr('xlink:href', keyFunctions.url)
-                .attr('xlink:title', keyFunctions.mean)
-                .append('text')
-                .attr('x', keyFunctions.column)
-                .attr('y', keyFunctions.row)
-                .attr('dy', '20')
-                .attr('text-anchor', 'middle')
-                .text(keyFunctions.mean);
-
-            anchorGroups.exit()
-                .transition()
-                .duration(1000)
-                .style('opacity', 0)
-                .remove();
-        }
     },
 
     distributePlayersAroundMesh: function (excludeCells, percentBlankCells) {
@@ -202,12 +87,6 @@ pong.PlayerTiles = Backbone.View.extend({
 
             return available;
         }
-    },
-
-    colorize: function (d) {
-        var colorClasses = ['color1', 'color2', 'color3', 'color4', 'color5'];
-        var index = Math.floor((d.i + d.j) % 5);
-        return colorClasses[index];
     },
 
     renderTilesOnResize: function () {
