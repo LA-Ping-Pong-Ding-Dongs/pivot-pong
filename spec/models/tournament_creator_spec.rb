@@ -17,7 +17,7 @@ describe TournamentCreator do
       expect(Tournament.last.winner_key).to eq('sally')
     end
 
-    it 'returns an Open Struct representing the match' do
+    it 'returns an Open Struct representing the tournament' do
       record = creator.create_tournament(start_time: DateTime.new(2014, 2, 15), end_time: DateTime.new(2014, 2, 22), winner_key: 'sally')
       expect(record).to be_kind_of TournamentStruct
       expect(record.start_time).to eq(DateTime.new(2014, 2, 15))
