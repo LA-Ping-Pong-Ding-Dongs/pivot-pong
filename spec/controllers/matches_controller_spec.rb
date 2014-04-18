@@ -100,7 +100,7 @@ describe MatchesController do
       end
 
       it 'returns a list of recent matches' do
-        expect(match_finder_double).to receive(:find_matches_for_tournament).with(tournament_ranking.start_time, tournament_ranking.end_time, described_class::TOURNAMENT_MATCHES_LIMIT).and_return(recent_matches)
+        expect(match_finder_double).to receive(:find_matches_for_tournament).with(tournament_ranking.start_date, tournament_ranking.end_date, described_class::TOURNAMENT_MATCHES_LIMIT).and_return(recent_matches)
         xhr :get, :index, recent: 'true'
 
         expected = recent_matches.map{ |match| MatchPresenter.new(match).as_json }

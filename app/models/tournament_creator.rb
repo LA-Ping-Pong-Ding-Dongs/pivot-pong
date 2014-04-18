@@ -1,6 +1,6 @@
 class TournamentCreator
-  def create_tournament(start_time: raise(ArgumentError), end_time: raise(ArgumentError), winner_key: raise(ArgumentError))
-    record = Tournament.create(start_time: start_time, end_time: end_time, winner_key: winner_key)
-    TournamentStruct.new(record.start_time, record.end_time, record.winner_key)
+  def create_tournament(start_date:, end_date:, winner_key:)
+    record = TournamentRecord.create(start_date: start_date, end_date: end_date, winner_key: winner_key)
+    Tournament.new(record.start_date, record.end_date, record.winner_key)
   end
 end

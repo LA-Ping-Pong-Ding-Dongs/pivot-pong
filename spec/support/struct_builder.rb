@@ -12,6 +12,6 @@ module StructBuilder
   end
 
   def build_tournament_struct(tournament)
-    TournamentStruct.new(tournament.start_time, tournament.end_time, tournament.winner_key)
+    Tournament.new(tournament.start_date, tournament.end_date, tournament.winner_key)
   end
 end

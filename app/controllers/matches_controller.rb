@@ -28,7 +28,7 @@ class MatchesController < ApplicationController
 
   def index
     if params[:recent]
-      matches = match_finder.find_matches_for_tournament(tournament_ranking.start_time, tournament_ranking.end_time, TOURNAMENT_MATCHES_LIMIT)
+      matches = match_finder.find_matches_for_tournament(tournament_ranking.start_date, tournament_ranking.end_date, TOURNAMENT_MATCHES_LIMIT)
     else
       page_number = params[:page] || 1
       page = match_finder.find_page_of_matches(page_number, PAGE_SIZE)
