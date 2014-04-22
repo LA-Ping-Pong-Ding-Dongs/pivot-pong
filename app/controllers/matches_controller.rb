@@ -40,6 +40,7 @@ class MatchesController < ApplicationController
 
     respond_to do |format|
       format.js { render json: { results: @matches_presenter.as_json } }
+      format.json { render json: { results: @matches_presenter.as_json } }
       format.html
     end
   end

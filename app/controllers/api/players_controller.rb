@@ -1,6 +1,6 @@
 class Api::PlayersController < Api::BaseController
-  api :GET, 'players.json'
 
+  api :GET, 'players.json'
   def index
     respond_with players: PlayersJsonPresenter.new(collection)
   end

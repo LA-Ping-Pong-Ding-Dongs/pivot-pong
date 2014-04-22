@@ -1,13 +1,14 @@
 require 'spec_helper'
 
 describe 'Players api' do
-  describe 'GET /api/matches.json' do
-    let(:params) do
-      { match: {
-        winner: 'patrick',
-        loser: 'britz'
-      } }
-    end
+  let(:params) do
+    { match: {
+      winner: 'patrick',
+      loser: 'britz'
+    } }
+  end
+
+  describe 'POST /api/matches.json' do
 
     let(:bad_params) do
       { match: {
@@ -27,6 +28,11 @@ describe 'Players api' do
     end
   end
 
-  describe 'POST /api/matches.json', :show_in_doc do
+  describe 'GET /api/matches.json' do
+    before { post api_matches_path(format: :json), params }
+    it 'returns json', :show_in_doc do
+      get api_matches_path(format: :json)
+      expect(response).to be_success
+    end
   end
 end

@@ -1,4 +1,67 @@
 --- !omap
+- matches#create:
+  - !omap
+    - verb: :POST
+    - path: "/api/matches.json"
+    - versions:
+      - '1.0'
+    - query: 
+    - request_data: match[winner]=patrick&match[loser]=britz
+    - response_data:
+        winner: patrick
+        loser: britz
+    - code: 200
+    - show_in_doc: 1
+    - recorded: true
+  - !omap
+    - verb: :POST
+    - path: "/api/matches.json"
+    - versions:
+      - '1.0'
+    - query: 
+    - request_data: match[winner]=patrick&match[loser]=patrick
+    - response_data:
+        winner: patrick
+        loser: patrick
+        errors:
+          loser:
+          - cannot be the same player as winner
+    - code: 400
+    - show_in_doc: 1
+    - recorded: true
+  - !omap
+    - verb: :POST
+    - path: "/api/matches.json"
+    - versions:
+      - '1.0'
+    - query: 
+    - request_data: match[winner]=patrick&match[loser]=britz
+    - response_data:
+        winner: patrick
+        loser: britz
+    - code: 200
+    - show_in_doc: 1
+    - recorded: true
+- matches#index:
+  - !omap
+    - verb: :GET
+    - path: "/api/matches.json"
+    - versions:
+      - '1.0'
+    - query: 
+    - request_data: 
+    - response_data:
+        results:
+        - id: 2
+          winner_key: 37ca3367-6204-4940-b2f8-6980ff4e7147
+          loser_key: 0aef28b9-2db0-41c4-a4bc-55bc7c227162
+          winner_name: patrick
+          loser_name: britz
+          created_at: '2014-04-22T19:25:53.664Z'
+          human_readable_time: less than a minute ago
+    - code: 200
+    - show_in_doc: 1
+    - recorded: true
 - players#index:
   - !omap
     - verb: :GET
