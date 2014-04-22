@@ -9,5 +9,6 @@ PivotPong::Application.routes.draw do
 
   namespace :api do
     resources :players, only: :index
+    resources :matches
   end
 end

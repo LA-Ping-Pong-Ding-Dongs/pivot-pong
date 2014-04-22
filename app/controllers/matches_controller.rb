@@ -11,8 +11,13 @@ class MatchesController < ApplicationController
       if match_validator.valid?
         match_form.save
         format.js { render json: match_form.as_json }
+        format.json { render json: match_form.as_json }
       else
         format.js do
+          errors = match_validator.errors.as_json
+          render status: 400, json: match_form.as_json.merge(errors: errors)
+        end
+        format.json do
           errors = match_validator.errors.as_json
           render status: 400, json: match_form.as_json.merge(errors: errors)
         end
