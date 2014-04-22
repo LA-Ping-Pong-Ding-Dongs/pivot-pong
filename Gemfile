@@ -13,6 +13,8 @@ gem 'kaminari'
 gem 'psych', '~> 2.0.5'
 gem 'font-awesome-sass'
 gem 'apipie-rails'
+gem 'virtus'
+gem 'draper'
 
 group :production, :staging do
   gem 'rails_12factor'

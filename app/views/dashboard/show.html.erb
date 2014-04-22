@@ -3,7 +3,7 @@
     <section class="nojs-players">
       <h3><%= link_to I18n.t('players.title'), players_path %></h3>
       <table>
-        <% @players.each do |player| %>
+        <% collection.each do |player| %>
           <tr>
             <td class="player-name"><%= link_to player.name, player_path(player.key) %></td>
             <td class="player-record"><%= player.mean %></td>
@@ -76,7 +76,7 @@
 </div>
 
 <script type="text/javascript">
-  pong.players = <%= PlayersJsonPresenter.new(@players).to_json.html_safe %>;
+  pong.players = <%= PlayersJsonPresenter.new(collection).to_json.html_safe %>;
 
   $('a.leaderboard-link').click(pong.navigator);
   $('a.recent-matches-link').click(pong.navigator);

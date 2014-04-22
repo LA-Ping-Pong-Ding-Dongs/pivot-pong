@@ -4,7 +4,17 @@ class Player < ActiveRecord::Base
 
   self.primary_key = :key
 
+  before_create :ensure_requried_fields
+
+  def self.find_or_initialize_by_lower_name(name)
+    where('LOWER(name) = ?', name.downcase).first || new(name: name)
+  end
+
   def to_param
     key
+  end
+
+  def ensure_requried_fields
+    self.key ||= SecureRandom.uuid
   end
 end

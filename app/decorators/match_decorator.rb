@@ -1,17 +1,9 @@
-class MatchPresenter
+class MatchDecorator < Draper::Decorator
   include ActionView::Helpers::DateHelper
-
-  attr_reader :match
-  private :match
-
-  delegate :winner_name, :winner_key, :loser_name, :loser_key, :created_at, to: :match
-
-  def initialize(match)
-    @match = match
-  end
+  delegate_all
 
   def as_json
-    @match.to_h.merge({
+    object.to_h.merge({
       human_readable_time: human_readable_time,
     })
   end

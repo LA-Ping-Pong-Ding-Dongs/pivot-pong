@@ -1,0 +1,2 @@
+class DashboardService < BaseService
+end
