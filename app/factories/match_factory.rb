@@ -26,7 +26,7 @@ class MatchFactory < BaseFactory
   end
 
   def players_must_be_different
-    if winning_player && losing_player && winning_player == losing_player
+    if winner && loser && winner == loser
       errors.add(:loser, "can't be the same name as winner!")
     end
   end

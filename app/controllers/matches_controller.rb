@@ -1,10 +1,12 @@
 class MatchesController < BaseController
   using_service MatchService
-  decorate_with MatchDecorator
 
   def recent
-    set_collection(service.find_recent)
-    index
+    self.collection = service.find_recent
+    respond_to do |format|
+      format.js { render json: { results: collection.as_json } }
+      format.html { render action: :index }
+    end
   end
 
   private

@@ -4,7 +4,7 @@ class Player < ActiveRecord::Base
 
   self.primary_key = :key
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: true
 
   before_create :ensure_required_fields
 

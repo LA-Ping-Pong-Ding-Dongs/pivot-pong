@@ -1,6 +1,5 @@
 module DashboardService
-  extend self
-  delegate :all, to: Player
+  extend self, BaseService
 
   def new_match
     MatchFactory.new
@@ -8,5 +7,9 @@ module DashboardService
 
   def tournament_rankings
     Tournament.new.determine_rankings
+  end
+
+  def collection_source
+    Player.all
   end
 end

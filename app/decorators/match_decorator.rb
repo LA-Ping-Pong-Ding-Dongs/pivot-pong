@@ -1,8 +1,6 @@
 class MatchDecorator < Draper::Decorator
   include ActionView::Helpers::DateHelper
   delegate_all
-  delegate :name, to: :winner, prefix: true
-  delegate :name, to: :loser, prefix: true
 
   def as_json
     super.merge({
@@ -19,5 +17,13 @@ class MatchDecorator < Draper::Decorator
     else
       object.created_at.strftime('%-m/%-d/%Y')
     end
+  end
+
+  def winner_name
+    object.winner.try(:name)
+  end
+
+  def loser_name
+    object.loser.try(:name)
   end
 end

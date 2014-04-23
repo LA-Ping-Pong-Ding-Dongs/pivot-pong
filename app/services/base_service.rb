@@ -1,40 +1,30 @@
-class BaseService
-  include Virtus.model
-  include ActiveModel::Validations
-
-  def self.validates_dependencies *things
-    validator_method_name = "validates_#{things.join('_')}"
-    define_method validator_method_name do
-      things.each do |thing|
-        model = send(thing)
-        unless model.valid?
-          errors.add(thing, model.errors.full_messages.to_sentence)
-        end
-      end
-    end
-    validate validator_method_name
+module BaseService
+  def get_page(page)
+    decorate(paged(collection_source, page: page))
   end
 
+  def get_all
+    decorate(collection_source)
+  end
 
-  def save
-    if valid?
-      persist!
-      true
+  # redefine in your own service class to change
+  def page_size
+    10
+  end
+
+  def paged(collection_object, page:)
+    collection_object.page(page).per(page_size)
+  end
+
+  def decorate(collection_object)
+    if decorator
+      PaginatingDecorator.decorate(collection_object, with: decorator)
     else
-      false
+      collection_object
     end
   end
 
-  def as_json options = {}
-    if errors.any?
-      super.merge(errors: errors)
-    else
-      super
-    end
-  end
-
-  private
-  def persist!
-    raise NotImplementedError, 'Subclasses of BaseService need to implement #persist!'
+  def decorator
+    nil
   end
 end

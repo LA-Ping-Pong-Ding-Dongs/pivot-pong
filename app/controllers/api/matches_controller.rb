@@ -1,11 +1,7 @@
-class Api::MatchesController < MatchesController
-  api :POST, 'matches.json'
-  def create
-    super
-  end
+class Api::MatchesController < Api::BaseController
+  using_service MatchService
 
-  api :GET, 'matches.json'
-  def index
-    super
+  def safe_params
+    params.require(:match).permit(:winner, :loser)
   end
 end

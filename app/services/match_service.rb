@@ -1,6 +1,14 @@
 module MatchService
-  extend self
+  extend self, BaseService
 
-  delegate :all, :find_recent, to: Match
-  delegate :new, to: MatchFactory
+  def decorator; MatchDecorator; end
+  def collection_source; Match.all; end
+
+  def new(attributes = nil)
+    MatchFactory.new(attributes)
+  end
+
+  def find_recent
+    decorate(Match.find_recent)
+  end
 end

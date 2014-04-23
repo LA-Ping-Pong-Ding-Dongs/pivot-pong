@@ -33,6 +33,10 @@ class BaseFactory
     end
   end
 
+  def error_messages
+    errors.full_messsages
+  end
+
   private
   def persist!
     raise NotImplementedError, 'Subclasses of BaseService need to implement #persist!'

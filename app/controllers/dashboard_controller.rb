@@ -1,9 +1,8 @@
 class DashboardController < BaseController
   using_service DashboardService
-  page_size 100
 
   def show
-    set_collection
+    self.collection = service.get_all
     @match = service.new_match
     @tournament_rankings = service.tournament_rankings
   end
