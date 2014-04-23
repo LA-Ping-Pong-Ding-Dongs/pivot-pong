@@ -25,6 +25,14 @@ class BaseService
     end
   end
 
+  def as_json options = {}
+    if errors.any?
+      super.merge(errors: errors)
+    else
+      super
+    end
+  end
+
   private
   def persist!
     raise NotImplementedError, 'Subclasses of BaseService need to implement #persist!'

@@ -7,14 +7,6 @@ class MatchService < BaseService
   validates_dependencies :winning_player, :losing_player, :match
   validate :players_must_be_different
 
-  def as_json options = {}
-    if errors.any?
-      super.merge(errors: errors)
-    else
-      super
-    end
-  end
-
   private
 
   def winning_player
