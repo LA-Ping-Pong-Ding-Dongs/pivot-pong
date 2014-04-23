@@ -38,4 +38,6 @@ end
 group :test do
   gem 'nyan-cat-formatter', git: 'https://github.com/mattsears/nyan-cat-formatter.git', branch: 'master'
   gem 'database_cleaner'
+  gem 'pry'
+  gem 'pry-nav'
 end
