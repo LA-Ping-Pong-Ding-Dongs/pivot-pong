@@ -22,10 +22,11 @@
     - request_data: match[winner]=patrick&match[loser]=patrick
     - response_data:
         winner: patrick
-        loser: patrick
+        loser:
+        - can't be the same name as winner!
         errors:
           loser:
-          - cannot be the same player as winner
+          - can't be the same name as winner!
     - code: 400
     - show_in_doc: 1
     - recorded: true
@@ -53,12 +54,13 @@
     - response_data:
         results:
         - id: 2
-          winner_key: 37ca3367-6204-4940-b2f8-6980ff4e7147
-          loser_key: 0aef28b9-2db0-41c4-a4bc-55bc7c227162
+          winner_key: f8cd3d3b-9c6e-42cc-9952-0423727b724b
+          loser_key: 4457edf0-b1b6-41cc-aedf-8a8c659b767e
+          created_at: '2014-04-23T22:24:22.039Z'
+          updated_at: '2014-04-23T22:24:22.039Z'
+          human_readable_time: less than a minute ago
           winner_name: patrick
           loser_name: britz
-          created_at: '2014-04-22T19:25:53.664Z'
-          human_readable_time: less than a minute ago
     - code: 200
     - show_in_doc: 1
     - recorded: true
@@ -73,13 +75,11 @@
     - response_data:
         players:
         - name: Ehren
-          url: "/players/ehren"
-          mean: 1112
           key: ehren
+          mean: 1112
         - name: Patrick
-          url: "/players/patrick"
-          mean: 1200
           key: patrick
+          mean: 1200
     - code: 200
     - show_in_doc: 1
     - recorded: true
