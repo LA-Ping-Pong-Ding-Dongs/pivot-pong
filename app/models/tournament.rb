@@ -1,2 +1,2 @@
-class Tournament < Struct.new(:start_date, :end_date, :winner_key)
+class Tournament < ActiveRecord::Base
 end

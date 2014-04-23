@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe TournamentWinnerPickerJob do
   describe '.perform' do
-    let(:tournament_service) { TournamentService.new }
+    let(:tournament_service) { TournamentService }
     before do
       allow(TournamentService).to receive(:new).and_return(tournament_service)
     end

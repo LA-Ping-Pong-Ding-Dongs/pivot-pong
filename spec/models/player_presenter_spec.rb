@@ -23,8 +23,8 @@ describe PlayerPresenter do
     ]
   end
 
-  let(:tourney_win_1) { Tournament.new(3.weeks.ago, 2.weeks.ago, 'bob') }
-  let(:tourney_win_2) { Tournament.new(4.weeks.ago, 3.weeks.ago, 'bob') }
+  let(:tourney_win_1) { Tournament.new(start_date: 3.weeks.ago, end_date: 2.weeks.ago, winner_key: 'bob') }
+  let(:tourney_win_2) { Tournament.new(start_date: 4.weeks.ago, end_date: 3.weeks.ago, winner_key: 'bob') }
   let(:tournament_wins) { [tourney_win_1, tourney_win_2] }
 
   subject(:player_presenter) { PlayerPresenter.new(bob, all_matches, recent_matches, tournament_wins) }

@@ -5,16 +5,8 @@ describe TournamentFinder do
   subject(:finder) { TournamentFinder.new }
 
   describe '#find_wins_for_player' do
-    let(:tournament) { Tournament.new(3.weeks.ago, 2.weeks.ago, 'bob') }
-    let(:not_relevant_tournament) { Tournament.new(3.weeks.ago, 2.weeks.ago, 'sally') }
-    before do
-      [tournament, not_relevant_tournament].each do |t|
-        TournamentCreator.new.create_tournament(
-          start_date: t.start_date,
-          end_date: t.end_date,
-          winner_key: t.winner_key)
-      end
-    end
+    let!(:tournament) { Tournament.create(start_date: 3.weeks.ago, end_date: 2.weeks.ago, winner_key: 'bob') }
+    let!(:not_relevant_tournament) { Tournament.create(start_date: 3.weeks.ago, end_date: 2.weeks.ago, winner_key: 'sally') }
 
     it 'returns an array of tournaments for a player' do
       expect(finder.find_wins_for_player('bob')).to match_array([tournament])
@@ -24,17 +16,8 @@ describe TournamentFinder do
   describe '#find_most_recent_tournament' do
 
     context 'with tournaments' do
-      let(:old_tournament) { Tournament.new(3.weeks.ago, 2.weeks.ago - 1.minute, 'bob') }
-      let(:new_tournament) { Tournament.new(2.weeks.ago, 1.weeks.ago, 'sally') }
-      let(:creator) { TournamentCreator.new }
-      before do
-        [old_tournament, new_tournament].each do |t|
-          creator.create_tournament(
-            start_date: t.start_date,
-            end_date: t.end_date,
-            winner_key: t.winner_key)
-        end
-      end
+      let!(:old_tournament) { Tournament.create(start_date: 3.weeks.ago, end_date: 2.weeks.ago - 1.minute, winner_key: 'bob') }
+      let!(:new_tournament) { Tournament.create(start_date: 2.weeks.ago, end_date: 1.weeks.ago, winner_key: 'sally') }
 
       it 'returns only the most recent tournament' do
         expect(finder.find_most_recent_tournament).to eq(new_tournament)

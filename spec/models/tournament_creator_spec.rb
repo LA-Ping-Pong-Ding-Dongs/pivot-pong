@@ -10,11 +10,11 @@ describe TournamentCreator do
     it 'adds a tournament record with a start time, end time, and winner' do
       expect {
         creator.create_tournament(start_date: start_date, end_date: end_date, winner_key: 'sally')
-      }.to change(TournamentRecord, :count).by(1)
+      }.to change(Tournament, :count).by(1)
 
-      expect(TournamentRecord.last.start_date).to eq(start_date)
-      expect(TournamentRecord.last.end_date).to eq(end_date)
-      expect(TournamentRecord.last.winner_key).to eq('sally')
+      expect(Tournament.last.start_date).to eq(start_date)
+      expect(Tournament.last.end_date).to eq(end_date)
+      expect(Tournament.last.winner_key).to eq('sally')
     end
 
     it 'returns a populated instance of Tournament' do
