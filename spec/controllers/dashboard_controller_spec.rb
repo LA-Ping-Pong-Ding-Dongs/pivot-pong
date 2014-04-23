@@ -3,22 +3,22 @@ require 'spec_helper'
 describe DashboardController do
 
   describe '#show' do
-
-    let(:players) { ['player one data', 'player two data'] }
-    let(:player_finder) { instance_double(PlayerFinder, find_all_players: players) }
-    let(:tournament_double) { double(Tournament, determine_rankings: 'data')}
+    let(:match) { double('match') }
+    let(:players) { double('players') }
+    let(:service) { double('service', new_match: match, tournament_rankings: 'data', all: players) }
 
     before do
-      allow(controller).to receive(:new_player_finder).and_return(player_finder)
-      allow(controller).to receive(:tournament).and_return(tournament_double)
+      allow(controller).to receive(:service).and_return(service)
+      allow(players).to receive(:page).and_return(players)
+      allow(players).to receive(:per).and_return(players)
     end
 
     it 'responds successfully' do
       get :show
 
       expect(response).to be_success
-      expect(assigns(:match)).to be_a_kind_of(MatchForm)
-      expect(assigns(:players)).to eq(players)
+      expect(assigns(:match)).to eq(match)
+      expect(assigns(:collection)).to eq(players)
       expect(assigns(:tournament_rankings)).to eq 'data'
     end
   end

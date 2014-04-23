@@ -35,8 +35,8 @@ class BaseController < ApplicationController
 
   protected
 
-  def set_collection(collection_object)
-    @collection = decorate(paged(collection_object))
+  def set_collection(collection_object = nil)
+    @collection = decorate(paged(collection_object || default_collection))
   end
 
   def collection
