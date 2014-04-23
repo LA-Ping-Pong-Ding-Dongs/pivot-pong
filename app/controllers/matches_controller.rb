@@ -3,7 +3,8 @@ class MatchesController < BaseController
   decorate_with MatchDecorator
 
   def recent
-    service.find_recent
+    set_collection(service.find_recent)
+    index
   end
 
   private

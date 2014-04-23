@@ -1,9 +1,9 @@
 class DashboardController < BaseController
-  using_service Player
+  using_service DashboardService
   page_size 100
 
   def show
-    @match = MatchService.new
-    @tournament_rankings = Tournament.new.determine_rankings
+    @match = service.new_match
+    @tournament_rankings = service.tournament_rankings
   end
 end

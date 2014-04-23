@@ -8,7 +8,7 @@
         <th class="player-name"><%= I18n.t('matches.loser') %></th>
         <th class="time"><%= I18n.t('matches.time') %></th>
       </tr>
-      <% @matches_presenter.each do |match| %>
+      <% collection.each do |match| %>
           <tr>
             <td class="player-name winner"><%= match.winner_name %></td>
             <td class="player-name loser"><%= match.loser_name %></td>
@@ -16,6 +16,6 @@
           </tr>
       <% end %>
     </table>
-    <%= paginate @page %>
+    <%= paginate collection %>
   </div>
 </div>

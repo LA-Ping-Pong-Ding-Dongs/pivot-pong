@@ -1,22 +1,4 @@
-class MatchForm
-  include Virtus.model
-  include ActiveModel::Validations
-
-  def self.validates_dependencies *things
-    validator_method_name = "validates_#{things.join('_')}"
-    define_method validator_method_name do
-      things.each do |thing|
-        model = send(thing)
-        unless model.valid?
-          errors.add(thing, model.errors.full_messages.to_sentence)
-        end
-      end
-    end
-    validate validator_method_name
-  end
-
-
-
+class MatchFactory < BaseFactory
   attribute :winner, String
   attribute :loser, String
 
@@ -25,16 +7,8 @@ class MatchForm
   validates_dependencies :winning_player, :losing_player, :match
   validate :players_must_be_different
 
-  def save
-    if valid?
-      persist!
-      true
-    else
-      false
-    end
-  end
-
   private
+
   def winning_player
     @winning_player ||= find_player(winner)
   end
@@ -48,12 +22,12 @@ class MatchForm
   end
 
   def find_player(name)
-    Player.find_or_initialize_by(name: name)
+    Player.find_or_initialize_by_lower_name(name)
   end
 
   def players_must_be_different
     if winning_player && losing_player && winning_player == losing_player
-      errors.add(:loser, "Winner and loser can't be the same!")
+      errors.add(:loser, "can't be the same name as winner!")
     end
   end
 

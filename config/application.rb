@@ -27,6 +27,7 @@ module PivotPong
     config.i18n.default_locale = :en
 
 
-    config.autoload_paths << "#{config.root}/app/forms"
+    config.autoload_paths << "#{config.root}/app/factories"
+    config.autoload_paths << "#{config.root}/app/services"
   end
 end

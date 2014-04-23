@@ -1,5 +1,6 @@
 class BaseController < ApplicationController
   helper_method :collection
+  respond_to :html, :json
 
   def self.using_service service_class
     define_method(:service) { service_class }
@@ -12,7 +13,6 @@ class BaseController < ApplicationController
   def self.page_size size
     define_method(:page_size) { size }
   end
-  page_size 10
 
   def index
     respond_to do |format|
@@ -35,11 +35,19 @@ class BaseController < ApplicationController
 
   protected
 
+  def set_collection(collection_object)
+    @collection = decorate(paged(collection_object))
+  end
+
   def collection
     unless @collection
-      @collection = paged_collection
+      @collection = decorate(paged(default_collection))
     end
     @collection
+  end
+
+  def page_size
+    10
   end
 
   private
@@ -48,19 +56,19 @@ class BaseController < ApplicationController
     raise NotImplementedError, 'Subclasses of BaseController need to define #safe_params!'
   end
 
-  def raw_collection
+  def default_collection
     service.all
   end
 
-  def paged_collection
-    raw_collection.page(params[:page]).per(page_size)
+  def paged(collection_object)
+    collection_object.page(params[:page]).per(page_size)
   end
 
-  def decorated_paged_collection
+  def decorate(collection_object)
     if decorator
-      paged_collection.decorate_with(decorator)
+      PaginatingDecorator.decorate(collection_object, with: decorator)
     else
-      paged_collection
+      collection_object
     end
   end
 
