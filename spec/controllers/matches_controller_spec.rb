@@ -6,7 +6,7 @@ describe MatchesController do
   end
 
   before do
-    allow(controller).to receive(:service).and_return(service)
+    controller.class.using_service(service)
   end
 
   describe '#create' do

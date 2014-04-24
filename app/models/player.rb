@@ -14,6 +14,10 @@ class Player < ActiveRecord::Base
     where('LOWER(name) = ?', name.downcase).first || new(name: name)
   end
 
+  def self.find_by_substring(substr)
+    where('name ILIKE ?', "#{substr}%").order('name ASC')
+  end
+
   def recent_matches
     matches.limit(10)
   end

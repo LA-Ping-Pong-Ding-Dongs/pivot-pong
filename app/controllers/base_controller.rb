@@ -19,7 +19,7 @@ class BaseController < ApplicationController
     self.resource = finder
     respond_to do |format|
       format.json { render json: resource }
-      format.html { respond_with collection }
+      format.html { respond_with resource }
     end
   end
 

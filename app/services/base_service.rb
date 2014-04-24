@@ -35,4 +35,5 @@ module BaseService
   def decorator
     nil
   end
+
 end
