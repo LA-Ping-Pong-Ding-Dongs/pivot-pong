@@ -5,7 +5,7 @@ describe DashboardController do
   describe '#show' do
     let(:match) { double('match') }
     let(:players) { double('players') }
-    let(:service) { double('service', new_match: match, tournament_rankings: 'data', all: players) }
+    let(:service) { double('service', new_match: match, tournament_rankings: 'data', get_all: players) }
 
     before do
       allow(controller).to receive(:service).and_return(service)
