@@ -12,7 +12,7 @@ describe PlayersSearchController do
       xhr :get, :index, search: 'b'
 
       expect(response).to be_success
-      expect(response.body).to eql('{"results":{"some":"results"}}')
+      expect(response.body).to eql('{"some":"results"}')
     end
   end
 end
