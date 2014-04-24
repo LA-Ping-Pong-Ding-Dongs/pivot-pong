@@ -9,6 +9,7 @@ describe 'Players api' do
       Player.create name: 'Patrick', mean: 1200, key: patrick_key
       get api_players_path(format: :json)
       expect(response).to be_success
+
       expect(response_json).to eq({players: [
         {"name"=>"Ehren", "mean"=>1112, "key"=>ehren_key},
         {"name"=>"Patrick", "mean"=>1200, "key"=>patrick_key}
