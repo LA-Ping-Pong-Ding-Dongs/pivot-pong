@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe DashboardController do
-
   describe '#show' do
     let(:match) { double('match') }
     let(:players) { double('players') }

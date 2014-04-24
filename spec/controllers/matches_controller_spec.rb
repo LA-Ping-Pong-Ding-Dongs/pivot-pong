@@ -6,7 +6,7 @@ describe MatchesController do
   end
 
   before do
-    controller.class.using_service(service)
+    allow(controller).to receive(:service).and_return(service)
   end
 
   describe '#recent' do

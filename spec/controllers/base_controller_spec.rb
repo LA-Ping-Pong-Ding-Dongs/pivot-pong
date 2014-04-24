@@ -27,7 +27,7 @@ describe BaseController do
   end
 
   before do
-    controller.class.using_service(service)
+    allow(controller).to receive(:service).and_return(service)
     allow(controller).to receive(:safe_params).and_return({})
   end
 

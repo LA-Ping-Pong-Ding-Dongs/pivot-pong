@@ -3,7 +3,7 @@ require 'spec_helper'
 describe PlayersController do
   let(:service) { double('player service') }
   before do
-    controller.class.using_service(service)
+    allow(controller).to receive(:service).and_return(service)
   end
 
   describe '#show' do

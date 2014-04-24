@@ -4,7 +4,7 @@ describe PlayersSearchController do
   let(:players) { double('players', as_json: {some: 'results'}) }
   let(:service) { double('player service', find_by_substring: players) }
   before do
-    controller.class.using_service(service)
+    allow(controller).to receive(:service).and_return(service)
   end
 
   describe '#index' do
