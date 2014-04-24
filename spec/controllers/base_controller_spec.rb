@@ -1,14 +1,16 @@
 require 'spec_helper'
 
 describe BaseController do
-  # adding routes to spec and abstract class
-  # http://pivotallabs.com/adding-routes-for-tests-specs-with-rails-3/
-  render_views false
   before do
+    # adding routes to spec and abstract class
+    # http://pivotallabs.com/adding-routes-for-tests-specs-with-rails-3/
     Rails.application.routes.draw do
       root 'base#index'
       resources :base
     end
+
+    # empty views to the abstract controller can be tested
+    controller.prepend_view_path 'spec/fixtures/views'
   end
 
   after do
