@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe RatingsUpdater do
   let(:ratings_updater) { RatingsUpdater.new }
-  let(:winner) { PlayerStruct.new('fe6467411b7b93fc5dfca7b8fa715a7d', 'Winner', 1233, 12) }
-  let(:loser) { PlayerStruct.new('e8bd17d7852ffa79a687933d1bfdac5a', 'Loser', 445, 233) }
+  let(:winner) { double :player, key: 'fe6467411b7b93fc5dfca7b8fa715a7d', name: 'Winner', mean: 1233, sigma: 12 }
+  let(:loser) { double :player, key: 'e8bd17d7852ffa79a687933d1bfdac5a', name: 'Loser', mean: 445, sigma: 233 }
   let(:winner_rating) { double(Saulabs::TrueSkill::Rating, mean: 3454.45, deviation: 32.86) }
   let(:loser_rating) { double(Saulabs::TrueSkill::Rating, mean: 433, deviation: 12) }
   let(:factor_graph_double) { double(Saulabs::TrueSkill::FactorGraph, update_skills: true)}
