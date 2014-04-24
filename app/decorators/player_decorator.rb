@@ -11,7 +11,9 @@ class PlayerDecorator < Draper::Decorator
   end
 
   def current_streak_type
-    object.recent_matches.first.winner_key == key ? 'W' : 'L'
+    match = object.recent_matches.try(:first)
+    return unless match
+    match.winner_key == key ? 'W' : 'L'
   end
 
   def current_streak_string
