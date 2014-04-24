@@ -97,8 +97,35 @@ describe TournamentService do
   end
 
   describe '#pick_winners' do
-    context 'the tournament is not yet over (i.e. the end date occurs after today)' do
-      it 'does not pick a winner'
+    before { Timecop.freeze(now.to_time) }
+    after { Timecop.return }
+
+    let(:winner) { Player.create(key: '70ec1678-35f0-4bf0-b09d-9207f7f5d1b8', name: 'Wallace') }
+    let(:loser) { Player.create(key: '2f8ff742-4c56-4d06-9b57-dc90e0c0f949', name: 'Laurence') }
+    let(:tournament) { TournamentService.spanning(DateTime.new(2014, 4, 22)) }
+    let(:match_date) { tournament.start_date.advance(hours: 1) }
+
+    before do
+      Match.create(winner_key: winner.key, loser_key: loser.key, created_at: match_date)
+      tournament.save!
+    end
+
+    context 'when the tournament is over' do
+      let(:now) { tournament.end_date.since(1) }
+
+      it 'picks a winner for the tournament' do
+        TournamentService.pick_winners
+        expect(Tournament.find_by_start_date(tournament.start_date).winner_key).to eq winner.key
+      end
+    end
+
+    context 'when the tournament is ongoing' do
+      let(:now) { tournament.end_date.ago(1) }
+
+      it 'does not pick a winner for the tournament' do
+        TournamentService.pick_winners
+        expect(Tournament.find_by_start_date(tournament.start_date).winner_key).to be_nil
+      end
     end
   end
 end

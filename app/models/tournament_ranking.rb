@@ -2,10 +2,10 @@ class TournamentRanking
   attr_reader :start_date, :end_date
 
   def initialize(
-    match_finder = MatchFinder.new,
-    player_standings_builder = PlayerStandingsBuilder.new,
-    start_date = Time.now.beginning_of_week,
-    end_date = Time.now
+    match_finder: MatchFinder.new,
+    player_standings_builder: PlayerStandingsBuilder.new,
+    start_date: Time.now.beginning_of_week,
+    end_date: Time.now
   )
     @match_finder = match_finder
     @player_standings_builder = player_standings_builder
