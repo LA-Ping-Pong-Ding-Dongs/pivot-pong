@@ -1,55 +1,31 @@
 require 'spec_helper'
 
 describe PlayersController do
-
-  let(:player) { PlayerStruct.new('f2b8be6ba879e2b1bd1653852f1a33ab', 'Bob', 1200, 50) }
-  let(:nemesis) { PlayerStruct.new('99ce27141314607c8d0d3cec9807c67f', 'Sally', 1500, 150) }
-  let(:player_finder_double) { double(PlayerFinder, find: player, find_all_players: [player, nemesis]) }
-  let(:match_finder_double) { double(MatchFinder, find_all_for_player: 'all matches', find_recent_matches_for_player: 'recent matches') }
-  let(:player_presenter_double) { double(PlayerPresenter, as_json: { field: 'val' }) }
-  let(:players_json_presenter_double) { double(PlayersJsonPresenter, as_json: true) }
-
-  let(:bella) { PlayerStruct.new('93fb9466661fe0da4f07df6a745ffb81', 'Bella', 1200, 100) }
-  let(:single_player_finder_double) { double(PlayerFinder, find: bella) }
-
+  let(:service) { double('player service') }
   before do
-    allow(controller).to receive(:player_finder).and_return(player_finder_double)
-    allow(controller).to receive(:match_finder).and_return(match_finder_double)
-    allow(controller).to receive(:player_presenter).with(player, 'all matches', 'recent matches').and_return(player_presenter_double)
-    allow(controller).to receive(:players_json_presenter).with([player, nemesis]).and_return(players_json_presenter_double)
+    controller.class.using_service(service)
   end
 
   describe '#show' do
     context 'js request' do
-      it 'returns serialized player information' do
-        xhr :get, :show, key: 'bob'
-
-        expect(response).to be_success
-        expect(JSON(response.body).deep_symbolize_keys).to eq({results: {field: 'val'}})
+      before do
+        allow(service).to receive(:find).and_return(double('player', as_json: {fake: 'player'}))
       end
-    end
-  end
 
-  describe '#index' do
-    context 'js request' do
-      it 'returns the players' do
-        expect(players_json_presenter_double).to receive(:as_json).and_return([{wut: 'wat'}])
-        xhr :get, :index
+      it 'returns serialized player information' do
+        xhr :get, :show, key: 'keykeykeykey', format: :json
 
         expect(response).to be_success
-        expect(JSON(response.body).map(&:deep_symbolize_keys)).to match_array([{wut: 'wat'}])
+        expect(response.body).to eq('{"results":{"fake":"player"}}')
       end
     end
   end
 
   describe '#edit' do
-    before do
-      allow(controller).to receive(:player_finder).and_return(single_player_finder_double)
-      allow(controller).to receive(:player_presenter).with(bella, nil, nil).and_return(single_player_finder_double)
-    end
     context 'js request' do
       it 'renders a player name edit form' do
-        xhr :get, :edit, key: bella.key
+        allow(service).to receive(:find).and_return(double('player'))
+        xhr :get, :edit, key: 'keykeykeykey'
 
         expect(response).to be_success
       end
@@ -57,17 +33,22 @@ describe PlayersController do
   end
 
   describe '#update' do
-    let(:templeton) { Player.create(key: '6ce6380961f7b389e51a4080767f9aeb', name: 'Templeton') }
-
+    let(:player) { double(:player) }
     context 'js response' do
+      before do
+        allow(controller).to receive(:url_for).and_return('/player_path')
+        allow(service).to receive(:find).and_return(player)
+      end
       it 'redirects to player page on success' do
-        xhr :patch, :update, key: templeton.key, player: { name: 'Mallomar' }
-        expect(response).to redirect_to player_path templeton.key
+        allow(player).to receive(:update_attributes).and_return(true)
+        patch :update, key: 'keykeykey', player: { name: 'Mallomar' }
+        expect(response).to redirect_to('http://test.host/player_path')
       end
 
       it 'renders edit with errors if save fails' do
-        xhr :patch, :update, key: templeton.key, player: { name: 'Templeton' }
-        expect(response).to redirect_to edit_player_path(templeton.key)
+        allow(player).to receive(:update_attributes).and_return(false)
+        patch :update, key: 'key', player: { name: 'Templeton' }
+        expect(response).to render_template('edit')
       end
     end
   end

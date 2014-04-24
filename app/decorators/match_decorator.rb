@@ -19,6 +19,10 @@ class MatchDecorator < Draper::Decorator
     end
   end
 
+  def human_date
+    match.created_at.to_s(:pivot_pong_time)
+  end
+
   def winner_name
     object.winner.try(:name)
   end

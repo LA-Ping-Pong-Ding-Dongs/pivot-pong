@@ -9,6 +9,6 @@ module MatchService
   end
 
   def find_recent
-    decorate(Match.find_recent)
+    decorate_collection(Match.find_recent)
   end
 end
