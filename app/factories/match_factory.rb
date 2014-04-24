@@ -35,6 +35,6 @@ class MatchFactory < BaseFactory
     winning_player.save!
     losing_player.save!
     match.save!
-    RatingsUpdater.new.update_for_match(winner_key: winning_player.key, loser_key: losing_player.key)
+    RatingsUpdater.new.update_for_match(winner: winning_player, loser: losing_player)
   end
 end

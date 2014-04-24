@@ -1,6 +1,5 @@
 module MatchService
-  extend self
-  include BaseService
+  extend self, BaseService
 
   def decorator; MatchDecorator; end
   def collection_source; Match.all; end

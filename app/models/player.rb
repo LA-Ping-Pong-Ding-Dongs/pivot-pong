@@ -5,7 +5,8 @@ class Player < ActiveRecord::Base
   self.primary_key = :key
   validates :name, presence: true, uniqueness: true
   validates :key, presence: true, uniqueness: true
-  before_create :ensure_required_fields
+
+  before_validation :ensure_required_fields
 
   has_many :winning_matches, class_name: 'Match', primary_key: 'key', foreign_key: 'winner_key'
   has_many :losing_matches, class_name: 'Match', primary_key: 'key', foreign_key: 'loser_key'
@@ -32,5 +33,13 @@ class Player < ActiveRecord::Base
 
   def ensure_required_fields
     self.key ||= SecureRandom.uuid
+  end
+
+  def mean
+    read_attribute(:mean) || DEFAULT_MEAN
+  end
+
+  def sigma
+    read_attribute(:sigma) || DEFAULT_SIGMA
   end
 end
