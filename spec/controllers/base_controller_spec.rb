@@ -31,6 +31,29 @@ describe BaseController do
     allow(controller).to receive(:safe_params).and_return({})
   end
 
+  describe '#update' do
+    let(:model) { double(:model) }
+    context 'js response' do
+      before do
+        allow(controller).to receive(:url_for).and_return('/model_path')
+        allow(service).to receive(:find).and_return(model)
+      end
+
+      it 'redirects to model show page on success' do
+        allow(model).to receive(:update_attributes).and_return(true)
+        patch :update, id: 1, model: { name: 'Mallomar' }
+        expect(response).to redirect_to('http://test.host/model_path')
+      end
+
+      it 'renders edit with errors if save fails' do
+        allow(model).to receive(:update_attributes).and_return(false)
+        patch :update, id: 1, model: { name: 'Templeton' }
+        expect(response).to render_template('edit')
+      end
+    end
+  end
+
+
   describe '#create' do
     let(:factory) { double('factory', error_messages: 'didnt work yo', as_json: {fake: 'persistence object'}) }
 
