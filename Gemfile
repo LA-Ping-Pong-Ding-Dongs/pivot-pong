@@ -22,6 +22,7 @@ group :production, :staging do
 end
 
 group :development, :test do
+  gem 'launchy'
   gem 'license_finder'
   gem 'rspec-rails', git: 'https://github.com/rspec/rspec-rails.git', tag: 'v3.0.0.beta2'
   gem 'capybara', git: 'https://github.com/jnicklas/capybara.git', branch: 'master'
