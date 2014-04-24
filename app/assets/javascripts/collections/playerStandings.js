@@ -1,7 +1,7 @@
 window.pong = window.pong || {};
 
 pong.PlayerStandings = Backbone.Collection.extend({
-  url: '/tournament',
+  url: '/tournament.json',
 
   parse: function (response) {
     return response.results;

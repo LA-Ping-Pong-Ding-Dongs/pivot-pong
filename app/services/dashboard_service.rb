@@ -6,7 +6,7 @@ module DashboardService
   end
 
   def tournament_rankings
-    Tournament.new.determine_rankings
+    TournamentRanking.new.determine_rankings
   end
 
   def collection_source

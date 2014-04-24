@@ -68,6 +68,10 @@ class PlayerDecorator < Draper::Decorator
     end
   end
 
+  def tournament_win_count
+    winning_tournaments.count
+  end
+
   def as_json(options = nil)
     {
         name: name,

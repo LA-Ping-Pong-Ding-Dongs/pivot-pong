@@ -1,24 +1,21 @@
 require 'spec_helper'
 
 describe TournamentController do
-
-  let(:tournament_ranking_double) { double(TournamentRanking, determine_rankings: ['one', 'two']) }
-  let(:presenter_double) { double(PlayerStandingJsonPresenter, as_json: 'json_data') }
+  let :service do
+    double(:service, {
+      tournament_rankings: 'data'
+    })
+  end
 
   before do
-    allow(controller).to receive(:tournament_ranking).and_return(tournament_ranking_double)
-    allow(PlayerStandingJsonPresenter).to receive(:new).and_return(presenter_double)
+    allow(controller).to receive(:service).and_return(service)
   end
 
   describe '#show' do
     context 'responds with json' do
       it 'returns current tournament data' do
         xhr :get, :show
-
-        expect(tournament_ranking_double).to have_received(:determine_rankings)
-
         expect(response).to be_success
-        expect(JSON.parse(response.body)).to eq(JSON.parse({ results: ['json_data', 'json_data'] }.to_json))
       end
     end
 
@@ -32,7 +29,7 @@ describe TournamentController do
       end
 
       it 'assigns tournament data to @standings' do
-        expect(assigns(:standings)).to eq(tournament_ranking_double.determine_rankings)
+        expect(assigns(:standings)).to eq(service.tournament_rankings)
       end
     end
   end
