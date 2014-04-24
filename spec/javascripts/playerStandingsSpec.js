@@ -4,11 +4,11 @@ describe('PlayerStandings', function () {
   });
 
   it('specifies a url to fetch recent matches', function () {
-    expect(this.collection.url).toEqual('/tournament')
+    expect(this.collection.url).toEqual('/tournament.json')
   });
 
   it('parses the response', function () {
-    jasmine.Ajax.stubRequest('/tournament').andReturn(ajaxResponses.Tournament.show.success);
+    jasmine.Ajax.stubRequest('/tournament.json').andReturn(ajaxResponses.Tournament.show.success);
     this.collection.fetch();
     jasmine.clock().tick(1);
 
