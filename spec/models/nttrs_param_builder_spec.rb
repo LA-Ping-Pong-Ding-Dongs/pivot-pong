@@ -4,9 +4,9 @@ describe NttrsParamBuilder do
   subject { NttrsParamBuilder.new }
 
   shared_context "players" do
-    let(:bob) { PlayerStruct.new('544151cd41aaa51edfd4a0bd2ccbef03', 'Bob', 2300, 23) }
-    let(:sally) { PlayerStruct.new('9621b65bf7c398ee7fd4a708a8171a54', 'Sally', 1850, 40) }
-    let(:templeton) { PlayerStruct.new('abfa9dba916f2e487d64ccdb658ce6d0', 'Templeton', nil, nil) }
+    let(:bob) { double :player, key: '544151cd41aaa51edfd4a0bd2ccbef03', name: 'Bob', mean: 2300, sigma: 23 }
+    let(:sally) { double :player, key: '9621b65bf7c398ee7fd4a708a8171a54', name: 'Sally', mean: 1850, sigma: 40 }
+    let(:templeton) { double :player, key: 'abfa9dba916f2e487d64ccdb658ce6d0', name: 'Templeton', mean: nil, sigma: nil }
   end
 
   describe '#build_player_data' do

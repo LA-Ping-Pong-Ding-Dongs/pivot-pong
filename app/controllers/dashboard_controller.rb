@@ -1,18 +1,9 @@
-class DashboardController < ApplicationController
+class DashboardController < BaseController
+  using_service DashboardService
 
   def show
-    @match = MatchForm.new({})
-    @players = new_player_finder.find_all_players
-    @tournament_rankings = tournament_ranking.determine_rankings
-  end
-
-  private
-
-  def new_player_finder
-    PlayerFinder.new
-  end
-
-  def tournament_ranking
-    TournamentRanking.new
+    self.collection = service.get_all
+    @match = service.new_match
+    @tournament_rankings = service.tournament_rankings
   end
 end

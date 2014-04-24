@@ -14,8 +14,8 @@ feature 'at the players URL:' do
       expect(page).to have_content I18n.t('players.title')
 
       expect(page).to have_css 'tr:eq(2)', text: 'Bob'
-      expect(page).to have_css 'tr:eq(3)', text: 'Godzilla'
-      expect(page).to have_css 'tr:eq(4)', text: 'Sally'
+      expect(page).to have_css 'tr:eq(3)', text: 'Sally'
+      expect(page).to have_css 'tr:eq(4)', text: 'Godzilla'
     end
 
     step '3. click Bob link', current: example do

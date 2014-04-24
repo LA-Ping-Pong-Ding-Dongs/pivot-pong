@@ -1,6 +1,6 @@
 <%= render 'shared/header' %>
 <div class="player-statistics">
-  <span><h1><%= I18n.t('player.title') %> <%= @player_information.name %></h1> <%= link_to '<i class="fa fa-pencil-square-o"></i>'.html_safe, edit_player_path, id: 'edit_player_link'  %></span>
+  <span><h1><%= I18n.t('player.title') %> <%= resource.name %></h1> <%= link_to '<i class="fa fa-pencil-square-o"></i>'.html_safe, edit_player_path, id: 'edit_player_link'  %></span>
 
   <div class="stats">
     <dl>
@@ -9,16 +9,16 @@
           <%= I18n.t('player_info.record.overall') %>
         </dt>
 
-        <% if @player_information.overall_winning_percentage.to_f > 50 %>
+        <% if resource.overall_winning_percentage.to_f > 50 %>
             <% record_class = 'winning' %>
-        <% elsif @player_information.overall_winning_percentage.to_f < 50 %>
+        <% elsif resource.overall_winning_percentage.to_f < 50 %>
             <% record_class = 'losing' %>
         <% else %>
             <% record_class = 'even' %>
         <% end %>
 
         <dd class="<%= record_class %>">
-          <%= @player_information.overall_record_string %> (<%= @player_information.overall_winning_percentage %>)
+          <%= resource.overall_record_string %> (<%= resource.overall_winning_percentage %>)
         </dd>
       </div>
       <div class="definition-wrapper">
@@ -26,17 +26,17 @@
           <%= I18n.t('player.streak.title') %>
         </dt>
 
-        <% if @player_information.current_streak_type == 'W' %>
+        <% if resource.current_streak_type == 'W' %>
             <% streak_class = 'hot-streak' %>
-        <% elsif @player_information.current_streak_type == 'L' %>
+        <% elsif resource.current_streak_type == 'L' %>
             <% streak_class = 'cold-streak' %>
         <% else %>
             <% streak_class = '' %>
         <% end %>
 
         <dd class="<%= streak_class %>">
-          <%= @player_information.current_streak_string %>
-          <%= image_tag(@player_information.current_streak_totem_image) %>
+          <%= resource.current_streak_string %>
+          <%= image_tag(resource.current_streak_totem_image) %>
         </dd>
       </div>
     </dl>
@@ -54,7 +54,7 @@
 
   <h3><%= I18n.t('player.recent_matches.title') %></h3>
   <ul class="recent-matches">
-    <% @player_information.recent_matches.each do |match| %>
+    <% resource.recent_matches.each do |match| %>
         <li><%= match %></li>
     <% end %>
   </ul>

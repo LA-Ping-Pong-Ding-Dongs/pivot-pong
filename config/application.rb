@@ -28,5 +28,8 @@ module PivotPong
 
     config.autoload_paths += Dir["#{config.root}/lib/jobs/**/"]
     config.autoload_paths += Dir["#{config.root}/lib/tournament_actions/**/"]
+
+    config.autoload_paths << "#{config.root}/app/factories"
+    config.autoload_paths << "#{config.root}/app/services"
   end
 end

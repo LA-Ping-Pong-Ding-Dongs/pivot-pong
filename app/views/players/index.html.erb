@@ -6,11 +6,12 @@
       <tr>
         <th class="player-name"><%= I18n.t('players.name') %></th>
       </tr>
-      <% @players.each do |player| %>
+      <% collection.each do |player| %>
           <tr>
             <td class="player-name"><%= link_to player.name, player_path(player.key) %></td>
           </tr>
       <% end %>
     </table>
   </div>
+  <%= paginate collection %>
 </div>
