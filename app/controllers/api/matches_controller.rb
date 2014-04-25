@@ -1,4 +1,4 @@
-class Api::MatchesController < BaseController
+class Api::MatchesController < Api::BaseController
   using_service MatchService
 
   api :GET, 'matches.json'

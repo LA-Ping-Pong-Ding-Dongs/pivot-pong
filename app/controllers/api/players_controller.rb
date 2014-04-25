@@ -1,4 +1,4 @@
-class Api::PlayersController < BaseController
+class Api::PlayersController < Api::BaseController
   using_service PlayerService
 
   api :GET, 'players.json'
