@@ -1,6 +1,6 @@
 PivotPong::Application.routes.draw do
   apipie
-  resources :matches, only: [:create, :index] do
+  resources :matches, only: [:create, :index, :show] do
     collection do
       get :recent
     end

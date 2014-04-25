@@ -9,14 +9,17 @@ class BaseController < ApplicationController
 
   def index
     self.collection = service.get_page(params[:page])
+    respond_with(collection)
   end
 
   def show
     self.resource = finder
+    respond_with(resource)
   end
 
   def edit
     self.resource = finder
+    respond_with(resource)
   end
 
   def create

@@ -7,6 +7,11 @@ class MatchFactory < BaseFactory
   validates_dependencies :winning_player, :losing_player, :match
   validate :players_must_be_different
 
+  # allow polymorphic_route to work so we don't have to override base_controller
+  def to_model
+    match
+  end
+
   private
 
   def winning_player

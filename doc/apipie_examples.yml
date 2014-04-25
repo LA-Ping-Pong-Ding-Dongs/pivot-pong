@@ -21,26 +21,10 @@
     - query: 
     - request_data: match[winner]=patrick&match[loser]=patrick
     - response_data:
-        winner: patrick
-        loser:
-        - can't be the same name as winner!
         errors:
           loser:
           - can't be the same name as winner!
-    - code: 400
-    - show_in_doc: 1
-    - recorded: true
-  - !omap
-    - verb: :POST
-    - path: "/api/matches.json"
-    - versions:
-      - '1.0'
-    - query: 
-    - request_data: match[winner]=patrick&match[loser]=britz
-    - response_data:
-        winner: patrick
-        loser: britz
-    - code: 201
+    - code: 422
     - show_in_doc: 1
     - recorded: true
 - matches#index:
@@ -52,15 +36,11 @@
     - query: 
     - request_data: 
     - response_data:
-        results:
-        - id: 2
-          winner_key: b9c51b3a-b4a4-4282-b7ab-3e2f9dbe2423
-          loser_key: e2a2f33d-c8a6-4a9a-8812-a17c601e10b8
-          created_at: '2014-04-25T00:53:02.499Z'
-          updated_at: '2014-04-25T00:53:02.499Z'
-          human_readable_time: less than a minute ago
-          winner_name: patrick
-          loser_name: britz
+      - id: 2
+        winner_key: 9d6b5831-e400-49a4-aee5-9d09397ec6a8
+        loser_key: 9a1f0cfe-068c-4a35-a781-a130f693f190
+        created_at: '2014-04-25T17:29:20.444Z'
+        updated_at: '2014-04-25T17:29:20.444Z'
     - code: 200
     - show_in_doc: 1
     - recorded: true
@@ -75,10 +55,10 @@
     - response_data:
         players:
         - name: Ehren
-          key: b7467ca2-6681-4eb4-973d-0744a49eb32b
+          key: 06fa9bd2-b338-4f16-a130-dbc649228022
           mean: 1112
         - name: Patrick
-          key: 5ceefa51-31ba-4e0e-ba66-6df86f4284cf
+          key: 628863b8-4fd2-4317-ab84-41f6ab14f6ff
           mean: 1200
     - code: 200
     - show_in_doc: 1

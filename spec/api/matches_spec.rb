@@ -24,12 +24,12 @@ describe 'Players api' do
 
     it 'handles invalid matches', :show_in_doc do
       post api_matches_path(format: :json), bad_params
-      expect(response.code).to eq('400')
+      expect(response.code).to eq('422')
     end
   end
 
   describe 'GET /api/matches.json' do
-    before { post api_matches_path(format: :json), params }
+    before { MatchFactory.new(winner: 'Player', loser: 'Not player').save }
     it 'returns json', :show_in_doc do
       get api_matches_path(format: :json)
       expect(response).to be_success
