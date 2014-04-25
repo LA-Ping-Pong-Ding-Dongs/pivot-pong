@@ -1,6 +1,9 @@
 <%= render 'shared/header' %>
 <section class="player-edit">
     <%= form_for resource, url: { controller: 'players', action: 'update' }, method: 'patch', as: 'player' do |f| %>
+        <% if resource.errors.any? %>
+          <%= resource.errors.full_messages.to_sentence %>
+        <% end %>
         <fieldset class="player-name-field">
           <%= f.text_field :name, placeholder: resource.name, tabindex: 1 %>
         </fieldset>
