@@ -1,0 +1,9 @@
+json.(player,
+      :name,
+      :overall_losses,
+      :overall_wins,
+      :current_streak_count,
+      :current_streak_type,
+      :current_streak_totem_image,
+      :rating,
+      :overall_winning_percentage)

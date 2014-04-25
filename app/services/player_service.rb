@@ -9,6 +9,6 @@ module PlayerService
   end
 
   def find_by_substring substr
-    collection_source.find_by_substring(substr)
+    decorate_collection(collection_source.find_by_substring(substr))
   end
 end

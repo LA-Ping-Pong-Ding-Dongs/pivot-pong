@@ -3,11 +3,6 @@ class PlayersSearchController < BaseController
 
   def index
     self.collection = service.find_by_substring(params[:search])
-
-    respond_to do |format|
-      format.js do
-        render json: collection.as_json
-      end
-    end
+    respond_with collection
   end
 end

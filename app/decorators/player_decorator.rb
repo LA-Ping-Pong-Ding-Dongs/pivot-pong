@@ -73,16 +73,19 @@ class PlayerDecorator < Draper::Decorator
     winning_tournaments.count
   end
 
-  def as_json(options = nil)
-    {
-        name: name,
-        overall_losses: losing_matches.count,
-        overall_wins: winning_matches.count,
-        current_streak_count: streak_count,
-        current_streak_type: current_streak_type,
-        current_streak_totem_image: current_streak_totem_image,
-        rating: mean,
-        overall_winning_percentage: overall_winning_percentage,
-    }
+  def overall_losses
+    losing_matches.count
+  end
+
+  def overall_wins
+    winning_matches.count
+  end
+
+  def current_streak_count
+    streak_count
+  end
+
+  def rating
+    mean
   end
 end
