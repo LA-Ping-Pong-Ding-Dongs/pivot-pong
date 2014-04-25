@@ -34,7 +34,7 @@ class BaseController < ApplicationController
     self.resource = service.new(safe_params)
     respond_to do |format|
       if resource.save
-        format.json { render json: resource }
+        format.json { render json: resource, status: 201 }
         format.html { redirect_to root_path }
       else
         format.json { render status: 400, json: resource.as_json.merge(resource.errors.as_json) }
