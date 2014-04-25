@@ -21,14 +21,15 @@ class PlayerDecorator < Draper::Decorator
   end
 
   def current_streak_totem_image
+    img = nil
     if streak_type == 'winner'
-      return 'smoke.png' if streak_count == 2
-      return 'fire.png' if streak_count > 2
+      img = 'smoke.png' if streak_count == 2
+      img = 'fire.png' if streak_count > 2
     elsif streak_type == 'loser'
-      return 'ice.png' if streak_count > 2
+      img = 'ice.png' if streak_count > 2
     end
 
-    return ''
+    img ? h.image_path(img) : ''
   end
 
   def streak_count

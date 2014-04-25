@@ -110,21 +110,21 @@ describe PlayerDecorator do
       allow(subject).to receive(:streak_type).and_return('winner')
       allow(subject).to receive(:streak_count).and_return(2)
 
-      expect(subject.current_streak_totem_image).to eq 'smoke.png'
+      expect(subject.current_streak_totem_image).to eq '/assets/smoke.png'
     end
 
     it 'returns fire.png when on a 3 game win streak' do
       allow(subject).to receive(:streak_type).and_return('winner')
       allow(subject).to receive(:streak_count).and_return(3)
 
-      expect(subject.current_streak_totem_image).to eq 'fire.png'
+      expect(subject.current_streak_totem_image).to eq '/assets/fire.png'
     end
 
     it 'returns ice.png when on a 3 game losing skid' do
       allow(subject).to receive(:streak_type).and_return('loser')
       allow(subject).to receive(:streak_count).and_return(3)
 
-      expect(subject.current_streak_totem_image).to eq 'ice.png'
+      expect(subject.current_streak_totem_image).to eq '/assets/ice.png'
     end
 
     it 'returns an empty string at a 2L streak' do
