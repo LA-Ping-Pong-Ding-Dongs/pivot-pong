@@ -148,26 +148,4 @@ describe PlayerDecorator do
       expect(subject.current_streak_totem_image).to eq ''
     end
   end
-
-  describe '#as_json' do
-    it 'presents name, overall_wins, overall_losses and rating in json format' do
-      expect(subject).to receive(:current_streak_totem_image).and_return('fire.bmp')
-      expect(player).to receive(:name).and_return('Bob')
-      expect(player).to receive(:losing_matches).and_return([1])
-      expect(player).to receive(:winning_matches).and_return([1, 2])
-      expect(player).to receive(:mean).and_return(1200)
-      expect(subject).to receive(:overall_winning_percentage).and_return('66.7%')
-
-      expect(subject.as_json).to eq({
-                                        name: 'Bob',
-                                        overall_wins: 2,
-                                        overall_losses: 1,
-                                        current_streak_count: 1,
-                                        current_streak_type: 'W',
-                                        current_streak_totem_image: 'fire.bmp',
-                                        rating: 1200,
-                                        overall_winning_percentage: '66.7%',
-                                    })
-    end
-  end
 end

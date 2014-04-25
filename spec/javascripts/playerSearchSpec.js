@@ -12,7 +12,7 @@ describe('PlayerSearch', function () {
         });
 
         it('returns a list of players', function () {
-            jasmine.Ajax.stubRequest('/players_search?search=b').andReturn(ajaxResponses.PlayersSearch.index.success);
+            jasmine.Ajax.stubRequest('/players_search.json?search=b').andReturn(ajaxResponses.PlayersSearch.index.success);
             this.collection.playerNameSearch('b');
             jasmine.clock().tick(1);
 

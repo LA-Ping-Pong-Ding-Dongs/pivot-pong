@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe PlayersSearchController do
-  let(:players) { double('players', as_json: {some: 'results'}) }
+  let(:players) { double('players') }
   let(:service) { double('player service', find_by_substring: players) }
   before do
     allow(controller).to receive(:service).and_return(service)
@@ -9,10 +9,9 @@ describe PlayersSearchController do
 
   describe '#index' do
     it 'returns serialized player information' do
-      xhr :get, :index, search: 'b'
+      xhr :get, :index, search: 'b', format: :json
 
       expect(response).to be_success
-      expect(response.body).to eql('{"some":"results"}')
     end
   end
 end

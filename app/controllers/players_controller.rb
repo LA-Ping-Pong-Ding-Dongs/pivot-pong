@@ -3,10 +3,7 @@ class PlayersController < BaseController
 
   def show
     self.resource = finder
-    respond_to do |format|
-      format.json { render json: {results: resource} }
-      format.html { respond_with collection }
-    end
+    respond_with resource
   end
 
   def finder
