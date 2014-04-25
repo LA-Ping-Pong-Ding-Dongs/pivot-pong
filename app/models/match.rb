@@ -3,6 +3,6 @@ class Match < ActiveRecord::Base
   belongs_to :loser, class_name: 'Player', foreign_key: 'loser_key', primary_key: 'key'
 
   def self.find_recent
-    order('created_at desc').limit(10)
+    includes(:winner, :loser).order('created_at desc').limit(10)
   end
 end
