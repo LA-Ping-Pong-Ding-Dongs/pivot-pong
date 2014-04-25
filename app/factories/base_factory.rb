@@ -15,21 +15,12 @@ class BaseFactory
     validate validator_method_name
   end
 
-
   def save
     if valid?
       persist!
       true
     else
       false
-    end
-  end
-
-  def as_json options = {}
-    if errors.any?
-      super.merge(errors: errors)
-    else
-      super
     end
   end
 
