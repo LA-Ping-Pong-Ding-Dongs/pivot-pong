@@ -3,10 +3,14 @@ class MatchesController < BaseController
 
   def recent
     self.collection = service.find_recent
-    respond_to do |format|
-      format.js { render json: { results: collection.as_json } }
-      format.html { render action: :index }
-    end
+    respond_with collection
+  end
+
+  def create
+    self.resource = service.new(safe_params)
+    resource.save
+    flash[:alert] = resource.errors.full_messages if resource.errors.any?
+    respond_with resource, location: root_path
   end
 
   private

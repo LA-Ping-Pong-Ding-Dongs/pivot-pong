@@ -7,6 +7,10 @@ module BaseService
     decorate_collection(collection_source)
   end
 
+  def find id
+    decorate(collection_source.find(id))
+  end
+
   # redefine in your own service class to change
   def page_size
     10

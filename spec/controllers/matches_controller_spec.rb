@@ -14,7 +14,7 @@ describe MatchesController do
       it 'responds with collection json' do
         xhr :get, :recent
         expect(response).to be_success
-        expect(response.body).to eql('{"results":[]}')
+        expect(response).to render_template('recent')
       end
     end
 
@@ -22,7 +22,7 @@ describe MatchesController do
       it 'renders index' do
         get :recent
         expect(response).to be_success
-        expect(response).to render_template('index')
+        expect(response).to render_template('recent')
       end
     end
   end

@@ -1,0 +1,20 @@
+<%= render 'shared/header' %>
+<div class="recent-matches">
+  <h3><%= I18n.t('matches.title') %></h3>
+  <div class="table-container">
+    <table>
+      <tr>
+        <th class="player-name"><%= I18n.t('matches.winner') %></th>
+        <th class="player-name"><%= I18n.t('matches.loser') %></th>
+        <th class="time"><%= I18n.t('matches.time') %></th>
+      </tr>
+      <% collection.each do |match| %>
+          <tr>
+            <td class="player-name winner"><%= match.winner_name %></td>
+            <td class="player-name loser"><%= match.loser_name %></td>
+            <td class="time"><%= match.human_readable_time %></td>
+          </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

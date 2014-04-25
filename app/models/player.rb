@@ -14,7 +14,7 @@ class Player < ActiveRecord::Base
   has_many :winning_tournaments, class_name: 'Tournament', primary_key: 'key', foreign_key: 'winner_key'
 
   def self.find_or_initialize_by_lower_name(name)
-    where('LOWER(name) = ?', name.downcase).first || new(name: name)
+    where('LOWER(name) = ?', name.try(:downcase)).first || new(name: name)
   end
 
   def self.find_by_substring(substr)
