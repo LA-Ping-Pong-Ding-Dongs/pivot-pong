@@ -3,9 +3,11 @@ development:
   database: pong_development
   pool: 5
   timeout: 5000
+  template: template0
 
 test:
   adapter: postgresql
   database: pong_test
   pool: 5
   timeout: 5000
+  template: template0
