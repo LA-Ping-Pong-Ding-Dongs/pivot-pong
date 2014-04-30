@@ -12,10 +12,14 @@ namespace :cf do
   end
 
   def determine_hot_url(app_name, target_space)
-    cf_manifest = YAML.load_file('manifest.yml')
+    cf_manifest = load_manifest
     app_name = app_name+'-'+target_space+'-green'
     green_app_config = cf_manifest['applications'].find { |cf_app| cf_app['name'] == app_name }
     green_app_config['host'].chomp('-green')
+  end
+
+  def load_manifest
+    YAML.load_file('manifest.yml')
   end
 
   desc 'Reroutes "live" traffic to specified app through provided URL'
@@ -25,6 +29,9 @@ namespace :cf do
 
     # determine which app is currently "hot"
     current_hot_app = `cf routes | grep '#{hot_url}' | awk '{ print $3 }'`
+
+    @cmd.backtick("cf routes | grep '......")
+
     current_hot_app.chomp!
 
     # unmap from current hot
