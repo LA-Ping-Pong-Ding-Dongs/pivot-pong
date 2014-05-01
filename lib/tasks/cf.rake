@@ -8,9 +8,13 @@ namespace :cf do
   end
 
   desc 'Reroutes "live" traffic to specified app through provided URL'
-  task :blue_green_deploy, :app_name, :domain, :blue_or_green do |t, args|
+  task :blue_green_deploy, :domain, :web_app_name do |t, args|
+    blue_or_green = args.extras.pop if args.extras.last == 'blue' || args.extras.last == 'green'
+    worker_apps = args.extras
+
     deploy_config = BlueGreenDeployConfig.new(load_manifest)
-    BlueGreenDeploy.make_it_so(args[:app_name], args[:domain], deploy_config, args[:blue_or_green])
+    puts deploy_config.inspect
+    BlueGreenDeploy.make_it_so(args[:domain], args[:web_app_name], worker_apps, deploy_config, blue_or_green)
   end
 
   def load_manifest

@@ -8,11 +8,12 @@ describe BlueGreenDeploy do
   describe '#make_it_so' do
     context 'when blue/green is specified' do
       let(:app_name) { 'app_name' }
+      let(:worker_apps) { ['app_name-worker'] }
       let(:domain) { 'cfapps.io' }
       let(:blue_or_green) { 'green' }
       let(:hot_url) { 'la-pong' }
       let(:current_hot_app) { 'blue' }
-      subject { BlueGreenDeploy.make_it_so(app_name, domain, deploy_config, blue_or_green) }
+      subject { BlueGreenDeploy.make_it_so(domain, app_name, worker_apps, deploy_config, blue_or_green) }
       before do
         @cf_route_table = [
           Route.new("#{app_name}-blue", domain, "#{app_name}-blue"),
@@ -22,7 +23,7 @@ describe BlueGreenDeploy do
         allow(CloudFoundry).to receive(:push)
         allow(CloudFoundry).to receive(:routes).and_return(@cf_route_table)
         allow(CloudFoundry).to receive(:unmap_route).with("#{app_name}-#{current_hot_app}", 'cfapps.io', hot_url) do
-          @cf_route_table.pop; nil
+          @cf_route_table.delete_if { |route| route.app == "#{app_name}-#{current_hot_app}" && route.host == hot_url }
         end
         allow(CloudFoundry).to receive(:map_route) do |app, domain, host|
           @cf_route_table.delete_if { |route| route.host == host }
@@ -42,9 +43,10 @@ describe BlueGreenDeploy do
     end
 
     context 'when blue/green is omitted' do
-      subject { BlueGreenDeploy.make_it_so(app_name, domain, deploy_config) }
+      subject { BlueGreenDeploy.make_it_so(domain, app_name, worker_apps, deploy_config) }
       let(:app_name) { 'app_name' }
       let(:domain) { 'cfapps.io' }
+      let(:worker_apps) { ['app_name-worker'] }
       let(:hot_url) { 'la-pong' }
       before do
         @cf_route_table = [
@@ -55,7 +57,7 @@ describe BlueGreenDeploy do
         allow(CloudFoundry).to receive(:push)
         allow(CloudFoundry).to receive(:routes).and_return(@cf_route_table)
         allow(CloudFoundry).to receive(:unmap_route).with("#{app_name}-#{current_hot_app}", 'cfapps.io', hot_url) do
-          @cf_route_table.pop; nil
+          @cf_route_table.delete_if { |route| route.app == "#{app_name}-#{current_hot_app}" && route.host == hot_url }
         end
         allow(CloudFoundry).to receive(:map_route) do |app, domain, host|
           @cf_route_table.delete_if { |route| route.host == host }
@@ -102,7 +104,7 @@ describe BlueGreenDeploy do
       allow(CloudFoundry).to receive(:push)
       allow(CloudFoundry).to receive(:routes).and_return(@cf_route_table)
       allow(CloudFoundry).to receive(:unmap_route).with("#{app_name}-#{current_hot_app}", 'cfapps.io', hot_url) do
-        @cf_route_table.pop; nil
+        @cf_route_table.delete_if { |route| route.app == "#{app_name}-#{current_hot_app}" && route.host == hot_url }
       end
       allow(CloudFoundry).to receive(:map_route) do |app, domain, host|
         @cf_route_table.delete_if { |route| route.host == host }
@@ -192,19 +194,11 @@ describe BlueGreenDeploy do
       allow(CloudFoundry).to receive(:push)
       allow(CloudFoundry).to receive(:routes).and_return(@cf_route_table)
       allow(CloudFoundry).to receive(:unmap_route).with("#{app_name}-#{current_hot_app}", 'cfapps.io', hot_url) do
-        @cf_route_table.pop; nil
+        @cf_route_table.delete_if { |route| route.app == "#{app_name}-#{current_hot_app}" && route.host == hot_url }
       end
       allow(CloudFoundry).to receive(:map_route) do |app, domain, host|
         @cf_route_table.delete_if { |route| route.host == host }
         @cf_route_table.push(Route.new(host, domain, app))
-      end
-    end
-
-    context 'when the target_app is already hot' do
-      let(:current_hot_app) { target_app }
-
-      it 'throws an InvalidRouteState exception' do
-        expect{ subject }.to raise_error(InvalidRouteStateError)
       end
     end
 
