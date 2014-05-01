@@ -15,11 +15,3 @@ applications:
   command: bundle exec rake cf:on_first_instance db:migrate && bundle exec rails s -p $PORT -e $RAILS_ENV
   services:
   - oyster-cracker
-
-- name: pivot-pong-staging
-  host: la-pong-staging
-  size: 1GB
-  buildpack: git://github.com/heroku/heroku-buildpack-ruby.git
-  command: bundle exec rake cf:on_first_instance db:migrate && bundle exec rails s -p $PORT -e $RAILS_ENV
-  services:
-  - oyster-cracker
