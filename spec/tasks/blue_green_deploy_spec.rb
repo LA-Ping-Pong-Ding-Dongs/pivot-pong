@@ -31,7 +31,7 @@ describe BlueGreenDeploy do
       end
 
       it 'instructs Cloud Foundry to deploy the specified app' do
-        expect(CloudFoundry).to receive(:push).with("#{app_name}-#{blue_or_green}") { puts "what" }
+        expect(CloudFoundry).to receive(:push).with("#{app_name}-#{blue_or_green}")
         subject
       end
 
@@ -83,18 +83,59 @@ describe BlueGreenDeploy do
         end
       end
 
+    end
+  end
+
+  describe '#ready_for_takeoff' do
+    subject { BlueGreenDeploy.ready_for_takeoff(hot_app_name, hot_url, blue_or_green) }
+    let(:app_name) { 'app_name' }
+    let(:domain) { 'cfapps.io' }
+    let(:blue_or_green) { 'green' }
+    let(:hot_url) { 'la-pong' }
+    let(:hot_app_name) { "#{app_name}-#{current_hot_app}" }
+    before do
+      @cf_route_table = [
+        Route.new("#{app_name}-blue", domain, "#{app_name}-blue"),
+        Route.new("#{app_name}-green", domain, "#{app_name}-green"),
+        Route.new(hot_url, domain, "#{app_name}-#{current_hot_app}")
+      ]
+      allow(CloudFoundry).to receive(:push)
+      allow(CloudFoundry).to receive(:routes).and_return(@cf_route_table)
+      allow(CloudFoundry).to receive(:unmap_route).with("#{app_name}-#{current_hot_app}", 'cfapps.io', hot_url) do
+        @cf_route_table.pop; nil
+      end
+      allow(CloudFoundry).to receive(:map_route) do |app, domain, host|
+        @cf_route_table.delete_if { |route| route.host == host }
+        @cf_route_table.push(Route.new(host, domain, app))
+      end
+    end
+
+    context 'the target color is opposite of what`s already hot' do
+      let(:current_hot_app) { 'blue' }
+      it 'does not raise an error: "It`s kosh!"' do
+        expect{ subject }.to_not raise_error
+      end
+
+    end
+
+    context 'the target color matches what`s already hot' do
+      let(:current_hot_app) { 'green' }
+      it 'raises an InvalidRouteStateError' do
+        expect{ subject }.to raise_error(InvalidRouteStateError)
+      end
+    end
+
+    context 'when blue/green is omitted' do
+      let(:blue_or_green) { nil }
       context 'there is no current hot app' do
         let(:current_hot_app) { '' }
+        let(:hot_app_name) { nil }
         before do
           @cf_route_table.pop # remove the hot route
         end
 
-        it 'fails and provide feedback to user to provide a blue_or_green' do
-          console_output = PiedPiper.capture_stdout { subject }
-
-          expect(console_output).to include(
-            "There is no route mapped from #{hot_url} to an app.",
-            'Indicate which app instance you want to deploy by specifying "blue" or "green"')
+        it 'raises an InvalidRouteStateError' do
+          expect{ subject }.to raise_error(InvalidRouteStateError)
         end
       end
     end

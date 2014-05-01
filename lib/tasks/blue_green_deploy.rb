@@ -6,26 +6,37 @@ class BlueGreenDeployError < StandardError; end
 class InvalidRouteStateError < BlueGreenDeployError; end
 
 class BlueGreenDeploy
-  def self.make_it_so(app_name, domain, deploy_config, blue_or_green = nil)
-    if blue_or_green.nil?
-      hot_app_name = get_hot_app(deploy_config.hot_url)
-      if hot_app_name
-        blue_or_green = determine_blue_green(hot_app_name)
-      else
-        puts "There is no route mapped from #{deploy_config.hot_url} to an app."
-        puts 'Indicate which app instance you want to deploy by specifying "blue" or "green"'
-      end
+  def self.ready_for_takeoff(hot_app_name, hot_url, blue_or_green)
+    if hot_app_name.nil?
+      raise InvalidRouteStateError.new(
+        "There is no route mapped from #{hot_url} to an app. " +
+        "Indicate which app instance you want to deploy by specifying \"blue\" or \"green\".")
     end
-    if blue_or_green
-      puts "BlueGreenDeploy(): push(#{calc_cold_app_name(app_name, blue_or_green)})"
 
-      CloudFoundry.push(calc_cold_app_name(app_name, blue_or_green))
-      make_hot(app_name, domain, deploy_config, blue_or_green)
+    if get_color_stem(hot_app_name) == blue_or_green
+      raise InvalidRouteStateError.new(
+        "The #{blue_or_green} instance is already hot.")
     end
   end
 
+  def self.make_it_so(app_name, domain, deploy_config, blue_or_green = nil)
+    hot_app_name = get_hot_app(deploy_config.hot_url)
+    if blue_or_green.nil? && hot_app_name
+      blue_or_green = determine_blue_green(hot_app_name)
+    end
+
+    ready_for_takeoff(hot_app_name, deploy_config.hot_url, blue_or_green)
+
+    CloudFoundry.push(calc_cold_app_name(app_name, blue_or_green))
+    make_hot(app_name, domain, deploy_config, blue_or_green)
+  end
+
+  def self.get_color_stem(hot_app_name)
+    hot_app_name.slice((hot_app_name.rindex('-') + 1)..(hot_app_name.length))
+  end
+
   def self.determine_blue_green(hot_app_name)
-    blue_or_green = (hot_app_name.slice((hot_app_name.rindex('-') + 1)..(hot_app_name.length)))
+    blue_or_green = get_color_stem(hot_app_name)
     blue_or_green == 'green' ? 'blue' : 'green'
   end
 
@@ -42,6 +53,7 @@ class BlueGreenDeploy
 
     cold_app = calc_cold_app_name(app_name, blue_or_green)
     CloudFoundry.map_route(cold_app, domain, hot_url)
+
   end
 
   def self.get_hot_app(hot_url)

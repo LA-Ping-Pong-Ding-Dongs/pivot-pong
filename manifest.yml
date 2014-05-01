@@ -1,17 +1,26 @@
 ---
 applications:
-- name: pivot-pong-staging-green
+- name: carrot-soup-green
   host: la-pong-green
+  domain: cfapps.io
   size: 1GB
   buildpack: git://github.com/heroku/heroku-buildpack-ruby.git
   command: bundle exec rake cf:on_first_instance db:migrate && bundle exec rails s -p $PORT -e $RAILS_ENV
   services:
   - oyster-cracker
 
-- name: pivot-pong-staging-blue
+- name: carrot-soup-blue
   host: la-pong-blue
+  domain: cfapps.io
   size: 1GB
   buildpack: git://github.com/heroku/heroku-buildpack-ruby.git
   command: bundle exec rake cf:on_first_instance db:migrate && bundle exec rails s -p $PORT -e $RAILS_ENV
   services:
   - oyster-cracker
+
+
+# manifest rules:
+# 1. the "host" of the manifest's very first application is the canonical definition of "hot_url"
+# 2. the first and second application definition must match in all values with one exception:
+#    - the stem of "name" and "host" are "-green" and "-blue" (in either order)
+#

@@ -1,6 +1,10 @@
 class CommandLine
+  DEBUG = false
   def self.backtick(command)
-    `CF_COLOR=false; #{command}`
+
+    output = `export CF_COLOR=false; #{command}`
+    puts "CommandLine.backtick(): \"#{output}\"" if DEBUG
+    output
   end
 
   def self.system(command)
