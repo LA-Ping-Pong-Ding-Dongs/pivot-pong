@@ -6,6 +6,9 @@ class BlueGreenDeployError < StandardError; end
 class InvalidRouteStateError < BlueGreenDeployError; end
 
 class BlueGreenDeploy
+  def self.cf
+    CloudFoundry
+  end
 
   def self.make_it_so(domain, app_name, worker_apps, deploy_config, blue_or_green = nil)
     hot_app_name = get_hot_app(deploy_config.hot_url)
@@ -15,13 +18,13 @@ class BlueGreenDeploy
 
     ready_for_takeoff(hot_app_name, deploy_config.hot_url, blue_or_green)
 
-    CloudFoundry.push(full_app_name(app_name, blue_or_green))
+    cf.push(full_app_name(app_name, blue_or_green))
 #   worker_apps.each do |worker_app|
 #     to_be_hot_worker = full_app_name(worker_app, blue_or_green)
 #     to_be_cold_worker = full_app_name(worker_app, green_or_blue)
 #
-#     CloudFoundry.push(to_be_hot_worker)
-#     CloudFoundry.stop(to_be_cold_worker)
+#     cf.push(to_be_hot_worker)
+#     cf.stop(to_be_cold_worker)
 #   end
     make_hot(app_name, domain, deploy_config, blue_or_green)
 
@@ -67,12 +70,12 @@ class BlueGreenDeploy
     hot_app = get_hot_app(hot_url)
     cold_app = full_app_name(app_name, blue_or_green)
 
-    CloudFoundry.map_route(cold_app, domain, hot_url)
-    CloudFoundry.unmap_route(hot_app, domain, hot_url) if hot_app
+    cf.map_route(cold_app, domain, hot_url)
+    cf.unmap_route(hot_app, domain, hot_url) if hot_app
   end
 
   def self.get_hot_app(hot_url)
-    cf_routes = CloudFoundry.routes
+    cf_routes = cf.routes
     hot_route = cf_routes.find { |route| route.host == hot_url }
     hot_route.nil? ? nil : hot_route.app
   end
