@@ -4,71 +4,87 @@ require_relative 'blue_green_deploy_config'
 
 class BlueGreenDeployError < StandardError; end
 class InvalidRouteStateError < BlueGreenDeployError; end
+class InvalidWorkerStateError < BlueGreenDeployError; end
 
 class BlueGreenDeploy
   def self.cf
     CloudFoundry
   end
 
-  def self.make_it_so(domain, app_name, worker_apps, deploy_config, blue_or_green = nil)
+  def self.make_it_so(domain, app_name, worker_apps, deploy_config, target_color = nil)
     hot_app_name = get_hot_app(deploy_config.hot_url)
-    if blue_or_green.nil? && hot_app_name
-      blue_or_green = determine_blue_green(hot_app_name)
+    if target_color.nil? && hot_app_name
+      target_color = determine_target_color(hot_app_name)
     end
 
-    ready_for_takeoff(hot_app_name, deploy_config.hot_url, blue_or_green)
+    ready_for_takeoff(hot_app_name, deploy_config, target_color)
 
-    cf.push(full_app_name(app_name, blue_or_green))
-#   worker_apps.each do |worker_app|
-#     to_be_hot_worker = full_app_name(worker_app, blue_or_green)
-#     to_be_cold_worker = full_app_name(worker_app, green_or_blue)
-#
-#     cf.push(to_be_hot_worker)
-#     cf.stop(to_be_cold_worker)
-#   end
-    make_hot(app_name, domain, deploy_config, blue_or_green)
+    cf.push(full_app_name(app_name, target_color))
+    worker_apps.each do |worker_app|
+      worker_app_name = full_app_name(worker_app, target_color)
+      to_be_cold_worker = full_app_name(worker_app, toggle_blue_green(target_color))
 
-#    ensure_everything_is_kosh(...) - that means web and workers sync
-    # 1. hot_app = green + blue_or_green = green ==> error out "green is already live!"
-    # 2. hot_app = blue + (blue_or_green = green or nil)
+      cf.push(worker_app_name)
+      cf.stop(to_be_cold_worker)
+    end
+    make_hot(app_name, domain, deploy_config, target_color)
+
+    # 2. hot_app = blue + (target_color = green or nil)
     #    - any worker app = green ==> error out "web and workers are out of sync!"
-    #
-    #
-#    deploy changes to cold slice
-#    push all related workers to cold worker slices
-#    stop all related old fart worker bees
-#    map route to new hot
-#    unmap route to old hot
 #    rejoice
 
   end
 
-  def self.ready_for_takeoff(hot_app_name, hot_url, blue_or_green)
+  def self.ready_for_takeoff(hot_app_name, deploy_config, target_color)
+    hot_url = deploy_config.hot_url
+    hot_worker_apps = deploy_config.target_worker_app_names
+    puts hot_worker_apps.inspect
     if hot_app_name.nil?
       raise InvalidRouteStateError.new(
         "There is no route mapped from #{hot_url} to an app. " +
         "Indicate which app instance you want to deploy by specifying \"blue\" or \"green\".")
     end
 
-    if get_color_stem(hot_app_name) == blue_or_green
+    if get_color_stem(hot_app_name) == target_color
       raise InvalidRouteStateError.new(
-        "The #{blue_or_green} instance is already hot.")
+        "The #{target_color} instance is already hot.")
     end
+
+    apps = cf.apps
+    hot_worker_apps.each do |hot_worker|
+      if get_color_stem(hot_worker) == target_color && invalid_worker?(hot_worker, apps)
+        raise InvalidWorkerStateError.new(
+          "Worker #{hot_worker} is already hot (going to #{target_color})")
+      end
+    end
+  end
+
+  def self.invalid_worker?(hot_worker, apps)
+    apps.each do |app|
+      if app.name == hot_worker && app.state = 'started'
+        return true
+      end
+    end
+    return false
   end
 
   def self.get_color_stem(hot_app_name)
     hot_app_name.slice((hot_app_name.rindex('-') + 1)..(hot_app_name.length))
   end
 
-  def self.determine_blue_green(hot_app_name)
-    blue_or_green = get_color_stem(hot_app_name)
-    blue_or_green == 'green' ? 'blue' : 'green'
+  def self.determine_target_color(hot_app_name)
+    target_color = get_color_stem(hot_app_name)
+    toggle_blue_green(target_color)
   end
 
-  def self.make_hot(app_name, domain, deploy_config, blue_or_green)
+  def self.toggle_blue_green(target_color)
+    target_color == 'green' ? 'blue' : 'green'
+  end
+
+  def self.make_hot(app_name, domain, deploy_config, target_color)
     hot_url = deploy_config.hot_url
     hot_app = get_hot_app(hot_url)
-    cold_app = full_app_name(app_name, blue_or_green)
+    cold_app = full_app_name(app_name, target_color)
 
     cf.map_route(cold_app, domain, hot_url)
     cf.unmap_route(hot_app, domain, hot_url) if hot_app
@@ -80,7 +96,7 @@ class BlueGreenDeploy
     hot_route.nil? ? nil : hot_route.app
   end
 
-  def self.full_app_name(app_name, blue_or_green)
-    app_name + "-" + blue_or_green
+  def self.full_app_name(app_name, target_color)
+    app_name + "-" + target_color
   end
 end

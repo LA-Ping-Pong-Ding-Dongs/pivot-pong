@@ -11,7 +11,29 @@ class CloudFoundryFake
     ]
   end
 
-  # Test Helpers
+  def self.init_app_list_with_workers_for(app_name)
+    @@cf_app_list = [
+      App.new(name: "#{app_name}-worker-green", state: 'stopped'),
+      App.new(name: "#{app_name}-worker-blue", state: 'stopped')
+    ]
+  end
+
+  def self.init_app_list(apps)
+    @@cf_app_list = apps
+  end
+
+  # App List Helpers
+
+  def self.replace_app(new_app)
+    app_index = @@cf_app_list.find_index { |existing_app| existing_app.name == new_app.name }
+    @@cf_app_list[app_index] = new_app
+  end
+
+  def self.apps
+    @@cf_app_list
+  end
+
+  # Route Table Helpers
   def self.find_route(host)
     @@cf_route_table.find { |route| route.host == host }
   end
@@ -26,6 +48,9 @@ class CloudFoundryFake
 
   # CloudFoundry fakes
   def self.push(app)
+  end
+
+  def self.stop(app)
   end
 
   def self.routes

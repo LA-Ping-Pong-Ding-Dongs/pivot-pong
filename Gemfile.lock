@@ -72,6 +72,7 @@ GEM
       rails (>= 3.0.10)
     arel (4.0.2)
     atomic (1.1.16)
+    awesome_print (1.2.0)
     builder (3.1.4)
     cliver (0.3.2)
     coderay (1.1.0)
@@ -210,6 +211,7 @@ PLATFORMS
 
 DEPENDENCIES
   apipie-rails
+  awesome_print
   capybara!
   ejs
   faker

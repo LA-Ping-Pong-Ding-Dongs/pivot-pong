@@ -1,16 +1,41 @@
 require_relative './command_line'
 require_relative './route'
+require_relative './app'
+require 'awesome_print'
 
 class CloudFoundryCliError < StandardError; end
 
 class CloudFoundry
-  DEBUG = false
+
+  def self.apps
+    apps = []
+    cmd = "cf apps"
+    output = CommandLine.backtick(cmd)
+    found_header = false
+
+    lines = output.lines
+
+    lines.each do |line|
+      line = line.split
+      if line[0] == 'name' && found_header == false
+        found_header = true
+        next
+      end
+
+      if found_header
+        apps << App.new(name: line[0], state: line[1])
+      end
+    end
+
+    apps
+  end
 
   def self.push(app)
-    puts "self.push" if DEBUG
-    cmd = "cf push #{app}"
-    success = CommandLine.system(cmd)
-    handle_success_or_failure(cmd, success)
+    execute("cf push #{app}")
+  end
+
+  def self.stop(app)
+    execute("cf stop #{app}")
   end
 
   def self.routes
@@ -23,7 +48,7 @@ class CloudFoundry
       found_header = false
       lines.each do |line|
         line = line.split
-        if line[0] == 'host'
+        if line[0] == 'host' && found_header == false
           found_header = true
           next
         end
@@ -32,7 +57,6 @@ class CloudFoundry
           routes << Route.new(line[0], line[1], line[2])
         end
       end
-      puts routes.inspect if DEBUG
       routes
     else
       raise CloudFoundryCliError.new("\"#{cmd}\" returned \"#{success}\".  The output of the command was \n\"#{output}\".")
@@ -40,20 +64,19 @@ class CloudFoundry
   end
 
   def self.unmap_route(app, domain, host)
-    puts "self.unmap_route(app, domain, host)" if DEBUG
-    cmd = "cf unmap-route #{app} #{domain} -n #{host}"
-    success = CommandLine.system(cmd)
-    handle_success_or_failure(cmd, success)
+    execute("cf unmap-route #{app} #{domain} -n #{host}")
   end
 
   def self.map_route(app, domain, host)
-    puts "self.map_route(app, domain, host)" if DEBUG
-    cmd = "cf map-route #{app} #{domain} -n #{host}"
-    success = CommandLine.system(cmd)
-    handle_success_or_failure(cmd, success)
+    execute("cf map-route #{app} #{domain} -n #{host}")
   end
 
   private
+
+  def self.execute(cmd)
+    success = CommandLine.system(cmd)
+    handle_success_or_failure(cmd, success)
+  end
 
   def self.handle_success_or_failure(cmd, success)
     if success

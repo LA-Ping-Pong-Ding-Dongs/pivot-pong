@@ -21,6 +21,56 @@ describe CloudFoundry do
     end
   end
 
+  describe '#stop' do
+    subject { CloudFoundry.stop(app) }
+    let(:app) { 'app_name-blue' }
+
+    it 'invokes the CloudFoundry CLI command "stop"' do
+      expect(CommandLine).to receive(:system).with("cf stop #{app}").and_return(true)
+      subject
+    end
+
+    context 'when the CloudFoundry push fails' do
+      before do
+        allow(CommandLine).to receive(:system).and_return(false)
+      end
+      it 'throws a CloudFoundryCliError' do
+        expect{ subject }.to raise_error(CloudFoundryCliError)
+      end
+    end
+  end
+
+  describe '#apps' do
+    subject { CloudFoundry.apps }
+    before do
+      allow(CommandLine).to receive(:backtick).with('cf apps').and_return(cli_apps_output)
+    end
+
+    context 'there is a list of apps defined in the current organization' do
+      let(:cli_apps_output) {
+        <<-CLI
+        Getting apps in org LA-Ping-Pong-Ding-Dongs / space carrot-soup as pivot-pong-developers@googlegroups.com...
+        OK
+
+        name                requested state   instances   memory   disk   urls
+        carrot-soup-blue    stopped           0/1         1G       1G     carrot-soup-blue.cfapps.io
+        carrot-soup-green   started           1/1         1G       1G     la-pong.cfapps.io, carrot-soup-green.cfapps.io
+        red                 started           1/1         1G       1G     pickle-breath.cfapps.io
+        CLI
+      }
+
+      it 'parses the CLI "apps" output into a collection of App objects, one for each app' do
+        expect(subject).to be_kind_of(Array)
+        expect(subject.length).to eq 3
+        expect(subject[0].name).to eq 'carrot-soup-blue'
+        expect(subject[0].state).to eq 'stopped'
+        expect(subject[1].name).to eq 'carrot-soup-green'
+        expect(subject[1].state).to eq 'started'
+      end
+    end
+
+  end
+
   describe '#routes' do
     subject { CloudFoundry.routes }
     before do

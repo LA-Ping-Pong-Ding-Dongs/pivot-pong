@@ -4,36 +4,48 @@ require_relative 'cloud_foundry_fake'
 
 describe BlueGreenDeploy do
   let(:cf_manifest) { YAML.load_file('spec/tasks/manifest.yml') }
-  let(:deploy_config) { BlueGreenDeployConfig.new(cf_manifest) }
+  let(:worker_app_names) { ['app_name-worker'] }
+  let(:deploy_config) { BlueGreenDeployConfig.new(cf_manifest, worker_app_names) }
   let(:domain) { 'cfapps.io' }
   let(:hot_url) { 'la-pong' }
   let(:app_name) { 'app_name' }
 
   describe '#make_it_so' do
     context 'when blue/green is specified' do
-      let(:worker_apps) { ['app_name-worker'] }
-      let(:blue_or_green) { 'green' }
+      let(:worker_apps) { worker_app_names }
+      let(:target_color) { 'green' }
       let(:current_hot_app) { 'blue' }
-      subject { BlueGreenDeploy.make_it_so(domain, app_name, worker_apps, deploy_config, blue_or_green) }
+      subject { BlueGreenDeploy.make_it_so(domain, app_name, worker_apps, deploy_config, target_color) }
       before do
         allow(BlueGreenDeploy).to receive(:cf).and_return(CloudFoundryFake)
         CloudFoundryFake.init_route_table(domain, app_name, hot_url, current_hot_app)
+        CloudFoundryFake.init_app_list_with_workers_for(app_name)
       end
 
-      it 'instructs Cloud Foundry to deploy the specified app' do
-        expect(CloudFoundryFake).to receive(:push).with("#{app_name}-#{blue_or_green}")
+      it 'instructs Cloud Foundry to deploy the specified web app; ' +
+         'THEN, deploys each of the specified worker apps, stopping their counterparts; ' +
+         'and THEN, makes the specified web app "hot" ' +
+         '(mapping the "hot" route to it and unmapping that "hot" route from it`s counterpart)' do
+        green_or_blue = BlueGreenDeploy.toggle_blue_green(target_color)
+        old_worker_app_full_name = "#{worker_apps.first}-#{green_or_blue}"
+        new_worker_app_full_name = "#{worker_apps.first}-#{target_color}"
+        new_web_app_full_name = "#{app_name}-#{target_color}"
+        old_web_app_full_name = "#{app_name}-#{green_or_blue}"
+
+        expect(CloudFoundryFake).to receive(:push).with(new_web_app_full_name).ordered.and_call_original
+        expect(CloudFoundryFake).to receive(:push).with(new_worker_app_full_name).ordered.and_call_original
+        expect(CloudFoundryFake).to receive(:stop).with(old_worker_app_full_name).ordered.and_call_original
+        expect(CloudFoundryFake).to receive(:map_route).with(new_web_app_full_name, domain, hot_url).ordered.and_call_original
+        expect(CloudFoundryFake).to receive(:unmap_route).with(old_web_app_full_name, domain, hot_url).ordered.and_call_original
+
         subject
       end
 
-      it 'attempts to make that the hot app' do
-        expect(BlueGreenDeploy).to receive(:make_hot).with(app_name, domain, deploy_config, blue_or_green)
-        subject
-      end
     end
 
-    context 'when blue/green is omitted' do
+    context 'when blue/green is omitted and there is already a hot app' do
       subject { BlueGreenDeploy.make_it_so(domain, app_name, worker_apps, deploy_config) }
-      let(:worker_apps) { ['app_name-worker'] }
+      let(:worker_apps) { worker_app_names }
       before do
         allow(BlueGreenDeploy).to receive(:cf).and_return(CloudFoundryFake)
         CloudFoundryFake.init_route_table(domain, app_name, hot_url, current_hot_app)
@@ -61,20 +73,30 @@ describe BlueGreenDeploy do
   end
 
   describe '#ready_for_takeoff' do
-    subject { BlueGreenDeploy.ready_for_takeoff(hot_app_name, hot_url, blue_or_green) }
-    let(:blue_or_green) { 'green' }
+    subject { BlueGreenDeploy.ready_for_takeoff(hot_app_name, deploy_config, target_color) }
+    let(:target_color) { 'green' }
     let(:hot_app_name) { "#{app_name}-#{current_hot_app}" }
+    let(:worker_apps) { CloudFoundry.apps }
     before do
       allow(BlueGreenDeploy).to receive(:cf).and_return(CloudFoundryFake)
       CloudFoundryFake.init_route_table(domain, app_name, hot_url, current_hot_app)
+      CloudFoundryFake.init_app_list_with_workers_for(app_name)
     end
 
-    context 'the target color is opposite of what`s already hot' do
+    context 'the target color is the cold app color.' do
       let(:current_hot_app) { 'blue' }
+
       it 'does not raise an error: "It`s kosh!"' do
         expect{ subject }.to_not raise_error
       end
 
+      context 'but, one or more of the corresponding worker apps is already hot' do
+        before { CloudFoundryFake.replace_app(App.new(name: "#{app_name}-worker-#{target_color}", state: 'started')) }
+
+        xit 'raises an InvalidWorkerStateError' do
+          expect{ subject }.to raise_error(InvalidWorkerStateError)
+        end
+      end
     end
 
     context 'the target color matches what`s already hot' do
@@ -85,7 +107,7 @@ describe BlueGreenDeploy do
     end
 
     context 'when blue/green is omitted' do
-      let(:blue_or_green) { nil }
+      let(:target_color) { nil }
 
       context 'there is no current hot app' do
         let(:current_hot_app) { '' }
@@ -114,9 +136,7 @@ describe BlueGreenDeploy do
     end
 
     context 'when there is no app mapped to the hot url' do
-      before do
-        CloudFoundryFake.remove_route(hot_url)
-      end
+      before { CloudFoundryFake.remove_route(hot_url) }
 
       it 'returns nil' do
         expect(subject).to be_nil
