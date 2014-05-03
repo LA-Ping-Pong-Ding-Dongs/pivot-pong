@@ -11,31 +11,28 @@ class BlueGreenDeploy
     CloudFoundry
   end
 
-  def self.make_it_so(domain, app_name, worker_apps, deploy_config, target_color = nil)
+  def self.make_it_so(domain, app_name, worker_apps, deploy_config)
     hot_app_name = get_hot_app(deploy_config.hot_url)
-    if target_color.nil? && hot_app_name
-      target_color = determine_target_color(hot_app_name)
+    if deploy_config.target_color.nil? && hot_app_name
+      deploy_config.target_color = determine_target_color(hot_app_name)
     end
 
-    ready_for_takeoff(hot_app_name, deploy_config, target_color)
+    ready_for_takeoff(hot_app_name, deploy_config)
 
-    cf.push(full_app_name(app_name, target_color))
-    worker_apps.each do |worker_app|
-      worker_app_name = full_app_name(worker_app, target_color)
-      to_be_cold_worker = full_app_name(worker_app, toggle_blue_green(target_color))
+    cf.push(full_app_name(app_name, deploy_config.target_color))   # deploy_config.target_app_name
+    deploy_config.target_worker_app_names.each do |worker_app_name|
+      to_be_cold_worker = BlueGreenDeployConfig.toggle_app_color(worker_app_name)
 
       cf.push(worker_app_name)
       cf.stop(to_be_cold_worker)
     end
-    make_hot(app_name, domain, deploy_config, target_color)
+    make_hot(app_name, domain, deploy_config)
 
-    # 2. hot_app = blue + (target_color = green or nil)
-    #    - any worker app = green ==> error out "web and workers are out of sync!"
 #    rejoice
 
   end
 
-  def self.ready_for_takeoff(hot_app_name, deploy_config, target_color)
+  def self.ready_for_takeoff(hot_app_name, deploy_config)
     hot_url = deploy_config.hot_url
     hot_worker_apps = deploy_config.target_worker_app_names
     puts hot_worker_apps.inspect
@@ -45,23 +42,23 @@ class BlueGreenDeploy
         "Indicate which app instance you want to deploy by specifying \"blue\" or \"green\".")
     end
 
-    if get_color_stem(hot_app_name) == target_color
+    if deploy_config.is_in_target?(hot_app_name)
       raise InvalidRouteStateError.new(
-        "The #{target_color} instance is already hot.")
+        "The #{deploy_config.target_color} instance is already hot.")
     end
 
     apps = cf.apps
     hot_worker_apps.each do |hot_worker|
-      if get_color_stem(hot_worker) == target_color && invalid_worker?(hot_worker, apps)
+      if deploy_config.is_in_target?(hot_worker) && invalid_worker?(hot_worker, apps)
         raise InvalidWorkerStateError.new(
-          "Worker #{hot_worker} is already hot (going to #{target_color})")
+          "Worker #{hot_worker} is already hot (going to #{deploy_config.target_color})")
       end
     end
   end
 
   def self.invalid_worker?(hot_worker, apps)
     apps.each do |app|
-      if app.name == hot_worker && app.state = 'started'
+      if app.name == hot_worker && app.state == 'started'
         return true
       end
     end
@@ -81,10 +78,11 @@ class BlueGreenDeploy
     target_color == 'green' ? 'blue' : 'green'
   end
 
-  def self.make_hot(app_name, domain, deploy_config, target_color)
+  def self.make_hot(app_name, domain, deploy_config)
+    target_color = deploy_config.target_color
     hot_url = deploy_config.hot_url
     hot_app = get_hot_app(hot_url)
-    cold_app = full_app_name(app_name, target_color)
+    cold_app = full_app_name(app_name, target_color)  # deploy_config.target_web_app_name
 
     cf.map_route(cold_app, domain, hot_url)
     cf.unmap_route(hot_app, domain, hot_url) if hot_app
