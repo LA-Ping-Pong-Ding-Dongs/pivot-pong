@@ -11,7 +11,7 @@ class BlueGreenDeploy
     CloudFoundry
   end
 
-  def self.make_it_so(domain, app_name, worker_apps, deploy_config)
+  def self.make_it_so(app_name, worker_apps, deploy_config)
     hot_app_name = get_hot_app(deploy_config.hot_url)
     if deploy_config.target_color.nil? && hot_app_name
       deploy_config.target_color = determine_target_color(hot_app_name)
@@ -26,9 +26,7 @@ class BlueGreenDeploy
       cf.push(worker_app_name)
       cf.stop(to_be_cold_worker)
     end
-    make_hot(app_name, domain, deploy_config)
-
-#    rejoice
+    make_hot(app_name, deploy_config)
 
   end
 
@@ -73,10 +71,11 @@ class BlueGreenDeploy
     BlueGreenDeployConfig.toggle_color(target_color)
   end
 
-  def self.make_hot(app_name, domain, deploy_config)
+  def self.make_hot(app_name, deploy_config)
     hot_url = deploy_config.hot_url
     hot_app = get_hot_app(hot_url)
     cold_app = deploy_config.target_web_app_name
+    domain = deploy_config.domain
 
     cf.map_route(cold_app, domain, hot_url)
     cf.unmap_route(hot_app, domain, hot_url) if hot_app

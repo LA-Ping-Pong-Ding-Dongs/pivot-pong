@@ -15,7 +15,7 @@ describe BlueGreenDeploy do
       let(:worker_apps) { worker_app_names }
       let(:target_color) { 'green' }
       let(:current_hot_app) { 'blue' }
-      subject { BlueGreenDeploy.make_it_so(domain, app_name, worker_apps, deploy_config) }
+      subject { BlueGreenDeploy.make_it_so(app_name, worker_apps, deploy_config) }
       before do
         allow(BlueGreenDeploy).to receive(:cf).and_return(CloudFoundryFake)
         CloudFoundryFake.init_route_table(domain, app_name, hot_url, current_hot_app)
@@ -46,7 +46,7 @@ describe BlueGreenDeploy do
     context 'when blue/green is omitted and there is already a hot app' do
       let(:target_color) { nil }
       let(:worker_apps) { worker_app_names }
-      subject { BlueGreenDeploy.make_it_so(domain, app_name, worker_apps, deploy_config) }
+      subject { BlueGreenDeploy.make_it_so(app_name, worker_apps, deploy_config) }
       before do
         allow(BlueGreenDeploy).to receive(:cf).and_return(CloudFoundryFake)
         CloudFoundryFake.init_route_table(domain, app_name, hot_url, current_hot_app)
@@ -150,7 +150,7 @@ describe BlueGreenDeploy do
   describe '#make_hot' do
     let(:target_color) { 'blue' }
     let(:current_hot_app) { 'green' }
-    subject { BlueGreenDeploy.make_hot(app_name, domain, deploy_config) }
+    subject { BlueGreenDeploy.make_hot(app_name, deploy_config) }
 
     before do
       allow(BlueGreenDeploy).to receive(:cf).and_return(CloudFoundryFake)
