@@ -1,12 +1,33 @@
+require_relative 'blue_green_deploy_error'
+
+class InvalidManifestError < BlueGreenDeployError; end
+
 class BlueGreenDeployConfig
-  attr_reader :hot_url, :worker_app_names
+  attr_reader :hot_url, :worker_app_names, :domain
   attr_accessor :target_color
 
   def initialize(cf_manifest, web_app_name, worker_app_names, target_color = nil)
-    manny = cf_manifest['applications']
-    item = manny.find { |item| self.class.strip_color(item['name']) == web_app_name }
-    host = item['host']
+    manifest = cf_manifest['applications']
+    item = manifest.find { |item| self.class.strip_color(item['name']) == web_app_name }
+    if item.nil?
+      raise InvalidManifestError.new("Could not find \"#{web_app_name}-green\" nor \"#{web_app_name}-blue\" in the Cloud Foundry manifest:\n" +
+                                 "#{cf_manifest.inspect}")
+    end
 
+    host = item['host']
+    if host.nil?
+      raise InvalidManifestError.new(
+        "Could not find the \"host\" property associated with the \"#{item['name']}\" application in the Cloud Foundry manifest:\n" +
+        "#{cf_manifest.inspect}")
+    end
+
+    @domain = item['domain']
+
+    if @domain.nil?
+      raise InvalidManifestError.new(
+        "Could not find the \"domain\" property associated with the \"#{item['name']}\" application in the Cloud Foundry manifest:\n" +
+        "#{cf_manifest.inspect}")
+    end
     @web_app_name = web_app_name
     @hot_url = host.slice(0, host.rindex('-'))
     @worker_app_names = worker_app_names

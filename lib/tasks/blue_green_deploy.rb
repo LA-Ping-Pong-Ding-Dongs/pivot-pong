@@ -1,8 +1,8 @@
 require_relative 'route'
 require_relative 'cloud_foundry'
+require_relative 'blue_green_deploy_error'
 require_relative 'blue_green_deploy_config'
 
-class BlueGreenDeployError < StandardError; end
 class InvalidRouteStateError < BlueGreenDeployError; end
 class InvalidWorkerStateError < BlueGreenDeployError; end
 

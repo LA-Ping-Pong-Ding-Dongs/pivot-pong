@@ -4,6 +4,7 @@ require_relative '../../lib/tasks/blue_green_deploy_config'
 describe BlueGreenDeployConfig do
   let(:cf_manifest) { YAML.load_file('spec/tasks/manifest.yml') }
   let(:web_app_name) { 'the-web-app' }
+  let(:web_url_name) { 'the-web-url' }
   let(:worker_app_names) { ['the-web-app-worker', 'hard-worker'] }
   let(:target_color) { nil }
   let(:deploy_config) { BlueGreenDeployConfig.new(cf_manifest, web_app_name, worker_app_names, target_color) }
@@ -11,7 +12,33 @@ describe BlueGreenDeployConfig do
     subject { deploy_config }
     context 'given a parsed conforming manifest.yml' do
       it 'calculates the "Hot URL"' do
-        expect(subject.hot_url).to eq 'the-web-url'
+        expect(subject.hot_url).to eq "#{web_url_name}"
+      end
+
+      it 'determines the "domain" (i.e the Cloud Foundry domain)' do
+        expect(subject.domain).to eq 'cfapps.io'
+      end
+
+    end
+
+    context 'given the "web_app_name" parameter does not match any of the applications defined in the manifest.yml' do
+      let(:web_app_name) { 'i-am-not-in-the-manifest' }
+      it 'raises an InvalidManifestError' do
+        expect{subject}.to raise_error InvalidManifestError
+      end
+    end
+
+    context 'given the "web_app_name" matches, but the host name is not defined' do
+      let(:cf_manifest) { {"applications"=>[{"name"=>"the-web-app-blue"}]} }
+      it 'raises an InvalidManifestError' do
+        expect{subject}.to raise_error InvalidManifestError
+      end
+    end
+
+    context 'given the "web_app_name" matches, but the domain is not defined' do
+      let(:cf_manifest) { {"applications"=>[{"name"=>"the-web-app-blue", "host"=> "#{web_url_name}"}]} }
+      it 'raises an InvalidManifestError' do
+        expect{subject}.to raise_error InvalidManifestError
       end
     end
   end
