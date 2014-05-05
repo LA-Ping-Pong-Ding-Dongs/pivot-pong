@@ -3,25 +3,47 @@ require_relative '../../lib/tasks/blue_green_deploy_config'
 
 describe BlueGreenDeployConfig do
   let(:cf_manifest) { YAML.load_file('spec/tasks/manifest.yml') }
-  let(:worker_app_names) { ['worker-bee', 'hard-worker'] }
-  let(:target_color) { 'green' }
+  let(:web_app_name) { 'the-web-app' }
+  let(:worker_app_names) { ['the-web-app-worker', 'hard-worker'] }
+  let(:target_color) { nil }
+  let(:deploy_config) { BlueGreenDeployConfig.new(cf_manifest, web_app_name, worker_app_names, target_color) }
   describe '#initialize' do
-    subject { BlueGreenDeployConfig.new(cf_manifest, worker_app_names, target_color) }
+    subject { deploy_config }
     context 'given a parsed conforming manifest.yml' do
-
       it 'calculates the "Hot URL"' do
-        expect(subject.hot_url).to eq 'la-pong'
-      end
-
-      it 'calculates the "target" worker app names' do
-        expect(subject.target_worker_app_names[0]).to eq 'worker-bee-green'
-        expect(subject.target_worker_app_names[1]).to eq 'hard-worker-green'
-      end
-
-      it 'calculates the "target" web app name' do
-        expect(subject.target_web_app_name).to eq "pivot-pong-staging-#{target_color}"
+        expect(subject.hot_url).to eq 'the-web-url'
       end
     end
+  end
+
+  context 'the target color was provided' do
+    let(:target_color) { 'green' }
+    describe '.target_web_app_name' do
+      subject { deploy_config.target_web_app_name }
+      it 'calculates the "target" web app name' do
+        expect(subject).to eq "the-web-app-#{target_color}"
+      end
+    end
+
+    describe '.target_worker_app_names' do
+      subject { deploy_config.target_worker_app_names }
+
+      it 'calculates the "target" worker app names' do
+        expect(subject[0]).to eq 'the-web-app-worker-green'
+        expect(subject[1]).to eq 'hard-worker-green'
+      end
+    end
+  end
+
+
+  describe '#strip_color' do
+    let(:app_name_with_color) { 'some-app-name-here-yay-blue' }
+    subject { BlueGreenDeployConfig.strip_color(app_name_with_color) }
+
+    it 'returns just the name of the app' do
+      expect(subject).to eq 'some-app-name-here-yay'
+    end
+
   end
 
   describe '#toggle_app_color' do
@@ -38,8 +60,9 @@ describe BlueGreenDeployConfig do
   end
 
   describe '.is_in_target?' do
+    let(:target_color) { 'green' }
     let(:app_name) { "app_name-#{app_color}" }
-    subject { BlueGreenDeployConfig.new(cf_manifest, worker_app_names, target_color).is_in_target?(app_name) }
+    subject { deploy_config.is_in_target?(app_name) }
 
     context 'when the specified app IS the name of the target app' do
       let(:app_color) { target_color }

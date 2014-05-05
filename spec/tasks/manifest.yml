@@ -1,18 +1,30 @@
 ---
 applications:
-- name: pivot-pong-staging-green
-  host: la-pong-green
+
+- name: the-web-app-worker-green
+  host: the-web-app-worker-green
   size: 1GB
-  buildpack: git://github.com/heroku/heroku-buildpack-ruby.git
+  command: bundle exec rake cf:on_first_instance db:migrate && bundle exec rails s -p $PORT -e $RAILS_ENV
+  services:
+  - creme-fraiche
+
+- name: the-web-app-green
+  host: the-web-url-green
+  size: 1GB
   command: bundle exec rake cf:on_first_instance db:migrate && bundle exec rails s -p $PORT -e $RAILS_ENV
   services:
   - oyster-cracker
 
-- name: pivot-pong-staging-blue
-  host: la-pong-blue
+- name: the-web-app-blue
+  host: the-web-url-blue
   size: 1GB
-  buildpack: git://github.com/heroku/heroku-buildpack-ruby.git
   command: bundle exec rake cf:on_first_instance db:migrate && bundle exec rails s -p $PORT -e $RAILS_ENV
   services:
   - oyster-cracker
 
+- name: the-web-app-worker-blue
+  host: the-web-app-worker-blue
+  size: 1GB
+  command: bundle exec rake cf:on_first_instance db:migrate && bundle exec rails s -p $PORT -e $RAILS_ENV
+  services:
+  - creme-fraiche

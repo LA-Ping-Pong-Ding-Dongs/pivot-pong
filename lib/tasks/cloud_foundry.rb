@@ -1,7 +1,6 @@
 require_relative './command_line'
 require_relative './route'
 require_relative './app'
-require 'awesome_print'
 
 class CloudFoundryCliError < StandardError; end
 

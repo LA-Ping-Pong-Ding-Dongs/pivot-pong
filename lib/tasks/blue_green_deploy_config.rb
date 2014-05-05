@@ -2,15 +2,19 @@ class BlueGreenDeployConfig
   attr_reader :hot_url, :worker_app_names
   attr_accessor :target_color
 
-  def initialize(cf_manifest, worker_app_names, target_color = nil)
-    host = cf_manifest['applications'][0]['host']
+  def initialize(cf_manifest, web_app_name, worker_app_names, target_color = nil)
+    manny = cf_manifest['applications']
+    item = manny.find { |item| self.class.strip_color(item['name']) == web_app_name }
+    host = item['host']
+
+    @web_app_name = web_app_name
     @hot_url = host.slice(0, host.rindex('-'))
     @worker_app_names = worker_app_names
     @target_color = target_color
   end
 
   def target_web_app_name
-
+    "#{@web_app_name}-#{@target_color}"
   end
 
   def is_in_target?(app)
@@ -21,6 +25,10 @@ class BlueGreenDeployConfig
     @worker_app_names.map do |app|
       "#{app}-#{@target_color}"
     end
+  end
+
+  def self.strip_color(app_name_with_color)
+    app_name_with_color.slice((0..app_name_with_color.rindex('-') - 1))
   end
 
   def self.toggle_app_color(target_app_name)

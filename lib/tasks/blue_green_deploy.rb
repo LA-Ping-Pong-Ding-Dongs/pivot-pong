@@ -19,7 +19,7 @@ class BlueGreenDeploy
 
     ready_for_takeoff(hot_app_name, deploy_config)
 
-    cf.push(full_app_name(app_name, deploy_config.target_color))   # deploy_config.target_app_name
+    cf.push(deploy_config.target_web_app_name)
     deploy_config.target_worker_app_names.each do |worker_app_name|
       to_be_cold_worker = BlueGreenDeployConfig.toggle_app_color(worker_app_name)
 
@@ -35,7 +35,6 @@ class BlueGreenDeploy
   def self.ready_for_takeoff(hot_app_name, deploy_config)
     hot_url = deploy_config.hot_url
     hot_worker_apps = deploy_config.target_worker_app_names
-    puts hot_worker_apps.inspect
     if hot_app_name.nil?
       raise InvalidRouteStateError.new(
         "There is no route mapped from #{hot_url} to an app. " +
@@ -71,18 +70,13 @@ class BlueGreenDeploy
 
   def self.determine_target_color(hot_app_name)
     target_color = get_color_stem(hot_app_name)
-    toggle_blue_green(target_color)
-  end
-
-  def self.toggle_blue_green(target_color)
-    target_color == 'green' ? 'blue' : 'green'
+    BlueGreenDeployConfig.toggle_color(target_color)
   end
 
   def self.make_hot(app_name, domain, deploy_config)
-    target_color = deploy_config.target_color
     hot_url = deploy_config.hot_url
     hot_app = get_hot_app(hot_url)
-    cold_app = full_app_name(app_name, target_color)  # deploy_config.target_web_app_name
+    cold_app = deploy_config.target_web_app_name
 
     cf.map_route(cold_app, domain, hot_url)
     cf.unmap_route(hot_app, domain, hot_url) if hot_app
@@ -94,7 +88,4 @@ class BlueGreenDeploy
     hot_route.nil? ? nil : hot_route.app
   end
 
-  def self.full_app_name(app_name, target_color)
-    app_name + "-" + target_color
-  end
 end

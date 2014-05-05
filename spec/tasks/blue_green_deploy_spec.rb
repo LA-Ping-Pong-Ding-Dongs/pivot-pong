@@ -4,11 +4,11 @@ require_relative 'cloud_foundry_fake'
 
 describe BlueGreenDeploy do
   let(:cf_manifest) { YAML.load_file('spec/tasks/manifest.yml') }
-  let(:worker_app_names) { ['app_name-worker'] }
-  let(:deploy_config) { BlueGreenDeployConfig.new(cf_manifest, worker_app_names, target_color) }
+  let(:worker_app_names) { ['the-web-app-worker'] }
+  let(:deploy_config) { BlueGreenDeployConfig.new(cf_manifest, app_name, worker_app_names, target_color) }
   let(:domain) { 'cfapps.io' }
-  let(:hot_url) { 'la-pong' }
-  let(:app_name) { 'app_name' }
+  let(:hot_url) { 'the-web-url' }
+  let(:app_name) { 'the-web-app' }
 
   describe '#make_it_so' do
     context 'when blue/green is specified' do
@@ -26,7 +26,7 @@ describe BlueGreenDeploy do
          'THEN, deploys each of the specified worker apps, stopping their counterparts; ' +
          'and THEN, makes the specified web app "hot" ' +
          '(mapping the "hot" route to it and unmapping that "hot" route from it`s counterpart)' do
-        green_or_blue = BlueGreenDeploy.toggle_blue_green(target_color)
+        green_or_blue = BlueGreenDeployConfig.toggle_color(target_color)
         old_worker_app_full_name = "#{worker_apps.first}-#{green_or_blue}"
         new_worker_app_full_name = "#{worker_apps.first}-#{target_color}"
         new_web_app_full_name = "#{app_name}-#{target_color}"
@@ -78,7 +78,7 @@ describe BlueGreenDeploy do
     subject { BlueGreenDeploy.ready_for_takeoff(hot_app_name, deploy_config) }
     let(:target_color) { 'green' }
     let(:hot_app_name) { "#{app_name}-#{current_hot_app}" }
-    let(:worker_apps) { CloudFoundry.apps }
+    let(:worker_apps) { CloudFoundryFake.apps }
     before do
       allow(BlueGreenDeploy).to receive(:cf).and_return(CloudFoundryFake)
       CloudFoundryFake.init_route_table(domain, app_name, hot_url, current_hot_app)
@@ -95,7 +95,7 @@ describe BlueGreenDeploy do
       context 'but, one or more of the corresponding worker apps is already hot' do
         before { CloudFoundryFake.replace_app(App.new(name: "#{app_name}-worker-#{target_color}", state: 'started')) }
 
-        xit 'raises an InvalidWorkerStateError' do
+        it 'raises an InvalidWorkerStateError' do
           expect{ subject }.to raise_error(InvalidWorkerStateError)
         end
       end
@@ -164,7 +164,7 @@ describe BlueGreenDeploy do
 
       it 'the target_color is mapped to the hot_url' do
         subject
-        expect(BlueGreenDeploy.get_hot_app(hot_url)).to eq "app_name-#{target_color}"
+        expect(BlueGreenDeploy.get_hot_app(hot_url)).to eq "#{app_name}-#{target_color}"
       end
     end
 
@@ -176,19 +176,19 @@ describe BlueGreenDeploy do
 
       it 'the target_color is mapped to the hot_url' do
         subject
-        expect(BlueGreenDeploy.get_hot_app(hot_url)).to eq "app_name-#{target_color}"
+        expect(BlueGreenDeploy.get_hot_app(hot_url)).to eq "#{app_name}-#{target_color}"
       end
     end
 
     context 'when the hot url IS mapped to an app, already' do
       it 'the app that was mapped to the hot_url is no longer mapped to hot_url' do
         subject
-        expect(BlueGreenDeploy.get_hot_app(hot_url)).to_not eq "app_name-#{current_hot_app}"
+        expect(BlueGreenDeploy.get_hot_app(hot_url)).to_not eq "#{app_name}-#{current_hot_app}"
       end
 
       it 'the target_color is mapped to the hot_url' do
         subject
-        expect(BlueGreenDeploy.get_hot_app(hot_url)).to eq "app_name-#{target_color}"
+        expect(BlueGreenDeploy.get_hot_app(hot_url)).to eq "#{app_name}-#{target_color}"
       end
     end
   end
